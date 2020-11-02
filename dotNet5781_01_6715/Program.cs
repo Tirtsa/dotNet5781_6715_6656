@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * Ex1 dotNet - construction of class Bus and main to can add buses and add travel, refueling or maintenance to buses
+ * Author : tirts
+ * Date : 02.11.2020
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
