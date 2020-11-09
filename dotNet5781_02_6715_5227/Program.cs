@@ -86,6 +86,13 @@ namespace dotNet5781_02_6715_5227
             return "Bus Station Code:" + BusStationKey + "," + Latitude + "°N" + Longitude + "°E";
         }
     }
+
+    /*
+     * Class BusLineStation - a station of a line bus route
+     */
+    class BusLineStation
+    {
+    }
     class Program
     {
         static void Main(string[] args)
