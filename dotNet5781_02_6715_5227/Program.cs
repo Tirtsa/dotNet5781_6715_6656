@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Permissions;
 using System.Text;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_6715_5227
 {
+
+
     /*
      * Class with list of all Bus Stations
      */
@@ -38,6 +41,18 @@ namespace dotNet5781_02_6715_5227
                 }
             }
         }
+
+        public BusStation searchStation(int stationKey)
+        {
+             foreach(BusStation item in ListOfAllStations)
+             {
+                if (item.BusStationKey = stationKey)
+                {
+                    return item;
+                }
+             }
+             // return -1;
+        }
     }
 
 
@@ -50,7 +65,7 @@ namespace dotNet5781_02_6715_5227
         static Random  rLatitude = new Random(DateTime.Now.Millisecond);
         static Random rLongitude = new Random(DateTime.Now.Millisecond);
 
-        public static int helpBusStationKey = 111111;
+        public static int codeStation = 111111;
         
         //fields of bus station
         public int BusStationKey {get; set;}
@@ -58,13 +73,14 @@ namespace dotNet5781_02_6715_5227
         public double Longitude { get; set; }
         public string StationAdress { get; set; }
 
+        
         //initialize list of all bus stations (class ListBusStation)
         ListBusStation ListOfAllStations=new ListBusStation();
         
         //constuctor with no parameter
         public BusStation()
         {
-            BusStationKey = helpBusStationKey ++;
+            BusStationKey = codeStation ++;
             Latitude = rLatitude.NextDouble()+ 31;
             Longitude = rLongitude.NextDouble() + 34;
             StationAdress = " ";
@@ -88,11 +104,35 @@ namespace dotNet5781_02_6715_5227
     }
 
     /*
-     * Class BusLineStation - a station of a line bus route
+     * Class LineBus - a line with much of stations
      */
-    class BusLineStation
+    class BusLine
     {
+        /*
+        * Class BusLineStation - a station of a line bus route
+        */
+        class BusLineStation
+        {
+            public int BusStationKey {get; set; }
+            public double Distance {get; set; }
+            public double TravelTime {get; set; }
+            
+            BusLineStation(int StationKey)
+            {
+                 
+            }
+        }
+
+        enum areas {General, North, South, Center, Jerusalem};
+        static int codeLine = 000;
+
+        public int BusLine {get; set;}
+        public BusStation FirstStation {get; set; }
+        public BusStation LastStation {get; set; }
+        public areas Area {get; set; }
+        List<BusLineStation> Stations = new List<BusLineStation> ();
     }
+    
     class Program
     {
         static void Main(string[] args)
