@@ -89,7 +89,7 @@ namespace dotNet5781_02_6715_5227
         //constructor with parameter : adress of station
         public BusStation(string name)
         {
-            BusStationKey = helpBusStationKey ++;
+            BusStationKey = codeStation++;
             Latitude = rLatitude.NextDouble() + 31;
             Longitude = rLongitude.NextDouble() + 34;
             StationAdress = name;
@@ -126,11 +126,33 @@ namespace dotNet5781_02_6715_5227
         enum areas {General, North, South, Center, Jerusalem};
         static int codeLine = 000;
 
-        public int BusLine {get; set;}
+        //fields
+        public int BusLineNumber {get; set;}
         public BusStation FirstStation {get; set; }
         public BusStation LastStation {get; set; }
-        public areas Area {get; set; }
+        public areas Areas {get; set; }
         List<BusLineStation> Stations = new List<BusLineStation> ();
+        public List<BusStation> ListOfAllStations = new List<BusStation>();
+
+        //methodes
+        public override string ToString()
+        {
+            return ("Bus line: " + BusLineNumber + " First Station: " + FirstStation + " Last Station: " + LastStation + " Areas: " + Areas +
+                "Stations:" );//צריך להדפיס את רשימת התחנות שבהן האוטובוס עובר
+        }
+        public void AddStation()
+        {
+            Console.WriteLine("Write address of the bus station to add:");
+            string nameOfNewBusStation = Console.ReadLine();
+            foreach (BusStation item in ListOfAllStations)
+            {
+                if (nameOfNewBusStation = item)
+                {
+                    
+                }
+
+            }
+        }
     }
     
     class Program
