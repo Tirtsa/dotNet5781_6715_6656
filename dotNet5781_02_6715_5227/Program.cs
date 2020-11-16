@@ -75,7 +75,7 @@ namespace dotNet5781_02_6715_5227
 
         
         //initialize list of all bus stations (class ListBusStation)
-        ListBusStation ListOfAllStations=new ListBusStation();
+        public ListBusStation* ListOfAllStations = new ListBusStation*();
         
         //constuctor with no parameter
         public BusStation()
@@ -128,30 +128,39 @@ namespace dotNet5781_02_6715_5227
 
         //fields
         public int BusLineNumber {get; set;}
-        public BusStation FirstStation {get; set; }
-        public BusStation LastStation {get; set; }
+        public BusStation FirstStation 
+        {
+            get
+            {
+                return Stations.FindAll() //need return station in first index
+            }
+        }
+        public BusStation LastStation {get; } //need return last station of stations list
         public areas Areas {get; set; }
         List<BusLineStation> Stations = new List<BusLineStation> ();
-        public List<BusStation> ListOfAllStations = new List<BusStation>();
+        public ListBusStation* ListOfAllStations = new ListBusStation*();
+
+
+        public void printStations ()
+        {
+            foreach (BusLineStation item in Stations)
+                Console.Write(item.BusStationKey + " ");
+        }
 
         //methodes
         public override string ToString()
         {
-            return ("Bus line: " + BusLineNumber + " First Station: " + FirstStation + " Last Station: " + LastStation + " Areas: " + Areas +
-                "Stations:" );//צריך להדפיס את רשימת התחנות שבהן האוטובוס עובר
+            return ("Bus line: " + BusLineNumber + " First Station: " + FirstStation + " Last Station: " + LastStation + 
+                " Areas: " + Areas + "Stations: " + printStations());
         }
-        public void AddStation()
+        public void AddStation(int num, int codeStation)
         {
-            Console.WriteLine("Write address of the bus station to add:");
-            string nameOfNewBusStation = Console.ReadLine();
-            foreach (BusStation item in ListOfAllStations)
-            {
-                if (nameOfNewBusStation = item)
-                {
-                    
-                }
-
-            }
+            switch (num)
+	        {
+                case 1:
+                  ListOfAllStations
+		        default:
+	        }
         }
     }
     
