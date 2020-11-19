@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Device.Location;
 
 namespace dotNet5781_02_6715_5227
 {
@@ -69,16 +70,16 @@ namespace dotNet5781_02_6715_5227
         
         //fields of bus station
         public int BusStationKey {get; set;}
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public var Latitude { get; set; }
+        public var Longitude { get; set; }
         public string StationAdress { get; set; }
 
         
         //initialize list of all bus stations (class ListBusStation)
-        public ListBusStation* ListOfAllStations = new ListBusStation*();
+        //public ListBusStation ListOfAllStations = new ListBusStation*();
         
         //constuctor with no parameter
-        public BusStation()
+        public BusStation(ListBusStation ListOfAllStations)
         {
             BusStationKey = codeStation ++;
             Latitude = rLatitude.NextDouble()+ 31;
@@ -87,7 +88,7 @@ namespace dotNet5781_02_6715_5227
             ListOfAllStations.addStation(this); //add the bus station to the list
         }
         //constructor with parameter : adress of station
-        public BusStation(string name)
+        public BusStation(string name, ListBusStation ListOfAllStations)
         {
             BusStationKey = codeStation++;
             Latitude = rLatitude.NextDouble() + 31;
@@ -132,16 +133,49 @@ namespace dotNet5781_02_6715_5227
         {
             get
             {
-                return Stations.FindAll() //need return station in first index
+                return Stations[0];
             }
         }
-        public BusStation LastStation {get; } //need return last station of stations list
+        public BusStation LastStation 
+        {
+            get
+            {
+                int i = 0;
+                while (Stations[i]!=null)
+                {
+                    i++;
+                }
+                return Stations[i-1];
+            }
+        } 
         public areas Areas {get; set; }
         List<BusLineStation> Stations = new List<BusLineStation> ();
-        public ListBusStation* ListOfAllStations = new ListBusStation*();
+        public BusLineStation this[int index]
+        {
+            get
+            {
+                return Stations[index];
+            }
+            set
+            {
+                Stations[index] = value;
+            }
+        }
+            public ListBusStation ListOfAllStations = new ListBusStation*();
 
-
-        public void printStations ()
+        public int SearchStation(int codeStation)
+        {
+            foreach(BusLineStation item in Stations)
+            {
+                if (item.BusStationKey = codeStation)
+                {
+                    return Stations.FindIndex(item);
+                }
+            
+            }
+            return -1;
+        }
+        public void PrintStations ()
         {
             foreach (BusLineStation item in Stations)
                 Console.Write(item.BusStationKey + " ");
@@ -158,9 +192,37 @@ namespace dotNet5781_02_6715_5227
             switch (num)
 	        {
                 case 1:
-                  ListOfAllStations
+                    Stations.Insert(0, new BusLineStation(){BusStationKey = codeStation});
+                    break;
+                case 2:
+                    Console.WriteLine("Please enter previous station's code : ");
+                    int prevcode=Console.ReadLine();
+                    int index = SearchStation(prevcode)
+                    if (index == -1)
+                        Console.WriteLine("ERROR, this code not exist in this bus line");
+                    else
+                        Stations.Insert(index+1, new BusLineStation(){BusStationKey = codeStation})
+                    break;
+                case 3:
+                  Stations.Add(new BusLineStation(){BusStationKey = codeStation});
+                  break;
 		        default:
 	        }
+        }
+
+        public void DeleteStation(int codeStation)
+        {
+            int index = SearchStation(codeStation);
+            BusLineStation stationToDelete = Stations[index];
+            Stations.Remove(stationToDelete);
+        }
+
+        public bool CheckBusStation(BusStation station1)
+        {
+            foreach(BusLineStation item in Stations)
+                if (station1.BusStationKey == item.BusStationKey)
+                    return true;
+            return false;
         }
     }
     
@@ -168,6 +230,8 @@ namespace dotNet5781_02_6715_5227
     {
         static void Main(string[] args)
         {
+            public ListBusStation ListOfAllStations = new ListBusStation*();
+            
             BusStation test = new BusStation();
             BusStation test2 = new BusStation("adress");
 
