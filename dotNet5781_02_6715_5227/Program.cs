@@ -11,15 +11,16 @@ namespace dotNet5781_02_6715_5227
 {
 
 
-    /*
+    /*************************************
      * Class with list of all Bus Stations
-     */
+     * 
+     *************************************/
     class ListBusStation
     {
         /// <summary>
         /// creat list which contains all bus station.
         /// </summary>
-        public List<BusStation> ListOfAllStations=new List<BusStation>();
+        public List<BusStation> ListOfAllStations = new List<BusStation>();
 
         /*
          * void addStation - add a new station to list of all stations
@@ -35,7 +36,7 @@ namespace dotNet5781_02_6715_5227
         {
             foreach(BusStation item in ListOfAllStations)
             {
-                if (item.BusStationKey = stationBusToDelete)
+                if (item.BusStationKey == stationBusToDelete)
                 {
                     ListOfAllStations.Remove(item);
                     Console.WriteLine("Bus station removed with success");
@@ -47,20 +48,21 @@ namespace dotNet5781_02_6715_5227
         {
              foreach(BusStation item in ListOfAllStations)
              {
-                if (item.BusStationKey = stationKey)
+                if (item.BusStationKey == stationKey)
                 {
                     return item;
                 }
              }
-             // return -1;
+             return null;
         }
     }
 
 
-    /*
+    /*******************************************************
      * Class BusStation - all details concern bus station
-     */
-    class BusStation
+     * 
+     *******************************************************/
+    class BusStation : ListBusStation
     {
         //random numbers for latitude and longitude
         static Random  rLatitude = new Random(DateTime.Now.Millisecond);
@@ -70,31 +72,29 @@ namespace dotNet5781_02_6715_5227
         
         //fields of bus station
         public int BusStationKey {get; set;}
-        public var Latitude { get; set; }
-        public var Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string StationAdress { get; set; }
 
         
-        //initialize list of all bus stations (class ListBusStation)
-        //public ListBusStation ListOfAllStations = new ListBusStation*();
         
-        //constuctor with no parameter
-        public BusStation(ListBusStation ListOfAllStations)
+        public BusStation() //constuctor with no parameter
         {
             BusStationKey = codeStation ++;
-            Latitude = rLatitude.NextDouble()+ 31;
-            Longitude = rLongitude.NextDouble() + 34;
+            Latitude = rLatitude.NextDouble() * (33.3 - 31) + 31;
+            Longitude = rLongitude.NextDouble() *(34.3 - 35.5)+ 34.3;
             StationAdress = " ";
-            ListOfAllStations.addStation(this); //add the bus station to the list
+            addStation(this); //add the bus station to the list
         }
-        //constructor with parameter : adress of station
-        public BusStation(string name, ListBusStation ListOfAllStations)
+
+        
+        public BusStation(string name) //constructor with parameter : adress of station
         {
             BusStationKey = codeStation++;
             Latitude = rLatitude.NextDouble() + 31;
             Longitude = rLongitude.NextDouble() + 34;
             StationAdress = name;
-            ListOfAllStations.addStation(this);//add the bus station to the list
+            addStation(this);//add the bus station to the list
         }
         
         //override of ToString method
@@ -104,38 +104,32 @@ namespace dotNet5781_02_6715_5227
         }
     }
 
-    /*
-     * Class LineBus - a line with much of stations
-     */
-    class BusLine
+    /**************************************************
+     * Class LineBus - a bbus line with many stations
+     * 
+     **************************************************/
+    class BusLine : ListBusStation, IComparable
     {
-        /*
-        * Class BusLineStation - a station of a line bus route
-        */
-        class BusLineStation
+        /**************************************************
+        * Class BusLineStation - an interior class for station of a line bus route
+        * 
+        **************************************************/
+        class BusLineStation : BusStation 
         {
-            public int BusStationKey {get; set; }
-            public double Distance {get; set; }
+            public double Distance { get; set; }
             public double TravelTime {get; set; }
-            
-            BusLineStation(int StationKey)
-            {
-                 
-            }
+            public BusLineStation() { }
         }
+
+        public BusLine() { }
+        BusLine(int lineNumber, List<BusLineStation> listStations) { BusLineNumber = lineNumber; Stations = listStations; }
 
         enum areas {General, North, South, Center, Jerusalem};
         static int codeLine = 000;
 
         //fields
         public int BusLineNumber {get; set;}
-        public BusStation FirstStation 
-        {
-            get
-            {
-                return Stations[0];
-            }
-        }
+        public BusStation FirstStation { get {return Stations[0];}}
         public BusStation LastStation 
         {
             get
@@ -148,9 +142,9 @@ namespace dotNet5781_02_6715_5227
                 return Stations[i-1];
             }
         } 
-        public areas Areas {get; set; }
+        areas Areas {get; set; }
         List<BusLineStation> Stations = new List<BusLineStation> ();
-        public BusLineStation this[int index]
+        BusLineStation this[int index]
         {
             get
             {
@@ -161,13 +155,13 @@ namespace dotNet5781_02_6715_5227
                 Stations[index] = value;
             }
         }
-            public ListBusStation ListOfAllStations = new ListBusStation*();
-
+        
+        
         public int SearchStation(int codeStation)
         {
             foreach(BusLineStation item in Stations)
             {
-                if (item.BusStationKey = codeStation)
+                if (item.BusStationKey == codeStation)
                 {
                     return Stations.FindIndex(item);
                 }
@@ -181,11 +175,13 @@ namespace dotNet5781_02_6715_5227
                 Console.Write(item.BusStationKey + " ");
         }
 
-        //methodes
+        //methods
         public override string ToString()
         {
-            return ("Bus line: " + BusLineNumber + " First Station: " + FirstStation + " Last Station: " + LastStation + 
-                " Areas: " + Areas + "Stations: " + printStations());
+            Console.WriteLine("Bus line: " + BusLineNumber + " First Station: " + FirstStation + " Last Station: " + LastStation +
+                " Areas: " + Areas + "Stations: ");
+            PrintStations();
+            return " ";
         }
         public void AddStation(int num, int codeStation)
         {
@@ -196,17 +192,18 @@ namespace dotNet5781_02_6715_5227
                     break;
                 case 2:
                     Console.WriteLine("Please enter previous station's code : ");
-                    int prevcode=Console.ReadLine();
-                    int index = SearchStation(prevcode)
+                    int prevcode = int.Parse(Console.ReadLine());
+                    int index = SearchStation(prevcode);//searchStation don't work...
                     if (index == -1)
                         Console.WriteLine("ERROR, this code not exist in this bus line");
                     else
-                        Stations.Insert(index+1, new BusLineStation(){BusStationKey = codeStation})
+                        Stations.Insert(index + 1, new BusLineStation() { BusStationKey = codeStation });
                     break;
                 case 3:
                   Stations.Add(new BusLineStation(){BusStationKey = codeStation});
                   break;
 		        default:
+                    break;
 	        }
         }
 
@@ -224,13 +221,55 @@ namespace dotNet5781_02_6715_5227
                     return true;
             return false;
         }
+
+        public double getDistance(int codeStation1, int codeStation2)
+        {
+            BusLineStation myStation1 = new BusLineStation();
+            BusLineStation myStation2 = new BusLineStation();
+            foreach (BusLineStation item in Stations)
+                if (item.BusStationKey == codeStation1)
+                    myStation1 = item;
+            foreach (BusLineStation item in Stations)
+                if (item.BusStationKey == codeStation2)
+                    myStation2 = item;
+            var sCoord = new GeoCoordinate(myStation1.Latitude, myStation1.Longitude);
+            var eCoord = new GeoCoordinate(myStation2.Latitude, myStation2.Longitude);
+
+            return sCoord.GetDistanceTo(eCoord);
+        }
+
+        public double TravelTimeBetweenStations(int codeStation1, int codeStation2)
+        {
+            return 0.5 * getDistance(codeStation1, codeStation2);
+        }
+
+        public BusLine PartOfLine (int codeStation1, int codeStation2)
+        {
+            List<BusLineStation> PartialStations = new List<BusLineStation>();
+            int begin = searchStation(codeStation1);
+            int end = searchStation(codeStation2);
+            int j = 0;
+            for (int i = begin; i <= end; i++)
+            {
+                PartialStations[j] = Stations[i];
+                j++;
+            }
+
+            return new BusLine(this.BusLineNumber, PartialStations);
+        }
+
+        public int CompareTo(object obj)
+        {
+            BusLine b = (BusLine)obj;
+            return TravelTimeBetweenStations(FirstStation.BusStationKey, LastStation.BusStationKey).CompareTo
+                (b.TravelTimeBetweenStations(b.FirstStation.BusStationKey, b.LastStation.BusStationKey));
+        }
     }
     
     class Program
     {
         static void Main(string[] args)
         {
-            public ListBusStation ListOfAllStations = new ListBusStation*();
             
             BusStation test = new BusStation();
             BusStation test2 = new BusStation("adress");
