@@ -15,7 +15,7 @@ namespace dotNet5781_02_6715_5227
      * Class with list of all Bus Stations
      * 
      *************************************/
-    class ListBusStation
+    public class ListBusStation
     {
         /// <summary>
         /// creat list which contains all bus station.
@@ -62,7 +62,7 @@ namespace dotNet5781_02_6715_5227
      * Class BusStation - all details concern bus station
      * 
      *******************************************************/
-    class BusStation : ListBusStation
+    public class BusStation : ListBusStation
     {
         //random numbers for latitude and longitude
         static Random  rLatitude = new Random(DateTime.Now.Millisecond);
@@ -108,26 +108,38 @@ namespace dotNet5781_02_6715_5227
      * Class LineBus - a bbus line with many stations
      * 
      **************************************************/
-    class BusLine : ListBusStation, IComparable
+    public class BusLine : ListBusStation, IComparable
     {
         /**************************************************
         * Class BusLineStation - an interior class for station of a line bus route
         * 
         **************************************************/
-        class BusLineStation : BusStation 
+        public class BusLineStation : BusStation 
         {
-            public double Distance { get; set; }
-            public double TravelTime {get; set; }
+            public double Distance 
+            { 
+                get; 
+                set; 
+            }
+            public double TravelTime 
+            {
+                get; 
+                set; 
+            }
             public BusLineStation() { }
+            
         }
 
+        //constructors
         public BusLine() { }
-        BusLine(int lineNumber, List<BusLineStation> listStations) { BusLineNumber = lineNumber; Stations = listStations; }
+        public BusLine(int lineNumber, List<BusLineStation> listStations) { BusLineNumber = lineNumber; Stations = listStations; }
 
+
+        //static & enum fields
         enum areas {General, North, South, Center, Jerusalem};
         static int codeLine = 000;
 
-        //fields
+        //properties
         public int BusLineNumber {get; set;}
         public BusStation FirstStation { get {return Stations[0];}}
         public BusStation LastStation 
@@ -155,9 +167,33 @@ namespace dotNet5781_02_6715_5227
                 Stations[index] = value;
             }
         }
-        
-        
-        public int SearchStation(int codeStation)
+
+        //functions
+
+        /// <summary>
+        /// search index of station and return station in previous index
+        /// </summary>
+        /// <returns>the previous station</returns>
+        public BusLineStation previousStation(BusLineStation myStation)
+        {
+            return Stations[searchStationIndex(myStation)+1];
+        }
+
+        /// <summary>
+        /// search index of a buslinestation in Stations' list with FindeIndex and bool function
+        /// </summary>
+        /// <param name="myStation">BusLineStation we want to find its index</param>
+        /// <returns>int : index of the station in Stations' list</returns>
+        public int searchStationIndex(BusLineStation myStation)
+        {
+            int codeStation = myStation.BusStationKey;
+            bool same(BusLineStation stat)
+            {
+                return stat.BusStationKey == codeStation;
+            }
+            return Stations.FindIndex(same);
+        }
+        /*public int SearchStation(int codeStation)
         {
             foreach(BusLineStation item in Stations)
             {
@@ -167,7 +203,7 @@ namespace dotNet5781_02_6715_5227
                 }
             
             }
-            return -1;
+            return -1;*/
         }
         public void PrintStations ()
         {
