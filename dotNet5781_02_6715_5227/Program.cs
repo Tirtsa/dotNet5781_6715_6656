@@ -6,6 +6,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Device.Location;
+using System.Collections;
 
 namespace dotNet5781_02_6715_5227
 {
@@ -117,14 +118,22 @@ namespace dotNet5781_02_6715_5227
         public class BusLineStation : BusStation 
         {
             public double Distance 
-            { 
-                get; 
-                set; 
+            {
+                get { return Distance; }
+                set
+                {
+                    BusLineStation prevStation=new BusLineStation();
+           
+                    var eCord = new GeoCoordinate(this.Latitude, this.Longitude);
+                    var sCord = new GeoCoordinate(prevStation.Latitude, prevStation.Longitude);
+                    Distance = eCord.GetDistanceTo(sCord);
+                }
             }
             public double TravelTime 
             {
-                get; 
-                set; 
+                get { return TravelTime; }
+                set { TravelTime = Distance * 0.5; }
+            
             }
             public BusLineStation() { }
             
@@ -176,7 +185,11 @@ namespace dotNet5781_02_6715_5227
         /// <returns>the previous station</returns>
         public BusLineStation previousStation(BusLineStation myStation)
         {
-            return Stations[searchStationIndex(myStation)+1];
+            if(searchStationIndex(myStation.BusStationKey)==0)
+            {
+                return myStation;
+            }
+            return Stations[searchStationIndex(myStation.BusStationKey)-1];
         }
 
         /// <summary>
@@ -184,15 +197,24 @@ namespace dotNet5781_02_6715_5227
         /// </summary>
         /// <param name="myStation">BusLineStation we want to find its index</param>
         /// <returns>int : index of the station in Stations' list</returns>
-        public int searchStationIndex(BusLineStation myStation)
+        public int searchStationIndex( int codeStation=0)
         {
-            int codeStation = myStation.BusStationKey;
+          
             bool same(BusLineStation stat)
             {
                 return stat.BusStationKey == codeStation;
             }
             return Stations.FindIndex(same);
         }
+      /*  public BusStation searchStation(int codeStation)
+        {
+            foreach(BusStation item in ListOfAllStations)
+            {
+                if (item.BusStationKey == codeStation)
+                    return item;
+            }
+            return null;
+        }*/
         /*public int SearchStation(int codeStation)
         {
             foreach(BusLineStation item in Stations)
@@ -203,8 +225,8 @@ namespace dotNet5781_02_6715_5227
                 }
             
             }
-            return -1;*/
-        }
+            return -1;
+        }*/
         public void PrintStations ()
         {
             foreach (BusLineStation item in Stations)
@@ -229,7 +251,7 @@ namespace dotNet5781_02_6715_5227
                 case 2:
                     Console.WriteLine("Please enter previous station's code : ");
                     int prevcode = int.Parse(Console.ReadLine());
-                    int index = SearchStation(prevcode);//searchStation don't work...
+                    int index = searchStationIndex(prevcode);
                     if (index == -1)
                         Console.WriteLine("ERROR, this code not exist in this bus line");
                     else
@@ -245,7 +267,7 @@ namespace dotNet5781_02_6715_5227
 
         public void DeleteStation(int codeStation)
         {
-            int index = SearchStation(codeStation);
+            int index = searchStationIndex(codeStation);
             BusLineStation stationToDelete = Stations[index];
             Stations.Remove(stationToDelete);
         }
@@ -282,8 +304,8 @@ namespace dotNet5781_02_6715_5227
         public BusLine PartOfLine (int codeStation1, int codeStation2)
         {
             List<BusLineStation> PartialStations = new List<BusLineStation>();
-            int begin = searchStation(codeStation1);
-            int end = searchStation(codeStation2);
+            int begin = searchStationIndex(codeStation1);
+            int end = searchStationIndex(codeStation2);
             int j = 0;
             for (int i = begin; i <= end; i++)
             {
@@ -301,7 +323,50 @@ namespace dotNet5781_02_6715_5227
                 (b.TravelTimeBetweenStations(b.FirstStation.BusStationKey, b.LastStation.BusStationKey));
         }
     }
-    
+
+    class BusesCollection : IEnumerable,IEnumerator
+    {
+        BusLine[] arrBuses { set; get; }
+       
+        public int Count { get; private set; }
+        int index = -1;
+
+        public object Current
+        {
+            get
+            {
+                return arrBuses[index];
+            }
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return this;
+        }
+
+        public bool MoveNext()
+        {
+            index++;
+            if (index >= Count)
+            {
+                index = -1;
+                return false;
+            }
+            return true;
+        }
+
+        public void Reset()
+        {
+            index = -1;
+        }
+
+        public void Add(int line,BusStation Stations)
+        {
+            foreach(BusLine item in arrBuses)
+            
+        }
+
+    }
     class Program
     {
         static void Main(string[] args)
