@@ -141,7 +141,12 @@ namespace dotNet5781_02_6715_5227
 
         //constructors
         public BusLine() { }
-        public BusLine(int lineNumber, List<BusLineStation> listStations) { BusLineNumber = lineNumber; Stations = listStations; }
+        public BusLine(int lineNumber, List<int> listStations) 
+        { 
+            BusLineNumber = lineNumber;
+            foreach (int item in listStations)
+                AddStation(3, item);
+        }
 
 
         //static & enum fields
@@ -163,6 +168,14 @@ namespace dotNet5781_02_6715_5227
                 return Stations[i-1];
             }
         } 
+        public double TotalTime
+        {
+            get { return TotalTime; }
+            set
+            {
+                TotalTime = getDistance(FirstStation.BusStationKey, LastStation.BusStationKey) * 0.5;
+            }
+        }
         areas Areas {get; set; }
         List<BusLineStation> Stations = new List<BusLineStation> ();
         BusLineStation this[int index]
@@ -197,7 +210,7 @@ namespace dotNet5781_02_6715_5227
         /// </summary>
         /// <param name="myStation">BusLineStation we want to find its index</param>
         /// <returns>int : index of the station in Stations' list</returns>
-        public int searchStationIndex( int codeStation=0)
+        public int searchStationIndex(int codeStation)
         {
           
             bool same(BusLineStation stat)
@@ -206,27 +219,7 @@ namespace dotNet5781_02_6715_5227
             }
             return Stations.FindIndex(same);
         }
-      /*  public BusStation searchStation(int codeStation)
-        {
-            foreach(BusStation item in ListOfAllStations)
-            {
-                if (item.BusStationKey == codeStation)
-                    return item;
-            }
-            return null;
-        }*/
-        /*public int SearchStation(int codeStation)
-        {
-            foreach(BusLineStation item in Stations)
-            {
-                if (item.BusStationKey == codeStation)
-                {
-                    return Stations.FindIndex(item);
-                }
-            
-            }
-            return -1;
-        }*/
+
         public void PrintStations ()
         {
             foreach (BusLineStation item in Stations)
@@ -303,13 +296,13 @@ namespace dotNet5781_02_6715_5227
 
         public BusLine PartOfLine (int codeStation1, int codeStation2)
         {
-            List<BusLineStation> PartialStations = new List<BusLineStation>();
+            List<int> PartialStations = new List<int>();
             int begin = searchStationIndex(codeStation1);
             int end = searchStationIndex(codeStation2);
             int j = 0;
             for (int i = begin; i <= end; i++)
             {
-                PartialStations[j] = Stations[i];
+                PartialStations[j] = Stations[i].BusStationKey;
                 j++;
             }
 
@@ -324,18 +317,19 @@ namespace dotNet5781_02_6715_5227
         }
     }
 
-    class BusesCollection : IEnumerable,IEnumerator
+    class BusesCollection : ListBusStation, IEnumerable,IEnumerator
     {
-        BusLine[] arrBuses { set; get; }
-       
+        //fields ans properties
+        List<BusLine> BusesLines { set; get; }
         public int Count { get; private set; }
         int index = -1;
 
+        //implementation of IEnumerable, Ienumerator interfaces
         public object Current
         {
             get
             {
-                return arrBuses[index];
+                return BusesLines[index];
             }
         }
 
@@ -360,12 +354,81 @@ namespace dotNet5781_02_6715_5227
             index = -1;
         }
 
-        public void Add(int line,BusStation Stations)
+
+        /// <summary>
+        /// Function Add - to add a new bus line to collection
+        /// </summary>
+        /// <param name="line"> number of line we want to add</param>
+        /// <param name="Stations">list of int - numbers of stations the bus line have</param>
+        public void Add(int line, List<int> Stations)
         {
-            foreach(BusLine item in arrBuses)
-            
+            foreach (BusLine item in BusesLines)
+            {
+                if (item.BusLineNumber == line)
+                    throw new ArgumentException($"Bus line's number must be unique, {line} is already exists.");
+            }
+            bool exist = false;
+            foreach (int item in Stations)
+            {
+                foreach (BusStation item2 in ListOfAllStations)
+                    if (item2.BusStationKey == item)
+                        exist = true;
+                if (exist == false)
+                    throw new ArgumentException($"There isn't exist station with {item} number.");
+            }
+            BusesLines.Add(new BusLine(line, Stations));
         }
 
+        /// <summary>
+        /// function Remove - to remove a bus line from collection
+        /// </summary>
+        /// <param name="myLine">int - num of line to delete</param>
+        public void Remove(int myLine)
+        {
+            BusesLines.Remove(new BusLine() { BusLineNumber = myLine });
+        }
+
+        /// <summary>
+        /// Function LisOfLine - list of all buses lines in a station
+        /// </summary>
+        /// <param name="codeStation">int - code of station</param>
+        /// <returns></returns>
+        public List<int> ListOfLines(int codeStation)
+        {
+            List<int> ListLines = new List<int>();
+            BusStation myStation = searchStation(codeStation);
+            foreach (BusLine item in BusesLines)
+            {
+                if (item.searchStationIndex(codeStation) != -1)
+                    ListLines.Add(item.BusLineNumber);
+            }
+            if (!ListLines.Any())
+                throw new ArgumentException("No line goes through this station");
+            return ListLines;
+        } 
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SortedBusLineList()
+        {
+            BusesLines.Sort(delegate (BusLine x, BusLine y)
+            {
+                return x.TotalTime.CompareTo(y.TotalTime);
+            });
+        }
+
+        public var this[int lineNumber]
+        {
+            get
+            {
+                foreach (BusLine item in BusesLines)
+                    if (item.BusLineNumber == lineNumber)
+                        return item;
+                return new ArgumentException($"There is no Bus Line with number {lineNumber}.");
+            }
+
+        }
     }
     class Program
     {
