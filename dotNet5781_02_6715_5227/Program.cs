@@ -502,20 +502,24 @@ namespace dotNet5781_02_6715_5227
                     "Print\n    d1: Print all bus' lines\n    d2: Print all stations with lines that pass through them\n" +
                     "e: Exit");
                 choice = Console.ReadLine();
-
                 int line;
+                string newLine;
                 switch (choice)
                 {
 
                     case "a1":
                         Console.WriteLine("Please enter number of the new line you want add : ");
-                        line = Console.Read();
+                        newLine =Console.ReadLine();
+                        line = int.Parse(newLine);
+                        //Console.WriteLine(line);
                         Console.WriteLine("Please enter list of bus stations in this new line (0 at end) : ");
                         List<int> stations = new List<int>();
                         while (Console.Read() != 0)
                         {
+                          //  int myStation=int.Parse(Console.ReadLine())
                             stations.Add(Console.Read());
                         }
+                       
                         allBuses.Add(line, stations);
                         break;
                     case "a2":
