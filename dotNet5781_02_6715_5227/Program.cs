@@ -16,20 +16,15 @@ namespace dotNet5781_02_6715_5227
      * Class with list of all Bus Stations
      * 
      *************************************/
-    public class ListBusStation
+    public class ListBusStation 
     {
         /// <summary>
         /// creat list which contains all bus station.
         /// </summary>
 
         public static List<BusStation> ListOfAllStations = new List<BusStation>();
-        /*public ListBusStation()
-        {
-            ListOfAllStations = new List<BusStation>();
-        }*/
-
-        /*
-         * void addStation - add a new station to list of all stations
+        
+         /* void addStation - add a new station to list of all stations
          * @parameter : BusStation (the bus station we want add)
          */
         public void addStation(BusStation myStation)
@@ -48,6 +43,8 @@ namespace dotNet5781_02_6715_5227
                 }
             }
         }
+
+        
 
         public BusStation searchStation(int stationKey)
         {
@@ -128,26 +125,33 @@ namespace dotNet5781_02_6715_5227
         **************************************************/
         public class BusLineStation : BusStation 
         {
-            public double Distance 
-            {
-                get { return Distance; }
-                set
-                {
-                    BusLineStation prevStation=new BusLineStation();
-           
-                    var eCord = new GeoCoordinate(this.Latitude, this.Longitude);
-                    var sCord = new GeoCoordinate(prevStation.Latitude, prevStation.Longitude);
-                    Distance = eCord.GetDistanceTo(sCord);
-                }
-            }
+            public double Distance { get; set; }
             public double TravelTime 
             {
                 get { return TravelTime; }
                 set { TravelTime = Distance * 0.5; }
             
             }
-            public BusLineStation() { }
-            
+            //public BusLineStation() { }
+            public BusLineStation(int codeStation, BusLineStation prevStation)
+            {
+                BusStation myNewBusLineStation = searchStation(codeStation);
+                BusStationKey = codeStation;
+                Latitude = myNewBusLineStation.Latitude;
+                Longitude = myNewBusLineStation.Longitude;
+                Distance = distanceFromPrevStation(prevStation);
+            }
+
+
+            //functions
+            public double distanceFromPrevStation (BusLineStation prevStation)
+            {
+                if (prevStation == null)
+                    prevStation = this;
+                var eCord = new GeoCoordinate(this.Latitude, this.Longitude);
+                var sCord = new GeoCoordinate(prevStation.Latitude, prevStation.Longitude);
+                return eCord.GetDistanceTo(sCord);
+            }
         }
 
         //constructors
@@ -158,25 +162,26 @@ namespace dotNet5781_02_6715_5227
             foreach (int item in listStations)
                 AddStation(3, item);
         }
+        public BusLine(BusLine myLine)
+        {
+            BusLineNumber = myLine.BusLineNumber;
+            for (int i = 0; i < myLine.Stations.Count(); i++)
+                Stations[i] = myLine.Stations[i];
+        }
 
 
         //static & enum fields
         enum areas {General, North, South, Center, Jerusalem};
-        static int codeLine = 000;
+        //static int codeLine = 0;
 
         //properties
         public int BusLineNumber {get; set;}
-        public BusStation FirstStation { get {return Stations[0];}}
-        public BusStation LastStation 
+        public BusLineStation FirstStation { get {return Stations[0];}}
+        public BusLineStation LastStation 
         {
             get
             {
-                int i = 0;
-                while (Stations[i]!=null)
-                {
-                    i++;
-                }
-                return Stations[i-1];
+                return Stations[Stations.Count -1];
             }
         } 
         public double TotalTime
@@ -184,7 +189,7 @@ namespace dotNet5781_02_6715_5227
             get { return TotalTime; }
             set
             {
-                TotalTime = getDistance(FirstStation.BusStationKey, LastStation.BusStationKey) * 0.5;
+                TotalTime = getDistance(FirstStation, LastStation) * 0.5;
             }
         }
         areas Areas {get; set; }
@@ -234,14 +239,15 @@ namespace dotNet5781_02_6715_5227
         public void PrintStations ()
         {
             foreach (BusLineStation item in Stations)
-                Console.Write(item.BusStationKey + " ");
+                Console.Write(item.BusStationKey + ", ");
+            Console.WriteLine();
         }
 
         //methods
         public override string ToString()
         {
-            Console.WriteLine("Bus line: " + BusLineNumber + " First Station: " + FirstStation + " Last Station: " + LastStation +
-                " Areas: " + Areas + "Stations:\n   ");
+            Console.Write("Bus line: " + BusLineNumber + "\nFirst Station: " + FirstStation + "\nLast Station: " + 
+                LastStation + "\nAreas: " + Areas + "\nStations: ");
             PrintStations();
             return " ";
         }
@@ -250,20 +256,23 @@ namespace dotNet5781_02_6715_5227
             switch (num)
 	        {
                 case 1:
-                    Stations.Insert(0, new BusLineStation(){BusStationKey = codeStation});
+                    Stations.Insert(0, new BusLineStation(codeStation, null));
                     break;
                 case 2:
                     Console.WriteLine("Please enter previous station's code : ");
                     int prevcode = int.Parse(Console.ReadLine());
                     int index = searchStationIndex(prevcode);
                     if (index == -1)
-                        Console.WriteLine("ERROR, this code not exist in this bus line");
+                        Console.WriteLine("ERROR, this station not exist in this bus line");
                     else
-                        Stations.Insert(index + 1, new BusLineStation() { BusStationKey = codeStation });
+                        Stations.Insert(index + 1, new BusLineStation(codeStation, Stations[index]));
                     break;
                 case 3:
-                  Stations.Add(new BusLineStation(){BusStationKey = codeStation});
-                  break;
+                  if(Stations.Count > 0)
+                    Stations.Add(new BusLineStation(codeStation, Stations[Stations.Count - 1]));
+                  else
+                    Stations.Add(new BusLineStation(codeStation, null));
+                    break;
 		        default:
                     break;
 	        }
@@ -272,8 +281,12 @@ namespace dotNet5781_02_6715_5227
         public void DeleteStation(int codeStation)
         {
             int index = searchStationIndex(codeStation);
-            BusLineStation stationToDelete = Stations[index];
-            Stations.Remove(stationToDelete);
+            if (index != -1)
+            {
+                BusLineStation stationToDelete = Stations[index];
+                Stations.Remove(stationToDelete);
+            }
+            throw new ArgumentException($"Line bus doesn't contains station {codeStation}.");
         }
 
         public bool CheckBusStation(BusStation station1)
@@ -284,16 +297,8 @@ namespace dotNet5781_02_6715_5227
             return false;
         }
 
-        public double getDistance(int codeStation1, int codeStation2)
+        public double getDistance(BusLineStation myStation1, BusLineStation myStation2)
         {
-            BusLineStation myStation1 = new BusLineStation();
-            BusLineStation myStation2 = new BusLineStation();
-            foreach (BusLineStation item in Stations)
-                if (item.BusStationKey == codeStation1)
-                    myStation1 = item;
-            foreach (BusLineStation item in Stations)
-                if (item.BusStationKey == codeStation2)
-                    myStation2 = item;
             var sCoord = new GeoCoordinate(myStation1.Latitude, myStation1.Longitude);
             var eCoord = new GeoCoordinate(myStation2.Latitude, myStation2.Longitude);
 
@@ -302,22 +307,22 @@ namespace dotNet5781_02_6715_5227
 
         public double TravelTimeBetweenStations(int codeStation1, int codeStation2)
         {
-            return 0.5 * getDistance(codeStation1, codeStation2);
+            return 0.5 * getDistance(Stations[searchStationIndex(codeStation1)], Stations[searchStationIndex(codeStation2)]);
         }
 
-        public BusLine PartOfLine (int codeStation1, int codeStation2)
+        public BusLine PartOfLine (int begin, int end)
         {
             List<int> PartialStations = new List<int>();
-            int begin = searchStationIndex(codeStation1);
-            int end = searchStationIndex(codeStation2);
-            int j = 0;
+            //int j = 0;
             for (int i = begin; i <= end; i++)
             {
-                PartialStations[j] = Stations[i].BusStationKey;
-                j++;
+                PartialStations.Add(this.Stations[i].BusStationKey);
+                //PartialStations[j] = this.Stations[i].BusStationKey;
+                //j++;
             }
 
             return new BusLine(this.BusLineNumber, PartialStations);
+            
         }
 
         public int CompareTo(object obj)
@@ -328,42 +333,22 @@ namespace dotNet5781_02_6715_5227
         }
     }
 
-    class BusesCollection : ListBusStation, IEnumerable,IEnumerator
+    class BusesCollection : ListBusStation, IEnumerable
     {
         //fields ans properties
         List<BusLine> BusesLines = new List<BusLine>();
-        public int Count { get; private set; }
-        int index = -1;
+        
 
         //implementation of IEnumerable, Ienumerator interfaces
-        public object Current
+        
+
+        public new IEnumerator GetEnumerator()
         {
-            get
-            {
-                return BusesLines[index];
-            }
+            for (int i=0; i<BusesLines.Count; i++)
+                yield return BusesLines[i];
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            return this;
-        }
-
-        public bool MoveNext()
-        {
-            index++;
-            if (index >= Count)
-            {
-                index = -1;
-                return false;
-            }
-            return true;
-        }
-
-        public void Reset()
-        {
-            index = -1;
-        }
+      
 
 
         /// <summary>
@@ -373,35 +358,45 @@ namespace dotNet5781_02_6715_5227
         /// <param name="Stations">list of int - numbers of stations the bus line have</param>
         public void Add(int line, List<int> Stations)
         {
+            //if (BusesLines == null)
+                //Count = 0;
             if(BusesLines != null)
             {
                 foreach (BusLine item in BusesLines)
                 {
                     if (item.BusLineNumber == line)
-                        throw new ArgumentException($"Bus line's number must be unique, {line} is already exists.");
+                        throw new ArgumentException(String.Format($"Bus line's number must be unique, line {line} is " +
+                            "already exists."));
                 }
             }
-            
             
             foreach (int item in Stations)
             {
                 bool exist = false;
+
                 foreach (BusStation item2 in ListOfAllStations)
-                    if (item2.BusStationKey == item)
-                        exist = true;
+                    if (exist == false)
+                        if (item2.BusStationKey == item)
+                            exist = true;
                 if (exist == false)
-                    throw new ArgumentException("One of stations doesn't exist");
+                    throw new ArgumentException($"Station number {item} doesn't exist");
+
             }
             BusesLines.Add(new BusLine(line, Stations));
+            //Count++;
         }
 
         /// <summary>
         /// function Remove - to remove a bus line from collection
         /// </summary>
         /// <param name="myLine">int - num of line to delete</param>
-        public void Remove(int myLine)
+        public void Remove(BusLine myLine)
         {
-            BusesLines.Remove(new BusLine() { BusLineNumber = myLine });
+            /*BusLine lineToDelete = BusesLines[myLine];
+            Console.WriteLine(lineToDelete);
+            BusesLines.Remove(lineToDelete);*/
+            BusesLines.Remove(myLine);
+            //Count--;
         }
 
         /// <summary>
@@ -419,7 +414,7 @@ namespace dotNet5781_02_6715_5227
                     ListLines.Add(item);
             }
             if (!ListLines.Any())
-                throw new ArgumentException("No line goes through this station");
+                throw new ArgumentException($"No line goes through station {codeStation}");
             return ListLines;
         } 
         
@@ -446,7 +441,7 @@ namespace dotNet5781_02_6715_5227
                 foreach (BusLine item in BusesLines)
                     if (item.BusLineNumber == lineNumber)
                         return item;
-                return null; // new ArgumentException($"There is no Bus Line with number {lineNumber}.");
+                throw new ArgumentException($"There is no Bus Line with number {lineNumber}.");
             }
 
         }
@@ -491,6 +486,7 @@ namespace dotNet5781_02_6715_5227
             allBuses.Add(33, stations9);
             allBuses.Add(1, stations10);
 
+
             string choice;
             do
             {
@@ -502,81 +498,131 @@ namespace dotNet5781_02_6715_5227
                     "Print\n    d1: Print all bus' lines\n    d2: Print all stations with lines that pass through them\n" +
                     "e: Exit");
                 choice = Console.ReadLine();
-                int line;
-                string newLine;
                 switch (choice)
                 {
 
                     case "a1":
                         Console.WriteLine("Please enter number of the new line you want add : ");
-                        newLine =Console.ReadLine();
-                        line = int.Parse(newLine);
-                        //Console.WriteLine(line);
+                        int line = int.Parse(Console.ReadLine());
                         Console.WriteLine("Please enter list of bus stations in this new line (0 at end) : ");
                         List<int> stations = new List<int>();
-                        while (Console.Read() != 0)
+                        int oneStation = int.Parse(Console.ReadLine());
+                        while (oneStation != 0)
                         {
-                          //  int myStation=int.Parse(Console.ReadLine())
-                            stations.Add(Console.Read());
+                            stations.Add(oneStation);
+                            oneStation = int.Parse(Console.ReadLine());
                         }
-                       
-                        allBuses.Add(line, stations);
+
+                        try
+                        {
+                            allBuses.Add(line, stations);
+                        }
+                        catch(ArgumentException e)
+                        {
+                            Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                        }
+                        Console.WriteLine();
                         break;
                     case "a2":
+                        BusLine LineToAdd = new BusLine();
                         Console.WriteLine("Please enter the line you want to add a station : ");
-                        BusLine LineToAdd = allBuses[Console.Read()];
+                        try
+                        {
+                            LineToAdd = allBuses[int.Parse(Console.ReadLine())];
+                        }
+                        catch (ArgumentException e)
+                        {
+                            Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                        }
                         Console.WriteLine("Please enter station's code to add");
-                        int codeStation = Console.Read();
-                        Console.WriteLine("Choose where add the new station - 1 for start, 2 for middle, 3 for end : ");
-                        LineToAdd.AddStation(Console.Read(), codeStation);
+                        int codeStation = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Choose where add the new station (1 for start, 2 for middle, 3 for end) : ");
+                        LineToAdd.AddStation(int.Parse(Console.ReadLine()), codeStation);
                         break;
                     case "b1":
+                        BusLine lineToDelete = new BusLine();
                         Console.WriteLine("Please enter number of line to remove : ");
-                        allBuses.Remove(Console.Read());
+                        try
+                        {
+                            lineToDelete = allBuses[int.Parse(Console.ReadLine())];
+                        }
+                        catch (ArgumentException e)
+                        {
+                            Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                        }
+                        allBuses.Remove(lineToDelete);
                         break;
                     case "b2":
+                        BusLine myLine = new BusLine();
                         Console.WriteLine("Please enter line's number : ");
-                        line = Console.Read();
+                        line = int.Parse(Console.ReadLine());
                         Console.WriteLine("Please enter station's code to delete : ");
-                        int code = Console.Read();
-                        BusLine myLine = allBuses[line];
-                        myLine.DeleteStation(code);
+                        int code = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            myLine = allBuses[line];
+                        }
+                        catch (ArgumentException e)
+                        {
+                            Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                        }
+                        
+                        try
+                        {
+                            myLine.DeleteStation(code);
+                        }
+                        catch(ArgumentException e)
+                        {
+                            Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                        }
                         break;
                     case "c1":
                         Console.WriteLine("Please enter line's number : ");
-                        List<BusLine> allLinesInStation = allBuses.ListOfLines(Console.Read());
+                        List<BusLine> allLinesInStation = allBuses.ListOfLines(int.Parse(Console.ReadLine()));
                         foreach (BusLine item in allLinesInStation)
                             Console.WriteLine(item.BusLineNumber + " ");
                         break;
                     case "c2":
                         Console.WriteLine("Please enter source's station : ");
-                        int statSource = Console.Read();
+                        int statSource = int.Parse(Console.ReadLine());
                         Console.WriteLine("Please enter destination's station : ");
-                        int statDestination = Console.Read();
+                        int statDestination = int.Parse(Console.ReadLine());
                         List<BusLine> routes = new List<BusLine>();
 
                         List<BusLine> allLines = allBuses.ListOfLines(statSource);
                         foreach (BusLine item in allLines)
                         {
-                            if (item.searchStationIndex(statDestination) > item.searchStationIndex(statSource))
-                                routes.Add(item.PartOfLine(statSource, statDestination));
+                            int indexSource = item.searchStationIndex(statSource);
+                            int indexDestination = item.searchStationIndex(statDestination);
+                            if (indexDestination >= indexSource)
+                                routes.Add(item.PartOfLine(indexSource, indexDestination));
                         }
                         if (!routes.Any())
                             throw new ArgumentException("No line pass trough these 2 stations.");
                         foreach (BusLine item in routes)
-                            item.ToString();
+                            Console.WriteLine(item.ToString());
                         break;
                     case "d1":
                         foreach (BusLine item in allBuses)
-                            item.ToString();
+                            Console.WriteLine(item.ToString());
                         break;
                     case "d2":
                         List<BusLine> lines = new List<BusLine>();
                         foreach (BusStation item in ListBusStation.ListOfAllStations)
                         {
-                            lines = allBuses.ListOfLines(item.BusStationKey);
-                            foreach (BusLine itemb in lines)
-                                Console.WriteLine(itemb);
+                            try
+                            { 
+                                lines = allBuses.ListOfLines(item.BusStationKey);
+                                Console.Write(item.BusStationKey + ": ");
+                                foreach (BusLine item2 in lines)
+                                    Console.Write(item2.BusLineNumber + " ");
+                            }
+                            catch(ArgumentException e)
+                            {
+                                Console.WriteLine("{0}: {1}", e.GetType().Name, e.Message);
+                            }
+                            
+                            Console.WriteLine();
                         }
                         break;
                     case "e":
@@ -584,7 +630,7 @@ namespace dotNet5781_02_6715_5227
                     default:
                         break;
                 }
-            } while (choice == "e");
+            } while (choice != "e");
         }
     }
 }
