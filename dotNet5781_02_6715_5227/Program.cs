@@ -16,17 +16,17 @@ namespace dotNet5781_02_6715_5227
      * Class with list of all Bus Stations
      * 
      *************************************/
-    public class ListBusStation 
+    public class ListBusStation
     {
         /// <summary>
         /// creat list which contains all bus station.
         /// </summary>
 
         public static List<BusStation> ListOfAllStations = new List<BusStation>();
-        
-         /* void addStation - add a new station to list of all stations
-         * @parameter : BusStation (the bus station we want add)
-         */
+
+        /* void addStation - add a new station to list of all stations
+        * @parameter : BusStation (the bus station we want add)
+        */
         public void addStation(BusStation myStation)
         {
             ListOfAllStations.Add(new BusStation(myStation));
@@ -34,7 +34,7 @@ namespace dotNet5781_02_6715_5227
 
         public void deleteStation(int stationBusToDelete)
         {
-            foreach(BusStation item in ListOfAllStations)
+            foreach (BusStation item in ListOfAllStations)
             {
                 if (item.BusStationKey == stationBusToDelete)
                 {
@@ -44,18 +44,18 @@ namespace dotNet5781_02_6715_5227
             }
         }
 
-        
-
-        public BusStation searchStation(int stationKey)
+        public BusStation SearchStation(int stationKey)
         {
+            int i = 0;
              foreach(BusStation item in ListOfAllStations)
              {
                 if (item.BusStationKey == stationKey)
                 {
                     return item;
                 }
+                i++;
              }
-             return null;
+            throw new ArgumentException($"Station {stationKey} doesn't exist");
         }
     }
 
@@ -123,8 +123,9 @@ namespace dotNet5781_02_6715_5227
         * Class BusLineStation - an interior class for station of a line bus route
         * 
         **************************************************/
-        public class BusLineStation : BusStation 
+        public class BusLineStation
         {
+            public int BusStationKey { get; set; }
             public double Distance { get; set; }
             public double TravelTime 
             {
@@ -135,21 +136,21 @@ namespace dotNet5781_02_6715_5227
             //public BusLineStation() { }
             public BusLineStation(int codeStation, BusLineStation prevStation)
             {
-                BusStation myNewBusLineStation = searchStation(codeStation);
+
                 BusStationKey = codeStation;
-                Latitude = myNewBusLineStation.Latitude;
-                Longitude = myNewBusLineStation.Longitude;
-                Distance = distanceFromPrevStation(prevStation);
+                if (prevStation == null)
+                    prevStation = this;
+                Distance = distanceFromPrevStation(ListOfAllStations[(this.BusStationKey) - 1], 
+                    ListOfAllStations[(prevStation.BusStationKey)- 1]);
             }
 
 
             //functions
-            public double distanceFromPrevStation (BusLineStation prevStation)
+            public double distanceFromPrevStation (BusStation station1, BusStation station2)
             {
-                if (prevStation == null)
-                    prevStation = this;
-                var eCord = new GeoCoordinate(this.Latitude, this.Longitude);
-                var sCord = new GeoCoordinate(prevStation.Latitude, prevStation.Longitude);
+                
+                var eCord = new GeoCoordinate(station1.Latitude, station1.Longitude);
+                var sCord = new GeoCoordinate(station2.Latitude, station2.Longitude);
                 return eCord.GetDistanceTo(sCord);
             }
         }
@@ -189,7 +190,7 @@ namespace dotNet5781_02_6715_5227
             get { return TotalTime; }
             set
             {
-                TotalTime = getDistance(FirstStation, LastStation) * 0.5;
+                TotalTime = getDistance(FirstStation.BusStationKey, LastStation.BusStationKey) * 0.5;
             }
         }
         areas Areas {get; set; }
@@ -297,17 +298,18 @@ namespace dotNet5781_02_6715_5227
             return false;
         }
 
-        public double getDistance(BusLineStation myStation1, BusLineStation myStation2)
+        public double getDistance(int stationKey1, int stationKey2)
         {
-            var sCoord = new GeoCoordinate(myStation1.Latitude, myStation1.Longitude);
-            var eCoord = new GeoCoordinate(myStation2.Latitude, myStation2.Longitude);
+            
+            var sCoord = new GeoCoordinate(ListOfAllStations[stationKey1].Latitude, ListOfAllStations[stationKey1].Longitude);
+            var eCoord = new GeoCoordinate(ListOfAllStations[stationKey2].Latitude, ListOfAllStations[stationKey2].Longitude);
 
             return sCoord.GetDistanceTo(eCoord);
         }
 
         public double TravelTimeBetweenStations(int codeStation1, int codeStation2)
         {
-            return 0.5 * getDistance(Stations[searchStationIndex(codeStation1)], Stations[searchStationIndex(codeStation2)]);
+            return 0.5 * getDistance(codeStation1, codeStation2);
         }
 
         public BusLine PartOfLine (int begin, int end)
@@ -407,7 +409,7 @@ namespace dotNet5781_02_6715_5227
         public List<BusLine> ListOfLines(int codeStation)
         {
             List<BusLine> ListLines = new List<BusLine>();
-            BusStation myStation = searchStation(codeStation);
+            BusStation myStation = SearchStation(codeStation);
             foreach (BusLine item in BusesLines)
             {
                 if (item.searchStationIndex(codeStation) != -1)
@@ -476,7 +478,7 @@ namespace dotNet5781_02_6715_5227
 
             //creation of 10 lines
             allBuses.Add(3, stations1);
-            allBuses.Add(41, stations2);
+            allBuses.Add(41, stations2); 
             allBuses.Add(15, stations3);
             allBuses.Add(6, stations4);
             allBuses.Add(13, stations5);
@@ -485,7 +487,6 @@ namespace dotNet5781_02_6715_5227
             allBuses.Add(50, stations8);
             allBuses.Add(33, stations9);
             allBuses.Add(1, stations10);
-
 
             string choice;
             do
