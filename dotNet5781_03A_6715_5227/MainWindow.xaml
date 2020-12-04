@@ -24,6 +24,6 @@
             <Label Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="52.2,23,0,0" VerticalAlignment="Top" Height="28" Width="104"/>
             <ComboBox Name="cbBudLinees" Grid.Column="1" HorizontalAlignment="Stretch" Margin="42.6,23,0,0" VerticalAlignment="Stretch" Width="120"/>
         </Grid>
-        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="62" Margin="177,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="522"/>
+        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="62" Margin="177,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="522" SelectionChanged="lbBusLineStations_SelectionChanged"/>
     </Grid>
 </Window>
