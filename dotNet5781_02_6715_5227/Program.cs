@@ -100,6 +100,15 @@ namespace dotNet5781_02_6715_5227
             Longitude = myStation.Longitude;
             StationAdress = myStation.StationAdress;
         }
+
+        public BusStation (int numStation)
+        {
+            BusStationKey = numStation;
+            Latitude = rLatitude.NextDouble() + 31;
+            Longitude = rLongitude.NextDouble() + 34;
+            StationAdress = "";
+            addStation(this);
+        }
         
         //override of ToString method
         public override string ToString()
@@ -258,7 +267,6 @@ namespace dotNet5781_02_6715_5227
                         Stations.Add(new BusLineStation(codeStation, Stations[Stations.Count - 1]));
                     else
                         Stations.Add(new BusLineStation(codeStation, null));
-                    break;
                     break;
 		        default:
                     break;

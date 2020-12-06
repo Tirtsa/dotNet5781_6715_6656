@@ -19,11 +19,11 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="tbArea" Grid.Column="3" HorizontalAlignment="Stretch" Height="23" Margin="35.8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="120" TextChanged="TextBox_TextChanged" FontSize="16" FontFamily="BN Alpaca" />
-            <Label Content="Label" HorizontalAlignment="Left" Margin="57,23,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
-            <Label Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="52.2,23,0,0" VerticalAlignment="Top" Height="28" Width="104"/>
-            <ComboBox Name="cbBudLinees" Grid.Column="1" HorizontalAlignment="Stretch" Margin="42.6,23,0,0" VerticalAlignment="Stretch" Width="120"/>
+            <TextBox Name="tbArea" Grid.Column="3" HorizontalAlignment="Stretch" Margin="9.8,12,21.6,17" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="18" FontFamily="Harlow Solid Italic" />
+            <Label Content="Bus Line Number :" HorizontalAlignment="Center" Margin="10,12,10.4,10" VerticalAlignment="Center" Height="46" Width="178" FontSize="20" FontFamily="Forte"/>
+            <Label Content="Area :" Grid.Column="2" HorizontalAlignment="Left" Margin="10.2,12,0,0" VerticalAlignment="Top" Height="39" Width="178" FontFamily="Forte" FontSize="20"/>
+            <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Stretch" Margin="26.6,12,40.8,19" VerticalAlignment="Stretch" SelectionChanged="cbBusLines_SelectionChanged"/>
         </Grid>
-        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="62" Margin="177,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="522" SelectionChanged="lbBusLineStations_SelectionChanged"/>
+        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="336" Margin="52,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="647"/>
     </Grid>
 </Window>

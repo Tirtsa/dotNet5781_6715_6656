@@ -28,7 +28,7 @@ namespace dotNet5781_03A_6715_5227
         public class ListBusStation
         {
             /// <summary>
-            /// creat list which contains all bus station.
+            /// List which contains all bus station.
             /// </summary>
 
             public static List<BusStation> ListOfAllStations = new List<BusStation>();
@@ -103,6 +103,14 @@ namespace dotNet5781_03A_6715_5227
                 Longitude = myStation.Longitude;
                 StationAdress = myStation.StationAdress;
             }
+            public BusStation(int numStation)
+            {
+                BusStationKey = numStation;
+                Latitude = rLatitude.NextDouble() + 31;
+                Longitude = rLongitude.NextDouble() + 34;
+                StationAdress = "";
+                addStation(this);
+            }
 
             //override of ToString method
             public override string ToString()
@@ -116,7 +124,7 @@ namespace dotNet5781_03A_6715_5227
             * Class BusLineStation - an interior class for station of a line bus route
             * 
             **************************************************/
-            public class BusLineStation
+            public class BusLineStation : ListBusStation
             {
                 public int BusStationKey { get; set; }
                 public double Distance { get; set; }
@@ -126,8 +134,9 @@ namespace dotNet5781_03A_6715_5227
                     BusStationKey = codeStation;
                     if (prevStation == null)
                         prevStation = this;
-                    Distance = DistanceFromPrevStation(ListOfAllStations[(this.BusStationKey) - 1],
-                        ListOfAllStations[(prevStation.BusStationKey) - 1]);
+                    
+                    Distance = DistanceFromPrevStation(SearchStation(this.BusStationKey),
+                        SearchStation(prevStation.BusStationKey));
                     TravelTime = Distance * 0.02;
                 }
 
@@ -144,7 +153,7 @@ namespace dotNet5781_03A_6715_5227
             public BusLine() { }
             public BusLine(int lineNumber, List<int> listStations)
             {
-                BusLineNumber = lineNumber;
+                BusLineNum = lineNumber;
                 foreach (int item in listStations)
                     AddStation(3, item);
                 TotalTime = 0;
@@ -153,7 +162,7 @@ namespace dotNet5781_03A_6715_5227
             }
             public BusLine(BusLine myLine)
             {
-                BusLineNumber = myLine.BusLineNumber;
+                BusLineNum = myLine.BusLineNum;
                 for (int i = 0; i < myLine.Stations.Count(); i++)
                     AddStation(3, myLine.Stations[i].BusStationKey);
                 TotalTime = 0;
@@ -166,7 +175,7 @@ namespace dotNet5781_03A_6715_5227
             enum areas { General, North, South, Center, Jerusalem };
 
             //properties
-            public int BusLineNumber { get; set; }
+            public int BusLineNum { get; set; }
             public BusLineStation FirstStation { get { return Stations[0]; } }
             public BusLineStation LastStation
             {
@@ -177,7 +186,7 @@ namespace dotNet5781_03A_6715_5227
             }
             public double TotalTime { get; set; }
             areas Areas { get; set; }
-            List<BusLineStation> Stations = new List<BusLineStation>();
+            public List<BusLineStation> Stations = new List<BusLineStation>();
             BusLineStation this[int index]
             {
                 get
@@ -230,7 +239,7 @@ namespace dotNet5781_03A_6715_5227
             //methods
             public override string ToString()
             {
-                Console.Write("Bus line: " + BusLineNumber + "  First Station: " + FirstStation.BusStationKey + "   Last Station: " +
+                Console.Write("Bus line: " + BusLineNum + "  First Station: " + FirstStation.BusStationKey + "   Last Station: " +
                     LastStation.BusStationKey + "   Areas: " + Areas + "\nStations: ");
                 PrintStations();
                 return " ";
@@ -302,7 +311,7 @@ namespace dotNet5781_03A_6715_5227
                     PartialStations.Add(this.Stations[i].BusStationKey);
                 }
 
-                return new BusLine(this.BusLineNumber, PartialStations);
+                return new BusLine(this.BusLineNum, PartialStations);
             }
 
             public int CompareTo(object obj)
@@ -334,7 +343,7 @@ namespace dotNet5781_03A_6715_5227
             {
                 foreach (BusLine item in BusesLines)
                 {
-                    if (item.BusLineNumber == line)
+                    if (item.BusLineNum == line)
                         throw new ArgumentException(String.Format($"Bus line's number must be unique, line {line} is " +
                             "already exists."));
                 }
@@ -408,7 +417,7 @@ namespace dotNet5781_03A_6715_5227
                 get
                 {
                     foreach (BusLine item in BusesLines)
-                        if (item.BusLineNumber == lineNumber)
+                        if (item.BusLineNum == lineNumber)
                             return item;
                     throw new ArgumentException($"There is no Bus Line with number {lineNumber}.");
                 }
@@ -423,37 +432,58 @@ namespace dotNet5781_03A_6715_5227
             }
         }
 
+        //creat random number
+        public static Random NumLine = new Random(DateTime.Now.Millisecond);
+        public static Random NumStation = new Random(DateTime.Now.Millisecond);
+
+        //creation of bus lines collection
+        BusesCollection busLines = new BusesCollection();
+
+        //ctor of MainWindow class
         public MainWindow()
         {
-            InitializeComponent();
-        }
+            //creation of bus lines collection
+            BusesCollection busLines = new BusesCollection();
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void lbBusLineStations_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BusesCollection allBuses = new BusesCollection();
-            for(int i=0;i<10;i++)
+            int newline;
+            int newstation;
+            for (int i = 0; i <= 10; i++)
             {
-                //creat random number
-                Random ran = new Random();
-                
-                int busNuber = ran.Next(i, 100);   //creat number for bus
-                for (int j=1;j<40;j++)  //creat 40 bus stations
-                    new BusStation();
-                List<int> station=new List<int>(); // creat list for bus stations
-                for (int k = 0; k < 10; k++)
+                List<int> listStations = new List<int>();
+                newline = NumLine.Next(150);
+                for (int j = 0; j <= 5; j++)
                 {
-                    int stationNumber = ran.Next(k, 40); //creat random number for bus station
-                    station.Add(stationNumber); //add station to list of stations.
+                    newstation = NumStation.Next(200);
+                    new BusStation(newstation);
+                    listStations.Add(newstation);
                 }
-                allBuses.Add(busNuber, station);
+                busLines.Add(newline, listStations);
             }
-          
+
+
+            //load of wpf's compoments
+            InitializeComponent();
+
+            //load bus' lines to cbBusLines
+            cbBusLines.ItemsSource = busLines;
+            cbBusLines.DisplayMemberPath = "BusLineNum";
+            cbBusLines.SelectedIndex = 0;
+            ShowBusLine(0);
 
         }
+
+        private BusLine currentDisplayBusLine;
+        private void ShowBusLine(int index)
+        {
+            currentDisplayBusLine = busLines[index];
+            UpGrid.DataContext = currentDisplayBusLine;
+            lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
+        }
+
+        private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ShowBusLine((cbBusLines.SelectedValue as BusLine).BusLineNum);
+        }
+
     }
 }
