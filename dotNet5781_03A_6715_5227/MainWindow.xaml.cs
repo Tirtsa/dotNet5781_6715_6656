@@ -482,5 +482,9 @@ namespace dotNet5781_03A_6715_5227
             ShowBusLine((cbBusLines.SelectedValue as BusLine).BusLineNum);
         }
 
+        private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
