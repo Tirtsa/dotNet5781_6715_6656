@@ -321,13 +321,13 @@ namespace dotNet5781_03A_6715_5227
                     (b.TravelTimeBetweenStations(b.FirstStation.BusStationKey, b.LastStation.BusStationKey));
             }
         }
-        class BusesCollection : ListBusStation, IEnumerable
+        public class BusesCollection : ListBusStation, IEnumerable
         {
             //fields ans properties
             List<BusLine> BusesLines = new List<BusLine>();
 
 
-            public new IEnumerator GetEnumerator()
+            public IEnumerator GetEnumerator()
             {
                 for (int i = 0; i < BusesLines.Count; i++)
                     yield return BusesLines[i];
@@ -433,17 +433,15 @@ namespace dotNet5781_03A_6715_5227
         }
 
         //creat random number
-        public static Random NumLine = new Random(DateTime.Now.Millisecond);
+        public static Random NumLine = new Random();
         public static Random NumStation = new Random(DateTime.Now.Millisecond);
 
         //creation of bus lines collection
-        BusesCollection busLines = new BusesCollection();
+        public BusesCollection busLines = new BusesCollection();
 
         //ctor of MainWindow class
         public MainWindow()
         {
-            //creation of bus lines collection
-            BusesCollection busLines = new BusesCollection();
 
             int newline;
             int newstation;
@@ -468,7 +466,6 @@ namespace dotNet5781_03A_6715_5227
             cbBusLines.ItemsSource = busLines;
             cbBusLines.DisplayMemberPath = "BusLineNum";
             cbBusLines.SelectedIndex = 0;
-            ShowBusLine(0);
 
         }
 
