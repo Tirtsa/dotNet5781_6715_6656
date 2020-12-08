@@ -172,7 +172,7 @@ namespace dotNet5781_03A_6715_5227
 
 
             //static & enum fields
-            enum areas { General, North, South, Center, Jerusalem };
+            public enum areas { General, North, South, Center, Jerusalem };
 
             //properties
             public int BusLineNum { get; set; }
@@ -185,7 +185,11 @@ namespace dotNet5781_03A_6715_5227
                 }
             }
             public double TotalTime { get; set; }
-            areas Areas { get; set; }
+            areas Areas
+            {
+                get;
+                set;
+            }
             public List<BusLineStation> Stations = new List<BusLineStation>();
             BusLineStation this[int index]
             {
@@ -348,19 +352,21 @@ namespace dotNet5781_03A_6715_5227
                             "already exists."));
                 }
 
-
                 foreach (int item in Stations)
                 {
                     bool exist = false;
+
                     foreach (BusStation item2 in ListOfAllStations)
                         if (exist == false)
                             if (item2.BusStationKey == item)
                                 exist = true;
                     if (exist == false)
                         throw new ArgumentException($"Station number {item} doesn't exist");
+
                 }
                 BusesLines.Add(new BusLine(line, Stations));
             }
+
 
             public void Add(BusLine myLine)
             {
@@ -439,6 +445,11 @@ namespace dotNet5781_03A_6715_5227
         //creation of bus lines collection
         public BusesCollection busLines = new BusesCollection();
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
         //ctor of MainWindow class
         public MainWindow()
         {
@@ -449,6 +460,7 @@ namespace dotNet5781_03A_6715_5227
             {
                 List<int> listStations = new List<int>();
                 newline = NumLine.Next(150);
+                
                 for (int j = 0; j <= 5; j++)
                 {
                     newstation = NumStation.Next(200);
@@ -456,15 +468,18 @@ namespace dotNet5781_03A_6715_5227
                     listStations.Add(newstation);
                 }
                 busLines.Add(newline, listStations);
+                
             }
 
 
             //load of wpf's compoments
             InitializeComponent();
-
+            
+            
             //load bus' lines to cbBusLines
             cbBusLines.ItemsSource = busLines;
             cbBusLines.DisplayMemberPath = "BusLineNum";
+            cbBusLines.Text = "BusLine";
             cbBusLines.SelectedIndex = 0;
 
         }
@@ -475,12 +490,15 @@ namespace dotNet5781_03A_6715_5227
             currentDisplayBusLine = busLines[index];
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
+            
         }
 
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ShowBusLine((cbBusLines.SelectedValue as BusLine).BusLineNum);
+
         }
+
 
         private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
         {

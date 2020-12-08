@@ -12,18 +12,19 @@
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" 
-              VerticalAlignment="Stretch" Width="auto">
+              VerticalAlignment="Stretch" Width="auto" DataContext="{Binding Path=currentDisplayBusLine}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="tbArea" Grid.Column="3" HorizontalAlignment="Stretch" Margin="9.8,12,21.6,17" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="14" TextChanged="tbArea_TextChanged" />
-            <Label Content="Bus Line Number :" HorizontalAlignment="Center" Margin="10,12,10.4,10" VerticalAlignment="Center" Height="46" Width="178" FontSize="20" FontFamily="Forte"/>
-            <Label Content="Area :" Grid.Column="2" HorizontalAlignment="Left" Margin="10.2,12,0,0" VerticalAlignment="Top" Height="39" Width="178" FontFamily="Forte" FontSize="20"/>
-            <ComboBox Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Stretch" Margin="26.6,12,40.8,19" VerticalAlignment="Stretch" SelectionChanged="cbBusLines_SelectionChanged"/>
+            <Label Content="Bus Line Number :" HorizontalAlignment="Center" Margin="10,12,10.4,10" VerticalAlignment="Center" Height="46" Width="178" FontSize="20" FontFamily="Forte" />
+            <Label Content="Area :" Grid.Column="2" HorizontalAlignment="Left" Margin="10.2,12,0,0" VerticalAlignment="Top" Height="39" Width="178" FontFamily="Forte" FontSize="20" />
+            <ComboBox Name="cbBusLines"  HorizontalAlignment="Stretch" Margin="9.6,12,57.8,19" VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="cbBusLines_SelectionChanged"  ItemsSource="{Binding Path=tbArea}"/>
+            <TextBox Name="tbArea"  Grid.Column="3" HorizontalAlignment="Stretch" Margin="9.8,12,21.6,17" TextWrapping="Wrap" VerticalAlignment="Stretch" FontSize="14" TextChanged="tbArea_TextChanged"  Text="{Binding Path=Areas}"/>
+
         </Grid>
-        <ListBox Name="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="336" Margin="52,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="647"/>
+        <ListBox Name="lbBusLineStations" HorizontalAlignment="Left" Height="336" Margin="52,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="647" ItemsSource="{Binding}" />
     </Grid>
 </Window>
