@@ -16,6 +16,7 @@ using System.IO;
 using System.Security.Permissions;
 using System.Collections;
 using System.Device.Location;
+using System.ComponentModel;
 
 namespace dotNet5781_03A_6715_5227
 {
@@ -115,7 +116,7 @@ namespace dotNet5781_03A_6715_5227
             //override of ToString method
             public override string ToString()
             {
-                return "Bus Station Code:" + BusStationKey + ", " + Latitude + "°N " + Longitude + "°E " + StationAdress;
+                return "Bus Station Code: " + BusStationKey + ",    Latitude : " + Latitude + " °N " + ",    Longitude : "+ Longitude + " °E " + StationAdress;
             }
         }
         public class BusLine : ListBusStation, IComparable
@@ -147,6 +148,14 @@ namespace dotNet5781_03A_6715_5227
                     var sCord = new GeoCoordinate(station2.Latitude, station2.Longitude);
                     return eCord.GetDistanceTo(sCord);
                 }
+
+                public override string ToString()
+                {
+                    SearchStation(BusStationKey);
+                    return SearchStation(BusStationKey)+"";
+                       // +"\n     Distance from previous station : "+Distance+ 
+                        //"   Time travel from previous station : "+TravelTime + "\n";
+                }
             }
 
             //constructors
@@ -172,7 +181,7 @@ namespace dotNet5781_03A_6715_5227
 
 
             //static & enum fields
-            enum areas { General, North, South, Center, Jerusalem };
+            public enum Areas { General, North, South, Center, Jerusalem };
 
             //properties
             public int BusLineNum { get; set; }
@@ -185,7 +194,7 @@ namespace dotNet5781_03A_6715_5227
                 }
             }
             public double TotalTime { get; set; }
-            areas Areas { get; set; }
+            public Areas Area { get; set; }
             public List<BusLineStation> Stations = new List<BusLineStation>();
             BusLineStation this[int index]
             {
@@ -240,7 +249,7 @@ namespace dotNet5781_03A_6715_5227
             public override string ToString()
             {
                 Console.Write("Bus line: " + BusLineNum + "  First Station: " + FirstStation.BusStationKey + "   Last Station: " +
-                    LastStation.BusStationKey + "   Areas: " + Areas + "\nStations: ");
+                    LastStation.BusStationKey + "   Areas: " + Area + "\nStations: ");
                 PrintStations();
                 return " ";
             }
@@ -445,18 +454,26 @@ namespace dotNet5781_03A_6715_5227
 
             int newline;
             int newstation;
-            for (int i = 0; i <= 10; i++)
+            try
             {
-                List<int> listStations = new List<int>();
-                newline = NumLine.Next(150);
-                for (int j = 0; j <= 5; j++)
+                for (int i = 0; i <= 10; i++)
                 {
-                    newstation = NumStation.Next(200);
-                    new BusStation(newstation);
-                    listStations.Add(newstation);
+                    List<int> listStations = new List<int>();
+                    newline = NumLine.Next(150);
+                    for (int j = 0; j <= 5; j++)
+                    {
+                        newstation = NumStation.Next(200);
+                        new BusStation(newstation);
+                        listStations.Add(newstation);
+                    }
+                    busLines.Add(newline, listStations);
                 }
-                busLines.Add(newline, listStations);
             }
+            catch(ArgumentException e)
+            {
+                Console.WriteLine(e.ParamName + e.Message);
+            }
+            
 
 
             //load of wpf's compoments
@@ -475,6 +492,7 @@ namespace dotNet5781_03A_6715_5227
             currentDisplayBusLine = busLines[index];
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
+            tbArea.DataContext = currentDisplayBusLine;
         }
 
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
