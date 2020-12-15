@@ -187,7 +187,26 @@ namespace dotNet5781_02_6715_5227
             }
         }
         public double TotalTime { get; set; }
-        areas Areas {get; set; }
+        areas Areas
+        { get;set;
+            //get
+            //{
+            //    return Areas;
+            //}
+            //set
+            //{
+            //    if (BusLineNumber < 30)
+            //        Areas = 0;
+            //    if (BusLineNumber >= 30 && BusLineNumber < 60)
+            //        Areas = (areas)1;
+            //    if (BusLineNumber >= 60 && BusLineNumber < 90)
+            //        Areas = (areas)2;
+            //    if (BusLineNumber >= 90 && BusLineNumber < 120)
+            //        Areas = (areas)3;
+            //    if (BusLineNumber >= 120 && BusLineNumber <= 150)
+            //        Areas = (areas)4;
+            //}
+        }
         List<BusLineStation> Stations = new List<BusLineStation> ();
         BusLineStation this[int index]
         {
@@ -473,6 +492,9 @@ namespace dotNet5781_02_6715_5227
             allBuses.Add(50, stations8);
             allBuses.Add(33, stations9);
             allBuses.Add(1, stations10);
+
+
+
 
             string choice;
             do
