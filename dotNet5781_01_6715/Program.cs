@@ -13,69 +13,66 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_6715
 {
-    class Program
+
+    /* ---------------------------------------
+    class bus - contains infos of bus object 
+    ----------------------------------------- */
+    public class Bus
     {
-        public static Random r = new Random(DateTime.Now.Millisecond);
+        public enum Status {Ready, Travelling, Refueling, underMaintenance};
+        public string Immatriculation { get; set; }
+        DateTime dateStart;
+        public DateTime DateStart { get { return dateStart.Date; } set { dateStart = value; } }
 
+        float kilometrage = 0;
+        public float Kilometrage { get; set; }
+        public float KmOfFuel { get; set; } //how much km can the bus drive with its gasoline
+        public DateTime MaintenanceDate { get; set; }
+        public float MaintenanceKm { get; set; }
 
-        /* ---------------------------------------
-        class bus - contains infos of bus object 
-        ----------------------------------------- */
-        public class Bus
+        Status busStatus = Status.Ready;
+        public Status BusStatus { get; set; }
+
+        /// <summary>
+        /// Dangerous - return if bus can do travel or is 'dangerous'
+        /// </summary>
+        /// <param name="km"></param>
+        /// <returns></returns>
+        public bool Dangerous(int km)
         {
-            public string Immatriculation 
-            {
-                get 
-                {
-                    //return immatriculation in format 12-345-67 or 123-45-678
-                    Console.WriteLine(DateStart.Year);
-                    if (DateStart.Year < 2018)
-                        return Immatriculation.Substring(0, 2) + "-" + Immatriculation.Substring(2, 3) + "-" +
-                            Immatriculation.Substring(5);
-                    else
-                        return Immatriculation.Substring(0, 3) + "-" + Immatriculation.Substring(3, 2) + "-" +
-                            Immatriculation.Substring(5);
-                }
-                set { Immatriculation = value; } 
-            }
-            public DateTime DateStart { get; set; }
-
-            float kilometrage = 0;
-            public float Kilometrage { get; }
-            public float KmOfFuel { get; set; } //how much km can the bus drive with its gasoline
-            public DateTime MaintenanceDate { get; set; }
-            public float MaintenanceKm { get; set; }
-
-            /// <summary>
-            /// Dangerous - return if bus can do travel or is 'dangerous'
-            /// </summary>
-            /// <param name="km"></param>
-            /// <returns></returns>
-            public bool Dangerous (int km) 
-            {
-                if ((MaintenanceKm + km) > 20000 || (DateTime.Now - MaintenanceDate).Days >= 365)
-                    return true;
-                else
-                    return false;
-            }
-
-            /// <summary>
-            /// addTravel - add kms to kilometrage and diminue of kmoffuel
-            /// </summary>
-            /// <param name="km"></param>
-            public void addTravel(int km)
-            {
-                this.kilometrage += km;
-                this.KmOfFuel -= km;
-            }
-
-            //ctor
-            public Bus() { }
-            
+            if ((MaintenanceKm + km) > 20000 || (DateTime.Now - MaintenanceDate).Days >= 365)
+                return true;
+            else
+                return false;
         }
 
+        /// <summary>
+        /// addTravel - add kms to kilometrage and diminue of kmoffuel
+        /// </summary>
+        /// <param name="km"></param>
+        public void addTravel(int km)
+        {
+            this.kilometrage += km;
+            this.KmOfFuel -= km;
+        }
 
+        //ctor
+        public Bus() { }
+        public override string ToString()
+        {
+            if (DateStart.Year < 2018)
+                return Immatriculation.Substring(0, 2) + "-" + Immatriculation.Substring(2, 3) + "-" +
+                    Immatriculation.Substring(5);
+            else
+                return Immatriculation.Substring(0, 3) + "-" + Immatriculation.Substring(3, 2) + "-" +
+                    Immatriculation.Substring(5);
+        }
 
+    }
+
+    public class Program
+    {
+        public static Random r = new Random(DateTime.Now.Millisecond);
 
         /* ---------------------------------------
        void main - principal program
@@ -92,6 +89,7 @@ namespace dotNet5781_01_6715
                 Console.WriteLine("Please choose the action you want to do :\na: Add a bus\nb: Add a bus journey\n" +
                 "c: Refueling or maintenance\nd: Print kilometrage since last maintenance for all buses\ne: Exit");
 
+                Console.Read();
                 choice = Convert.ToChar(Console.Read());
                 switch (choice)
                 {
@@ -99,7 +97,7 @@ namespace dotNet5781_01_6715
                         addABus();
                         break;
                     case 'b':
-                        addATravelBus(busOperation(), r.Next());
+                        addATravelBus(busOperation(), r.Next(900));
                         break;
                     case 'c':
                         addRefuelMaintenance(busOperation());
@@ -119,7 +117,12 @@ namespace dotNet5781_01_6715
             /// @parameter : string immat   /immatriculation of bus we have to find
             /// @return : Bus               /Bus if it exist or null
             ///</summary>
-            Bus searchBus(string immat) { return buses.Find(x => x.Immatriculation.Equals(immat)); }
+            Bus searchBus(string immat)
+            //{
+            //    foreach(Bus item in buses)
+            //        if (item.)
+            //}
+            { return buses.Find(x => x.Immatriculation.Equals(immat)); }
 
             ///<summary>
             ///void printKilometrages - print for all buses km since last maintenance
@@ -127,8 +130,8 @@ namespace dotNet5781_01_6715
             void printKilometrages()
             {
                 foreach(Bus item in buses)
-                    Console.Write("Immatriculation : {0, -9} Km since last maintenance : {1}",
-                        item.Immatriculation, (item.Kilometrage-item.MaintenanceKm));
+                    Console.Write("Immatriculation : {0, -9} \nKm since last maintenance : {1}",
+                        item, (item.Kilometrage-item.MaintenanceKm));
             }
             
             ///<summary>
@@ -136,7 +139,8 @@ namespace dotNet5781_01_6715
             ///</summary>
             Bus busOperation()
             {
-                Console.WriteLine("Please enter immatriculation : ");
+                Console.Write("Please enter immatriculation : ");
+                string test = Console.ReadLine();
                 return searchBus(Console.ReadLine());
             }
 
@@ -149,19 +153,23 @@ namespace dotNet5781_01_6715
                 Console.WriteLine("Please enter date of start activity : ");
                 Console.ReadLine();
                 DateTime mydate;
-                DateTime.TryParse(Console.ReadLine(), out mydate);
-
-                Console.WriteLine("Please enter immatriculation number (xxxxxxx or xxxxxxxx) : ");
-                //if immatriculation format corresponds to year of start activity add the bus to list
-                if ((mydate.Year < 2018 && Console.ReadLine().Length == 7) || (mydate.Year >= 2018 &&
-                    Console.ReadLine().Length == 8))
+                if (DateTime.TryParse(Console.ReadLine(), out mydate))
                 {
-                    buses.Add(new Bus() { DateStart = mydate, Immatriculation = Console.ReadLine(), KmOfFuel = 0 });
+                    Console.WriteLine("Please enter immatriculation number (xxxxxxx or xxxxxxxx) : ");
+                    //if immatriculation format corresponds to year of start activity add the bus to list
+                    string immat = Console.ReadLine();
+                    if ((mydate.Year < 2018 && immat.Length == 7) || (mydate.Year >= 2018 &&
+                        immat.Length == 8))
+                    {
+                        buses.Add(new Bus() { DateStart = mydate, Immatriculation = immat, KmOfFuel = 0 });
+                    }
+                    else
+                    {
+                        Console.WriteLine("Before 2018, vehicles must have 7 digits and since 2018, they must have 8 digits");
+                    }
                 }
                 else
-                {
-                    Console.WriteLine("Before 2018, vehicles must have 7 digits and since 2018, they must have 8 digits");
-                }
+                    Console.WriteLine("You have entered an incorrect value");   
             }
 
             ///<summary>

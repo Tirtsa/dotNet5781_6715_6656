@@ -187,26 +187,7 @@ namespace dotNet5781_02_6715_5227
             }
         }
         public double TotalTime { get; set; }
-        areas Areas
-        { get;set;
-            //get
-            //{
-            //    return Areas;
-            //}
-            //set
-            //{
-            //    if (BusLineNumber < 30)
-            //        Areas = 0;
-            //    if (BusLineNumber >= 30 && BusLineNumber < 60)
-            //        Areas = (areas)1;
-            //    if (BusLineNumber >= 60 && BusLineNumber < 90)
-            //        Areas = (areas)2;
-            //    if (BusLineNumber >= 90 && BusLineNumber < 120)
-            //        Areas = (areas)3;
-            //    if (BusLineNumber >= 120 && BusLineNumber <= 150)
-            //        Areas = (areas)4;
-            //}
-        }
+        areas Areas { get; set; }
         List<BusLineStation> Stations = new List<BusLineStation> ();
         BusLineStation this[int index]
         {
