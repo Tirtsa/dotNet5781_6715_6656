@@ -1,0 +1,11 @@
+﻿Assignment 3b by Rachel Wolfe 337816656 for Esther Parnes in Mini-Windows Project
+
+I chose to use only BackgoundWorkers instead of threads because they allow for more
+simple flow in sharing of infomation between the 'parent' and 'child' processes.
+I added to bus information the option to add a bus driver's name from the bus's
+information display window pop-up and the amount of seats on the bus
+The travel distance pop-up field and the driver's name field are submitted using
+the enter key (and then a button can be easily added in the code if needed)
+Buses are color coded based on the status if they are free, traveling, refueling 
+or in service are marked in green, orange, yellow and red respectively
+Stay Healthy! :)
