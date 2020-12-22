@@ -7,38 +7,59 @@
         mc:Ignorable="d"
         Title="Ex3B - Buses" Height="450" Width="800" Icon="bus.jpg">
     <Window.Resources>
-        <DataTemplate x:Key="myBusesList" DataType="dotNet5781_01_6715:Bus">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="2" Text ="{Binding Path=Immatriculation}" HorizontalAlignment="Right" />
-                <Button x:Name="FuelButton" Grid.Column="1"  Content="מילוי דלק" Click="FuelButton_Click"/>
-                <Button x:Name="TravelButton" Grid.Column="0" Content="ביצוע נסיעה" Click="TravelButton_Click"/>
-            </Grid>
-        </DataTemplate>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
-        <Label Content="רשימת אוטובוסים של החברה" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-        <Button x:Name="addBusButton" Content="הוספת אוטובוס" HorizontalAlignment="Left" Margin="100,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="Auto" Click="AddBusButton_Click"/>
-        <ListBox 
-            x:Name="BusListBox" HorizontalAlignment="Stretch" Height="250" Margin="0,0,0,50" VerticalAlignment="Top" Width="684" 
-             Grid.Row="2"  Grid.RowSpan="2" 
-            ItemsSource="{Binding}"
-            ItemTemplate="{StaticResource myBusesList}"
-            MouseDoubleClick="ListBox_MouseDoubleClick"
-            />
+        <Label Content="רשימת אוטובוסים של החברה" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" 
+               FontFamily="Corbel" FontWeight="Bold"/>
+        <Button x:Name="addBusButton" Content="הוספת אוטובוס" HorizontalAlignment="Left" Margin="50,0,0,0" Grid.Row="1"
+                VerticalAlignment="Center" Width="Auto" Click="AddBusButton_Click" BorderThickness="2"/>
+        <Label x:Name="mytest"/>
+        <DataGrid x:Name="BusListDataGrid" AutoGenerateColumns="False" Grid.Row="2" IsReadOnly="True"
+                  HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Right" Margin="0,0,46.6,0" Width="697"
+                  MouseDoubleClick="BusListDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="תידלוק" Click="FuelButton_Click" Margin="5,5,5,5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="בצע נסיעה" Click="TravelButton_Click" Margin="5,5,5,5"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*" x:Name="test">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="statusGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ProgressBar x:Name="ActionProgressBar" Visibility="Hidden" HorizontalAlignment="Stretch"
+                                             Margin="2" Grid.Column="0"/>
+                                <Label x:Name="progressPercentageLabel" Grid.Column="1" Visibility="Hidden"
+                                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding BusStatus}" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                           Grid.Column="2" Margin="2"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="מספר רישוי של האוטובוס" Binding="{Binding Immatriculation}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
 
     </Grid>
 </Window>

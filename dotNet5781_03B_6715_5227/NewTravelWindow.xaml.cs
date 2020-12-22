@@ -26,39 +26,53 @@ namespace dotNet5781_03B_6715_5227
         public NewTravelWindow()
         {
             InitializeComponent();
+
             travelling = new BackgroundWorker();
             travelling.DoWork += Travelling_DoWork;
             travelling.ProgressChanged += Travelling_ProgressChanged;
             travelling.RunWorkerCompleted += Travelling_RunWorkerCompleted;
 
             travelling.WorkerReportsProgress = true;
-            //Bus test = DataContext as Bus;
+            travelling.WorkerSupportsCancellation = true;
         }
 
         private void Travelling_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
                 MessageBox.Show("Error : " + e.Error.Message);
-            else
+            else if(travelling.CancellationPending==true)
             {
-                long result = (long)e.Result;
-                if (result < 1000)
-                    MessageBox.Show("Travelling of Bus " + myBus.Immatriculation + " finished - during " + result + " ms.");
-                else
-                    MessageBox.Show("Travelling of Bus "+ myBus.Immatriculation +" finished - during " + result / 1000 + " sec.");
-            }
                 
+                float result = (float)e.Result;
+                //int day = (int)(result / 1000) % 144;
+                //int hour = (int)(result / 1000 - day*144) % 6;
+                //int minutes = (int)((result / 1000) - day*144 - hour*6)/6*60 ;
+                int hour = (int)result / 6;
+                int minutes = (int)(result - hour)/6*60;
+                
+                //if(day != 0)
+                //    MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " + 
+                //    day + "ימים" + hour + " שעות ו " + minutes + "דקות");
+                //else
+                    MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " + 
+                    hour + " שעות ו " + minutes + "דקות");
+            }
+
+
         }
 
         private void Travelling_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
-            
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+              
+            }));
         }
 
         private void Travelling_DoWork(object sender, DoWorkEventArgs e)
         {
-            //myBus = DataContext as Bus;
+            //myBus = this.DataContext as Bus;
             //int kmTravel = int.Parse(this.travelKmTextBox.Text);
             int kmTravel = (int)e.Argument;
             Stopwatch stopwatch = new Stopwatch();
@@ -66,19 +80,20 @@ namespace dotNet5781_03B_6715_5227
             Random rndVitesse = new Random(DateTime.Now.Millisecond);
             try
             {
-                (this.DataContext as Bus).addTravel(kmTravel);
+                myBus.addTravel(kmTravel);
                 int vitesse = rndVitesse.Next(20, 50);
-                int totalTime = 6 * (kmTravel / vitesse);
-                for (int i = 0; i <= totalTime ; i++)
+                float totalTime = 6 * (kmTravel / vitesse);
+                for (int i = 0; i <= totalTime; i++)
                 {
                     System.Threading.Thread.Sleep(1000);
-                    travelling.ReportProgress(i / totalTime * 100);
+                    travelling.ReportProgress((int)(i * 100 / totalTime));
                 }
                 e.Result = stopwatch.ElapsedMilliseconds;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                travelling.CancelAsync();
             }
         }
 
@@ -88,14 +103,18 @@ namespace dotNet5781_03B_6715_5227
             {
                 int travelKm;
                 int.TryParse(travelKmTextBox.Text, out travelKm);
-                travelling.RunWorkerAsync(12);
+                myBus = (Bus)this.DataContext;
+                travelling.RunWorkerAsync(travelKm);
+
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
             }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
             this.Close();
         }
 
