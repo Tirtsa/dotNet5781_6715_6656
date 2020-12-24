@@ -40,22 +40,22 @@ namespace dotNet5781_03B_6715_5227
         {
             if (e.Error != null)
                 MessageBox.Show("Error : " + e.Error.Message);
-            else if(travelling.CancellationPending==true)
+            else if (travelling.CancellationPending == true)
             {
-                
+
                 float result = (float)e.Result;
                 //int day = (int)(result / 1000) % 144;
                 //int hour = (int)(result / 1000 - day*144) % 6;
                 //int minutes = (int)((result / 1000) - day*144 - hour*6)/6*60 ;
                 int hour = (int)result / 6;
-                int minutes = (int)(result - hour)/6*60;
-                
+                int minutes = (int)(result - hour) / 6 * 60;
+
                 //if(day != 0)
                 //    MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " + 
                 //    day + "ימים" + hour + " שעות ו " + minutes + "דקות");
                 //else
-                    MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " + 
-                    hour + " שעות ו " + minutes + "דקות");
+                MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " +
+                hour + " שעות ו " + minutes + "דקות");
             }
 
 
@@ -64,23 +64,29 @@ namespace dotNet5781_03B_6715_5227
         private void Travelling_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-              
-            }));
+            if (Application.Current.Dispatcher.CheckAccess())
+                MessageBox.Show(progress + "%");
+            else
+                Dispatcher.BeginInvoke(new Action(() => { Travelling_ProgressChanged(sender, e); }));
         }
 
         private void Travelling_DoWork(object sender, DoWorkEventArgs e)
         {
-            //myBus = this.DataContext as Bus;
-            //int kmTravel = int.Parse(this.travelKmTextBox.Text);
             int kmTravel = (int)e.Argument;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             Random rndVitesse = new Random(DateTime.Now.Millisecond);
             try
             {
-                myBus.addTravel(kmTravel);
+                myBus.BusStatus = "באמצע נסיעה";
+
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    //mainWindow.Show();
+                    this.Close();
+                });
+
                 int vitesse = rndVitesse.Next(20, 50);
                 float totalTime = 6 * (kmTravel / vitesse);
                 for (int i = 0; i <= totalTime; i++)
@@ -88,28 +94,30 @@ namespace dotNet5781_03B_6715_5227
                     System.Threading.Thread.Sleep(1000);
                     travelling.ReportProgress((int)(i * 100 / totalTime));
                 }
-                e.Result = stopwatch.ElapsedMilliseconds;
+                myBus.BusStatus = "מוכן לנסיעה";
+                myBus.addTravel(kmTravel);
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 travelling.CancelAsync();
             }
+            e.Result = stopwatch.ElapsedMilliseconds;
         }
 
         private void AddTravelButton_Click(object sender, RoutedEventArgs e)
         {
-            if (travelling.IsBusy != true)
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                int travelKm;
-                int.TryParse(travelKmTextBox.Text, out travelKm);
-                myBus = (Bus)this.DataContext;
-                travelling.RunWorkerAsync(travelKm);
-
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            }
+                if (travelling.IsBusy != true)
+                {
+                    int travelKm;
+                    int.TryParse(travelKmTextBox.Text, out travelKm);
+                    myBus = (Bus)this.DataContext;
+                    travelling.RunWorkerAsync(travelKm);
+                }
+            });
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
