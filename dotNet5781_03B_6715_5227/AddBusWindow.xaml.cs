@@ -49,7 +49,6 @@ namespace dotNet5781_03B_6715_5227
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
             this.Close();
         }
         void DataWindow_Closing(object sender, CancelEventArgs e)

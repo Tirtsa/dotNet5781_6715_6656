@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:dotNet5781_03B_6715_5227"
         xmlns:dotNet5781_01_6715="clr-namespace:dotNet5781_01_6715;assembly=dotNet5781_01_6715" x:Class="dotNet5781_03B_6715_5227.BusDetailsWindow"
         mc:Ignorable="d"
-        Title="BusDetailsWindow" Height="450" Width="800">
+        Title="BusDetailsWindow" Height="450" Width="800"  Closing="DataWindow_Closing">
 
     <Grid>
-        <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="237,83,0,0" VerticalAlignment="Top">
+        <Grid x:Name="grid2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -23,23 +23,25 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Bus Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <Label x:Name="busStatusLabel" Content="{Binding BusStatus}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <Label Content="Date Start:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <Label x:Name="dateStartLabel" Content="{Binding DateStart}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <Label Content="Immatriculation:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <Label x:Name="immatriculationLabel" Content="{Binding Immatriculation}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <Label Content="Kilometrage:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <Label x:Name="kilometrageLabel" Content="{Binding Kilometrage}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <Label Content="Km Of Fuel:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-            <Label x:Name="kmOfFuelLabel" Content="{Binding KmOfFuel}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-            <Label Content="Maintenance Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <Label x:Name="maintenanceDateLabel" Content="{Binding MaintenanceDate}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <Label Content="Maintenance Km:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
-            <Label x:Name="maintenanceKmLabel" Content="{Binding MaintenanceKm}" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <Label Content=": סטטוס" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <Label x:Name="busStatusLabel" Content="{Binding BusStatus}" Grid.Column="0" HorizontalAlignment="Right" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <Label Content=": תחילת פעילות" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <Label x:Name="dateStartLabel" Content="{Binding DateStart}" Grid.Column="0" HorizontalAlignment="Right" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <Label Content=": מספר רישוי" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <Label x:Name="immatriculationLabel" Content="{Binding Immatriculation}" Grid.Column="0" HorizontalAlignment="Right" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <Label Content=": מספר ק''מ" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <Label x:Name="kilometrageLabel" Content="{Binding Kilometrage}" Grid.Column="0" HorizontalAlignment="Right" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <Label Content=": (מצב דלק (בקילומטרים" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <Label x:Name="kmOfFuelLabel" Content="{Binding KmOfFuel}" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <Label Content=": תאריך טיפול אחרון" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label x:Name="maintenanceDateLabel" Content="{Binding MaintenanceDate}" Grid.Column="0" HorizontalAlignment="Right" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label Content=": ק''מ בטיפול האחרון" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <Label x:Name="maintenanceKmLabel" Content="{Binding MaintenanceKm}" Grid.Column="0" HorizontalAlignment="Right" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
         </Grid>
         <Button x:Name="Maintenance" Content="שלח לטיפול" HorizontalAlignment="Left" Margin="240,352,0,0" VerticalAlignment="Top" Width="75" Click="Maintenance_Click" />
         <Button x:Name="Refueling" Content="בצע תידלוק" HorizontalAlignment="Left" Margin="376,352,0,0" VerticalAlignment="Top" Width="75" Click="Refueling_Click"/>
+        <ProgressBar x:Name="resultProgressBar" HorizontalAlignment="Left" Height="10" Margin="43,57,0,0" VerticalAlignment="Top" Width="100" />
+        <Label x:Name="resultLabel" Content="Label" HorizontalAlignment="Left" Margin="174,57,0,0" VerticalAlignment="Top" Height="10" Width="16"/>
 
     </Grid>
 </Window>
