@@ -10,8 +10,6 @@ namespace APIDL
 {
     public interface IDAL
     {
-        double GetTemparture(int day);
-        WindDirection GetWindDirection(int day);
-
-    }
+		RunningNumber GetRunningNumber { get; set; }
+	}
 }

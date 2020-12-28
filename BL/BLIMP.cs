@@ -17,60 +17,18 @@ namespace BL
         {
             Weather w = new Weather();
             double feeling;
-            WindDirections dir;
-
+            //WindDirections dir;
+            RunningNumber number;
 
             feeling = dal.GetTemparture(day);
-            dir = dal.GetWindDirection(day).direction;
+            number = dal.GetRunningNumber.idNumber;
 
-            switch (dir)
+            switch (number)
             {
-                case WindDirections.S:
+                case RunningNumbers.start:
                     feeling += 2;
                     break;
-                case WindDirections.SSE:
-                    feeling += 1.5;
-                    break;
-                case WindDirections.SE:
-                    feeling += 1;
-                    break;
-                case WindDirections.SEE:
-                    feeling += 0.5;
-                    break;
-                case WindDirections.E:
-                    feeling -= 0.5;
-                    break;
-                case WindDirections.NEE:
-                    feeling -= 1;
-                    break;
-                case WindDirections.NE:
-                    feeling -= 1.5;
-                    break;
-                case WindDirections.NNE:
-                    feeling -= 2;
-                    break;
-                case WindDirections.N:
-                    feeling -= 3;
-                    break;
-                case WindDirections.NNW:
-                    feeling -= 2.5;
-                    break;
-                case WindDirections.NW:
-                    feeling -= 2;
-                    break;
-                case WindDirections.NWW:
-                    feeling -= 1.5;
-                    break;
-                case WindDirections.W:
-                    feeling -= 1;
-                    break;
-                case WindDirections.SWW:
-                    feeling -= 0;
-                    break;
-                case WindDirections.SW:
-                    break;
-                case WindDirections.SSW:
-                    feeling += 1;
+                default:
                     break;
             }
             w.Feeling = (int)feeling;

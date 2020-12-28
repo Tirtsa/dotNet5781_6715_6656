@@ -48,11 +48,12 @@
     <Compile Include="Bus.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="FollowingStations.cs" />
-    <Compile Include="ICloneable.cs" />
+    <Compile Include="IClonable.cs" />
     <Compile Include="IDAL.cs" />
     <Compile Include="LineStation.cs" />
     <Compile Include="PassengerTravel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunningNumber.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

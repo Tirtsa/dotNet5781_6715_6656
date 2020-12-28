@@ -28,13 +28,20 @@ namespace DL
             return temperature;
         }
 
-        public WindDirection GetWindDirection(int day)
-        {
-            WindDirection direction = DataSource.directions.Find(d => true);
-            var directions = (WindDirections[])Enum.GetValues(typeof(WindDirections));
-            direction.direction = directions[rnd.Next(0, directions.Length)];
+        public RunningNumber GetRunningNumber()
+		{
+            RunningNumber idNumber = DataSource.idNumber.Find(d => true);
+            var idNumbers = (RunningNumbers[])Enum.GetValues(typeof(RunningNumbers));
+            //idNumber.idNumber = idNumbers[rnd.Next(0, idNumbers.Length)];
+            return idNumber.Clone();
+		}
+        //public WindDirection GetWindDirection(int day)
+        //{
+        //    WindDirection direction = DataSource.directions.Find(d => true);
+        //    var directions = (WindDirections[])Enum.GetValues(typeof(WindDirections));
+        //    direction.direction = directions[rnd.Next(0, directions.Length)];
 
-            return direction.Clone();
-        }
+        //    return direction.Clone();
+        //}
     }
 }

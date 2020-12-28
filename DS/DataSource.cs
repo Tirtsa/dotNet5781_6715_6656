@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
+using APIDL;
 
 
 namespace DS
 {
     public static class DataSource
     {
-        public static List<WindDirection> directions;
+        public static List<RunningNumber> idNumber;
 
         static DataSource()
         {
-            directions = new List<WindDirection>();
-            directions.Add(new WindDirection());
+            idNumber = new List<RunningNumber>();
+            idNumber.Add(new RunningNumber());
         }
     }
 }
