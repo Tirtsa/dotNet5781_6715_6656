@@ -1,5 +1,5 @@
 ﻿using System;
-using BlApi;
+using BLApi;
 using APIDL;
 //using DL;
 using BO;
@@ -7,7 +7,7 @@ using DO;
 
 namespace BL
 {
-    public class BlImp1 : IBL
+    public class BLIMP : IBL
     {
         static Random rnd = new Random(DateTime.Now.Millisecond);
 

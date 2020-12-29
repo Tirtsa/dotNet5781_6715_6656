@@ -31,7 +31,7 @@ namespace DL
         public RunningNumber GetRunningNumber()
 		{
             RunningNumber idNumber = DataSource.idNumber.Find(d => true);
-            var idNumbers = (RunningNumbers[])Enum.GetValues(typeof(RunningNumbers));
+            //var idNumbers = (RunningNumbers[])Enum.GetValues(typeof(RunningNumbers));
             //idNumber.idNumber = idNumbers[rnd.Next(0, idNumbers.Length)];
             return idNumber.Clone();
 		}
