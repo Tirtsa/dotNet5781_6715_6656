@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace BL
 {
-    public interface IClonable { }
+	class Program
+	{
+		static void Main(string[] args)
+		{
+		}
+	}
 }

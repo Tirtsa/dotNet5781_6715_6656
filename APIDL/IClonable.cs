@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DO;
 
-namespace APIDL
-
+namespace DO
 {
-    public interface IDAL
-    {
-		RunningNumber GetRunningNumber { get; set; }
-	}
+    public interface IClonable { }
+
 }
