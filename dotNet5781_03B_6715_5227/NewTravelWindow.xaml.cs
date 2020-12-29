@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Diagnostics;
 
 namespace dotNet5781_03B_6715_5227
 {
@@ -23,6 +22,8 @@ namespace dotNet5781_03B_6715_5227
     {
         BackgroundWorker travelling;
         Bus myBus;
+        TravelInProgress newTravel;
+        MainWindow main;
         public NewTravelWindow()
         {
             InitializeComponent();
@@ -40,22 +41,30 @@ namespace dotNet5781_03B_6715_5227
         {
             if (e.Error != null)
                 MessageBox.Show("Error : " + e.Error.Message);
-            else if (travelling.CancellationPending == true)
+            else if (travelling.CancellationPending == false)
             {
+                //float result = (float)e.Result;
+                double result = Convert.ToDouble(e.Result);
+                int day = (int)(result / 144);
+                int hour = (int)(result - day * 6)/6;
+                int minutes = (int) ((result - day * 144.0 - hour * 6.0) / 6.0 * 60);
 
-                float result = (float)e.Result;
-                //int day = (int)(result / 1000) % 144;
-                //int hour = (int)(result / 1000 - day*144) % 6;
-                //int minutes = (int)((result / 1000) - day*144 - hour*6)/6*60 ;
-                int hour = (int)result / 6;
-                int minutes = (int)(result - hour) / 6 * 60;
 
                 //if(day != 0)
                 //    MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " + 
                 //    day + "ימים" + hour + " שעות ו " + minutes + "דקות");
                 //else
                 MessageBox.Show("נסיעתו של אוטובוס " + myBus.Immatriculation + " הסתיימה - היא ארכה " +
-                hour + " שעות ו " + minutes + "דקות");
+                hour + " שעות ו " + minutes + "דקות ");
+                
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    newTravel.Close();
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    main.Close();
+                });
+                
             }
 
 
@@ -65,30 +74,36 @@ namespace dotNet5781_03B_6715_5227
         {
             int progress = e.ProgressPercentage;
             if (Application.Current.Dispatcher.CheckAccess())
-                MessageBox.Show(progress + "%");
+            {
+                newTravel.travelProgressLabel.Content = progress + "%";
+                newTravel.travelProgressBar.Value = progress;
+            }
             else
                 Dispatcher.BeginInvoke(new Action(() => { Travelling_ProgressChanged(sender, e); }));
         }
 
         private void Travelling_DoWork(object sender, DoWorkEventArgs e)
         {
+            
+            
             int kmTravel = (int)e.Argument;
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
             Random rndVitesse = new Random(DateTime.Now.Millisecond);
             try
             {
                 myBus.BusStatus = "באמצע נסיעה";
-
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
-                    MainWindow mainWindow = new MainWindow();
-                    //mainWindow.Show();
                     this.Close();
                 });
 
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    newTravel = new TravelInProgress { Title = "נסיעתו של אוטובוס " + myBus.Immatriculation };
+                    newTravel.Show();
+                });
+
                 int vitesse = rndVitesse.Next(20, 50);
-                float totalTime = 6 * (kmTravel / vitesse);
+                double totalTime = 6 * ((double)kmTravel / vitesse);
                 for (int i = 0; i <= totalTime; i++)
                 {
                     System.Threading.Thread.Sleep(1000);
@@ -96,40 +111,33 @@ namespace dotNet5781_03B_6715_5227
                 }
                 myBus.BusStatus = "מוכן לנסיעה";
                 myBus.addTravel(kmTravel);
-                
+
+                e.Result = totalTime;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 travelling.CancelAsync();
             }
-            e.Result = stopwatch.ElapsedMilliseconds;
         }
 
         private void AddTravelButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke((Action)delegate
-            {
-                if (travelling.IsBusy != true)
-                {
-                    int travelKm;
-                    int.TryParse(travelKmTextBox.Text, out travelKm);
-                    myBus = (Bus)this.DataContext;
-                    travelling.RunWorkerAsync(travelKm);
-                }
-            });
+            int travelKm;
+            int.TryParse(travelKmTextBox.Text, out travelKm);
+            myBus = (Bus)this.DataContext;
+            travelling.RunWorkerAsync(travelKm);
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
             this.Close();
         }
 
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            main = new MainWindow();
+            main.Show();
         }
     }
 }

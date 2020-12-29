@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:dotNet5781_03B_6715_5227"
         xmlns:dotNet5781_01_6715="clr-namespace:dotNet5781_01_6715;assembly=dotNet5781_01_6715" x:Class="dotNet5781_03B_6715_5227.AddBusWindow"
         mc:Ignorable="d"
-        Title="AddBusWindow" Height="450" Width="800"
+        Title="הוספת אוטובוס" TextBlock.TextAlignment="Center" Height="450" Width="800"
         Closing="DataWindow_Closing">
     <Grid>
 

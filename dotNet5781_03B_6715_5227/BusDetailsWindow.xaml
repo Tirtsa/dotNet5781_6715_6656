@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:dotNet5781_03B_6715_5227"
         xmlns:dotNet5781_01_6715="clr-namespace:dotNet5781_01_6715;assembly=dotNet5781_01_6715" x:Class="dotNet5781_03B_6715_5227.BusDetailsWindow"
         mc:Ignorable="d"
-        Title="BusDetailsWindow" Height="450" Width="800"  Closing="DataWindow_Closing">
+        Title="פרטי האוטוסוס" TextBlock.TextAlignment="Center" Height="450" Width="800"  
+        Closing="DataWindow_Closing">
 
     <Grid>
         <Grid x:Name="grid2" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -40,8 +41,5 @@
         </Grid>
         <Button x:Name="Maintenance" Content="שלח לטיפול" HorizontalAlignment="Left" Margin="240,352,0,0" VerticalAlignment="Top" Width="75" Click="Maintenance_Click" />
         <Button x:Name="Refueling" Content="בצע תידלוק" HorizontalAlignment="Left" Margin="376,352,0,0" VerticalAlignment="Top" Width="75" Click="Refueling_Click"/>
-        <ProgressBar x:Name="resultProgressBar" HorizontalAlignment="Left" Height="10" Margin="43,57,0,0" VerticalAlignment="Top" Width="100" />
-        <Label x:Name="resultLabel" Content="Label" HorizontalAlignment="Left" Margin="174,57,0,0" VerticalAlignment="Top" Height="10" Width="16"/>
-
     </Grid>
 </Window>
