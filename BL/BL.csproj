@@ -45,6 +45,7 @@
     <Compile Include="BLIMP.cs" />
     <Compile Include="BO.cs" />
     <Compile Include="BusLine.cs" />
+    <Compile Include="BusStation.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

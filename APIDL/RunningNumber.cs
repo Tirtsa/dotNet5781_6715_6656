@@ -10,7 +10,7 @@ namespace DO
 	public class RunningNumber : IClonable
 	{
 		//public int id;
-		//public RunningNumber idNumber
+		public RunningNumber Number;
 		public int idNumber
 		{
 			get => idNumber;

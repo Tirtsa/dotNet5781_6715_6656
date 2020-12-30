@@ -22,11 +22,11 @@ namespace DL
             return target;
         }
 
-        internal static WindDirection Clone(this WindDirection original) //דרך ראשונה
+        /*internal static WindDirection Clone(this WindDirection original) //דרך ראשונה
         {
             WindDirection target = new WindDirection();
             target.direction = original.direction;
             return target;
-        }
+        }*/
     }
 }

@@ -20,10 +20,10 @@ namespace BL
             //WindDirections dir;
             RunningNumber number;
 
-            feeling = dal.GetTemparture(day);
-            number = dal.GetRunningNumber.idNumber;
+            //feeling = dal.GetTemparture(day);
+            //number = dal.GetRunningNumber.Number;
 
-            switch (number)
+            /*switch (number)
             {
                 case RunningNumbers.start:
                     feeling += 2;
@@ -31,7 +31,7 @@ namespace BL
                 default:
                     break;
             }
-            w.Feeling = (int)feeling;
+            w.Feeling = (int)feeling;*/
             return w;
         }
 

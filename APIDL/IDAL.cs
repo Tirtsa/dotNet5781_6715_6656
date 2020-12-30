@@ -10,6 +10,8 @@ namespace APIDL
 {
     public interface IDAL
     {
-		RunningNumber GetRunningNumber { get; set; }
+
+		//RunningNumber GetRunningNumber { get; set; }
+		//CRUD method calls
 	}
 }
