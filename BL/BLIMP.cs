@@ -1,5 +1,5 @@
 ﻿using System;
-using BlApi;
+using BLApi;
 using APIDL;
 //using DL;
 using BO;
@@ -7,7 +7,7 @@ using DO;
 
 namespace BL
 {
-    public class BlImp1 : IBL
+    public class BLIMP : IBL
     {
         static Random rnd = new Random(DateTime.Now.Millisecond);
 
@@ -20,10 +20,10 @@ namespace BL
             //WindDirections dir;
             RunningNumber number;
 
-            feeling = dal.GetTemparture(day);
-            number = dal.GetRunningNumber.idNumber;
+            //feeling = dal.GetTemparture(day);
+            //number = dal.GetRunningNumber.Number;
 
-            switch (number)
+            /*switch (number)
             {
                 case RunningNumbers.start:
                     feeling += 2;
@@ -31,7 +31,7 @@ namespace BL
                 default:
                     break;
             }
-            w.Feeling = (int)feeling;
+            w.Feeling = (int)feeling;*/
             return w;
         }
 

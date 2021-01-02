@@ -6,9 +6,24 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-	public enum RunningNumbers { start, edit, delete, travel}
+	//public enum RunningNumbers { start, edit, delete, travel}
 	public class RunningNumber : IClonable
 	{
-		public RunningNumber idNumber { get; set; }
+		//public int id;
+		public RunningNumber Number;
+		public int idNumber
+		{
+			get => idNumber;
+			set
+			{
+				if (value < 1000000)
+					while (value < 1000000)
+						value *= 10;
+				else if (value > 99999999)
+					while (value > 99999999)
+						value /= 10;
+				idNumber = value;
+			}
+		}
 	}
 }

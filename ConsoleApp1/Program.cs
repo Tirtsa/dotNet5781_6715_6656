@@ -1,5 +1,5 @@
 ﻿using System;
-using BlApi;
+using BLApi;
 using BO;
 
 
@@ -11,7 +11,7 @@ namespace PlConsole
 
         static void Main(string[] args)
         {
-            bl = BlFactory.GetBl();
+            bl = BlFactory.GetBL();
 
             Console.Write("Please enter how many days back: ");
             int days = int.Parse(Console.ReadLine());

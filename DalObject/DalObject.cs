@@ -10,14 +10,14 @@ using DS;
 namespace DL
 {
     public class DalObject : IDAL
-    {
+    {//CRUD method implimentations
         #region singelton
         static readonly DalObject instance = new DalObject();
         static DalObject() { }
         DalObject() { }
         public static DalObject Instance => instance;
         #endregion
-
+        
         static Random rnd = new Random(DateTime.Now.Millisecond);
         double temperature;
 
@@ -27,14 +27,10 @@ namespace DL
             temperature += rnd.NextDouble() * 10 - 5;
             return temperature;
         }
+        //CreateBusLine (busLine.id = DS.DataSource.RunningNumber)
+        //
+        //public RunningNumber GetRunningNumber()
 
-        public RunningNumber GetRunningNumber()
-		{
-            RunningNumber idNumber = DataSource.idNumber.Find(d => true);
-            var idNumbers = (RunningNumbers[])Enum.GetValues(typeof(RunningNumbers));
-            //idNumber.idNumber = idNumbers[rnd.Next(0, idNumbers.Length)];
-            return idNumber.Clone();
-		}
         //public WindDirection GetWindDirection(int day)
         //{
         //    WindDirection direction = DataSource.directions.Find(d => true);
