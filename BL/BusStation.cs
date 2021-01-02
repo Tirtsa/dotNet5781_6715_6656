@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-	class BusStation
+	public class BusStation
 	{
-		//tostring
-	}
+        public int BusStationKey { get; set; }
+        public string StationName { get; set; }
+        public string Address { get; set; }
+
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
+    }
 }
