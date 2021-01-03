@@ -107,8 +107,8 @@ namespace dotNet5781_03B_6715_5227
         private void Refueling_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int progress = e.ProgressPercentage;
-            resultLabel.Content = progress + "%";
-            resultProgressBar.Value = progress;
+            //resultLabel.Content = progress + "%";
+            //resultProgressBar.Value = progress;
 
         }
 

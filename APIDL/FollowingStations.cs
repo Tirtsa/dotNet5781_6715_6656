@@ -11,8 +11,8 @@ namespace DO
         public int Id { get; set; }
         public int KeyStation1 { get; set; }
         public int KeyStation2 { get; set; }
-        public float Distance { get; set; }
-        public float AverageJourneyTime { get; set; }
+        public double Distance { get; set; }
+        public double AverageJourneyTime { get; set; }
 
         public override string ToString()
         {

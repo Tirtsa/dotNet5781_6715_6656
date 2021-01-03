@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using DO;
 using APIDL;
+using System.Device.Location;
 
 
 namespace DS
@@ -612,11 +613,32 @@ namespace DS
 			ListFollowingStations = new List<FollowingStations>
 			{
 				new FollowingStations
-                {
+				{
 					Id = FollowingStationsId++,
 					KeyStation1 = 38831,
 					KeyStation2 = 38894,
-                }
+					Distance = new GeoCoordinate(32.183921, 34.917806).GetDistanceTo(new GeoCoordinate(31.813285, 34.775928)),
+					AverageJourneyTime = 
+						new GeoCoordinate(32.183921, 34.917806).GetDistanceTo(new GeoCoordinate(31.813285, 34.775928))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 38894,
+					KeyStation2 = 39002,
+					Distance = new GeoCoordinate(31.813285, 34.775928).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.813285, 34.775928).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 39002,
+					KeyStation2 = 39006,
+					Distance = new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922))*0.0012*0.5,
+				},
 			};
 		} 
 	}

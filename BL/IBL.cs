@@ -9,6 +9,6 @@ namespace BLApi
 {
     public interface IBL
     {
-        Weather GetWeather(int day);
+        
     }
 }

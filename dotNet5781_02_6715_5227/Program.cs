@@ -330,7 +330,7 @@ namespace dotNet5781_02_6715_5227
         List<BusLine> BusesLines = new List<BusLine>();
 
 
-        public new IEnumerator GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
             for (int i = 0; i < BusesLines.Count; i++)
                 yield return BusesLines[i];

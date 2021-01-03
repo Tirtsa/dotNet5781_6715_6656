@@ -15,7 +15,6 @@ namespace APIDL
     // Delete - delete an instance
     public interface IDAL
     {
-		RunningNumber GetRunningNumber { get; set; }
 
         #region Station
         IEnumerable<DO.BusStation> GetAllStations();
@@ -31,7 +30,7 @@ namespace APIDL
         IEnumerable<DO.BusStation> GetAllLines();
         IEnumerable<DO.BusStation> GetAllLinesBy(Predicate<DO.BusStation> predicate);
         DO.BusStation GetLine(int id);
-        void AddLine(DO.BusStation station);
+        void AddLine(DO.BusLine line);
         void UpdateLine(DO.BusStation station);
         void UpdateLine(int id, Action<DO.BusStation> update);
         void DeleteLine(int id);
@@ -41,17 +40,17 @@ namespace APIDL
         IEnumerable<DO.BusStation> GetAllLineStations();
         IEnumerable<DO.BusStation> GetAllLineStationsBy(Predicate<DO.BusStation> predicate);
         DO.BusStation GetLineStation(int id);
-        void AddLineStation(DO.BusStation station);
+        void AddLineStation(DO.LineStation lineStation);
         void UpdateLineStation(DO.BusStation station);
         void UpdateLineStation(int id, Action<DO.BusStation> update);
         void DeleteLineStation(int id);
         #endregion
 
         #region FollowingStations
-        IEnumerable<DO.BusStation> GetAllFollowingStations();
-        IEnumerable<DO.BusStation> GetAllFollowingStationsBy(Predicate<DO.BusStation> predicate);
-        DO.BusStation GetFollowingStations(int id);
-        void AddFollowingStations(DO.BusStation station);
+        IEnumerable<DO.FollowingStations> GetAllFollowingStations();
+        IEnumerable<DO.FollowingStations> GetAllFollowingStationsBy(Predicate<DO.BusStation> predicate);
+        DO.FollowingStations GetFollowingStations(int id);
+        void AddFollowingStations(DO.BusStation station1, DO.BusStation station2);
         void UpdateFollowingStations(DO.BusStation station);
         void UpdateFollowingStations(int id, Action<DO.BusStation> update);
         void DeleteFollowingStations(int id);
