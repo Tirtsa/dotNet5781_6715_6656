@@ -47,10 +47,10 @@ namespace DS
 			{
 				new BusStation
 				{
-					BusStationKey = 38831, 
-					StationName =" בי''ס בר לב / בן יהודה", 
-					Address =" רחוב:בן יהודה 76 עיר: כפר סבא רציף: קומה", 
-					Latitude = 32.183921,    
+					BusStationKey = 38831,
+					StationName =" בי''ס בר לב / בן יהודה",
+					Address =" רחוב:בן יהודה 76 עיר: כפר סבא רציף: קומה",
+					Latitude = 32.183921,
 					Longitude = 34.917806,
 				},
 				new BusStation
@@ -213,7 +213,248 @@ namespace DS
 					Address ="רחוב:חיים ברלב 30 עיר: מודיעין מכבים רעות רציף:   קומה",
 					Latitude = 31.907828,
 					Longitude = 35.000614,
+				},
+				new BusStation
+				{
+					BusStationKey = 39028,
+					StationName ="חיים ברלב/מרדכי מקלף",
+					Address ="רחוב:חיים ברלב 30 עיר: מודיעין מכבים רעות רציף:   קומה",
+					Latitude = 31.907828,
+					Longitude = 35.000614,
+				},
+				new BusStation
+				{
+					BusStationKey = 39028,
+					StationName ="חיים ברלב/מרדכי מקלף",
+					Address ="רחוב:חיים ברלב 30 עיר: מודיעין מכבים רעות רציף:   קומה",
+					Latitude = 31.907828,
+					Longitude = 35.000614,
+				},
+				new BusStation
+				{
+					BusStationKey = 39028,
+					StationName ="חיים ברלב/מרדכי מקלף",
+					Address ="רחוב:חיים ברלב 30 עיר: מודיעין מכבים רעות רציף:   קומה",
+					Latitude = 31.907828,
+					Longitude = 35.000614,
+				},
+				new BusStation
+				{
+					BusStationKey = 39028,
+					StationName ="חיים ברלב/מרדכי מקלף",
+					Address ="רחוב:חיים ברלב 30 עיר: מודיעין מכבים רעות רציף:   קומה",
+					Latitude = 31.907828,
+					Longitude = 35.000614,
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39040, 
+					Address = " רחוב:רבאט  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "גן חק''ל/רבאט", 
+					Latitude = 31.931204, 
+					Longitude = 34.884956 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39041, 
+					Address = " רחוב:דוכיפת  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "קניון צ. רמלה לוד/דוכיפת", 
+					Latitude = 31.933379, 
+					Longitude = 34.887207 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39042, 
+					Address = " רחוב:היצירה 2 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "היצירה/התקווה", 
+					Latitude = 31.929318, 
+					Longitude = 34.880069 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39043, 
+					Address = " רחוב:היצירה  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "היצירה/התקווה", 
+					Latitude = 31.929199, 
+					Longitude = 34.879993 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39044, 
+					Address = " רחוב:עמל  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "עמל/היצירה", 
+					Latitude = 31.932402, 
+					Longitude = 34.881442 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39049, 
+					Address = " רחוב:ישראל פרנקל 10 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "פרנקל/ויתקין", 
+					Latitude = 31.936159, 
+					Longitude = 34.864906 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39050, 
+					Address = " רחוב:ישראל פרנקל 11 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "פרנקל/ויתקין", 
+					Latitude = 31.936022, 
+					Longitude = 34.86495 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39051, 
+					Address = " רחוב:ישראל פרנקל 17 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "ישראל פרנקל/דוב הוז", 
+					Latitude = 31.935488, 
+					Longitude = 34.863972 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39052, 
+					Address = " רחוב:גיורא יוספטל 6 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "יוספטל/הדס", 
+					Latitude = 31.936109, 
+					Longitude = 34.857638 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39056, 
+					Address = " רחוב:שמחה הולצברג  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "אהרון בוגנים/משה שרת", 
+					Latitude = 31.933413, 
+					Longitude = 34.853906 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39057, 
+					Address = " רחוב:שמחה הולצברג 10 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "גרשון ש''ץ/שמחה הולצברג", 
+					Latitude = 31.932532, 
+					Longitude = 34.853223 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39058, 
+					Address = " רחוב:שמחה הולצברג 4 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "הולצברג/שץ", 
+					Latitude = 31.93166, 
+					Longitude = 34.853149 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39059, 
+					Address = " רחוב:לוי אשכול 11 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "אשכול/הרב שפירא", 
+					Latitude = 31.929827, 
+					Longitude = 34.857194 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39060, 
+					Address = " רחוב:יהודה שטיין  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "יהודה שטיין/קרן היסוד", 
+					Latitude = 31.926545, 
+					Longitude = 34.855866 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39066, 
+					Address = " רחוב:שמשון הגיבור  עיר: רמלה רציף:   קומה:  ", 
+					StationName = "שמשון הגיבור/המסגד", 
+					Latitude = 31.926441, 
+					Longitude = 34.866014 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39068, 
+					Address = " רחוב:ח.נ. ביאליק 19 עיר: רמלה רציף:   קומה:", 
+					StationName = "ביאליק/חניתה", 
+					Latitude = 31.924484, 
+					Longitude = 34.870366 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39069, 
+					Address = " רחוב:ח.נ. ביאליק 43 עיר: רמלה רציף:   קומה:", 
+					StationName = "ביאליק/ירמיהו", 
+					Latitude = 31.92055, 
+					Longitude = 34.868205 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39070, 
+					Address = " רחוב:א.ס. לוי 1 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "א.ס לוי/סעדיה מרדכי", 
+					Latitude = 31.9209, 
+					Longitude = 34.861221 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39071, 
+					Address = " רחוב:שדרות דוד רזיאל 5 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "רזיאל/זכריה", 
+					Latitude = 31.923666, 
+					Longitude = 34.862813 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39072, 
+					Address = " רחוב:חרוד  עיר: ישרש רציף:   קומה:  ", 
+					StationName = "חרוד א", 
+					Latitude = 31.912572, 
+					Longitude = 34.850134 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39073, 
+					Address = " רחוב:חרוד  עיר: ישרש רציף:   קומה:  ", 
+					StationName = "חרוד/הירדן", 
+					Latitude = 31.915977, 
+					Longitude = 34.848217 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39075, 
+					Address = " רחוב:הירדן  עיר: ישרש רציף:   קומה:  ", 
+					StationName = "הירדן/דן", 
+					Latitude = 31.915489, 
+					Longitude = 34.852139 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39076, 
+					Address = " רחוב:עוזי חיטמן 44 עיר: רמלה רציף:   קומה:  ", 
+					StationName = "עוזי חיטמן/שושנה דמארי", 
+					Latitude = 31.917022, 
+					Longitude = 34.868261 
+				},
+				new BusStation 
+				{ 
+					BusStationKey = 39091, 
+					Address = "רחוב:דרך החרוב  עיר: שילת רציף:   קומה", 
+					StationName = "החרוב א",
+					Latitude = 31.919207,
+					Longitude = 35.0234
+				},
+				new BusStation
+				{
+					BusStationKey = 39092,
+					Address = "רחוב:  עיר: כפר רות רציף:   קומה",
+					StationName ="כפר רות",
+					Latitude = 31.910544,
+					Longitude = 35.034349
+				},
+				new BusStation
+				{
+					BusStationKey = 39093,
+					Address = "רחוב:  עיר: כפר רות רציף:   קומה",
+					StationName = "כפר רות",
+					Latitude = 31.910485,
+					Longitude = 35.034441
 				}
+
 			};
 
 			ListLines = new List<BusLine>
