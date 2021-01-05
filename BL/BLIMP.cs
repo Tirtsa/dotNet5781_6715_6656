@@ -12,12 +12,14 @@ namespace BL
     {
 		//static Random rnd = new Random(DateTime.Now.Millisecond);
 
-		readonly IBL bl = BlFactory.GetBL();
+		readonly IDAL dl = DalFactory.GetDal();
 		public void AddBusLine(BO.BusLine newLine)
 		{
+			//int id = dl.AddLine();//call to converter BO.BusLine to DO.BusLine
 			if (DataSource.ListLines.FirstOrDefault(line => line.Id == newLine.Id) != null)
 				throw new ArgumentException("This bus line already exists");
 			//DataSource.ListLines.Add(newLine);
+			//"for" on list of stations and add linestationId using the id of newline(l.18) 
 		}
 
 		public void AddStation(BO.BusStation station)

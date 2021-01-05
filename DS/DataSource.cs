@@ -606,7 +606,7 @@ namespace DS
 					Id = LineStationId++,
 					LineId = 4,
 					StationKey = 39019,
-					RankInLine = 4
+					RankInLine = 3
 				},
 			};
 

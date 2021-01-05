@@ -129,7 +129,7 @@ namespace DL
         #region Line
         public void AddLine(BusLine line)
         {
-            if (DataSource.ListLines.FirstOrDefault(l => l.Id == line.Id) != null)
+            if (DataSource.ListLines.FirstOrDefault(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area) != null)
                 //throw new DO.BadPersonIdException(person.ID, "Duplicate person ID");
             DataSource.ListLines.Add(line.Clone());
         }
@@ -156,7 +156,7 @@ namespace DL
         }
         public void UpdateLine(BusLine line)
         {
-            BusLine tempLine = DataSource.ListLines.Find(l => l.Id == line.Id);
+            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area);
             if (tempLine != null)
             {
                 DataSource.ListLines.Remove(tempLine);
