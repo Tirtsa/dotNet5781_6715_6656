@@ -54,6 +54,10 @@
       <Project>{1eda3fbc-dc8d-404e-bc85-5c8f1416de67}</Project>
       <Name>APIDL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DS\DS.csproj">
+      <Project>{0a7f3a5a-d0d4-4056-8ab3-4d7d9e34c444}</Project>
+      <Name>DS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
