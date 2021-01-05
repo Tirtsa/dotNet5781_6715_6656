@@ -30,20 +30,6 @@ namespace DS
 		static void InitAllLists()
 		{
 
-			//while (Stations.Count() != 50)           //randomly initializing bus list of 21 buses
-			//{
-			//	BusStation station = new BusStation();
-			//}
-
-			//while (Buses.Count() != 25)           //randomly initializing bus list of 21 buses
-			//{
-			//	BusLine bus = new BusLine();
-			//	int rand = new Random().Next(1000000, 99999999);
-
-			//	Thread.Sleep(100);
-			//	//add at least 10 bus stops for 10 buses
-			//}
-
 			ListStations = new List<BusStation>
 			{
 				new BusStation

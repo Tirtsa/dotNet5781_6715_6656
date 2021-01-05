@@ -12,7 +12,7 @@ namespace DL
 {
     public class DalObject : IDAL
     {
-        //CRUD method implimentations
+        //CRUD method implementations
         #region singelton
         static readonly DalObject instance = new DalObject();
         static DalObject() { }
@@ -65,7 +65,8 @@ namespace DL
 
         public void UpdateStation(int id, Action<BusStation> update)
         {
-            throw new NotImplementedException();
+            BusStation sta = DataSource.ListStations.Find(s => s.BusStationKey == id);
+            update(sta);
         }
         #endregion
 
@@ -130,7 +131,7 @@ namespace DL
         public void AddLine(BusLine line)
         {
             if (DataSource.ListLines.FirstOrDefault(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area) != null)
-                //throw new DO.BadPersonIdException(person.ID, "Duplicate person ID");
+                //throw new 
             DataSource.ListLines.Add(line.Clone());
         }
         public void DeleteLine(int id)
@@ -177,15 +178,6 @@ namespace DL
             if (DataSource.ListLineStations.FirstOrDefault(s => s.Id == lineStation.Id)!= null)
                 throw new ArgumentException("Duplicate Stations");
             DataSource.ListLineStations.Add(lineStation);
-
-            //DataSource.ListLineStations.Add( 
-            //    new LineStation
-            //    {
-            //        Id = DS.DataSource.LineStationId++,
-            //        LineId = lineStation.LineId,
-            //        StationKey = lineStation.StationKey,
-            //        RankInLine = lineStation.RankInLine
-            //    });
         }
 
         public void DeleteLineStation(int id)
