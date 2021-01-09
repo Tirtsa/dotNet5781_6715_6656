@@ -20,15 +20,7 @@ namespace PlConsole
 
             foreach (DO.BusStation item in dl.GetAllStationsBy(s=>s.BusStationKey == 38831))
                 Console.WriteLine(item);
-            var request = from stat in DataSource.ListLineStations 
-                          where predicate(stat)
-                          select stat;
-            bool predicate (DO.LineStation stat)
-            {
-                return stat.StationKey == 38831;
-            }
-            foreach (DO.LineStation item in request)
-                Console.WriteLine(item);
+            
             foreach(DO.LineStation item in dl.GetAllLineStationsBy(s => s.StationKey == 38831))
                 Console.WriteLine(item);
 
@@ -37,9 +29,25 @@ namespace PlConsole
             Console.ReadKey();
             foreach (BusStation item in bl.GetAllBusStations())
                 Console.WriteLine(item);
-            bl.AddStation(new BusStation { Address = "testAdresse", BusStationKey = 12345, StationName = "testNom", });
+            try
+            {
+                bl.AddStation(new BusStation { Address = "testAdresse", BusStationKey = 12345, StationName = "testNom", });
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             foreach (BusStation item in bl.GetAllBusStations())
                 Console.WriteLine(item);
+            //bl.DeleteStation(12345);
+            //bl.UpdateBusStation(new BusStation { Address = "MonNewtestAdresse", BusStationKey = 12345, StationName = "2etestNom" });
+            //bl.UpdateBusStation(12345, testVoid); Need to define function's body
+            //void testVoid (BusStation myStation)
+            //{
+            //    myStation.BusStationKey = 45678;
+            //}
+
             Console.ReadKey();
         }
     }

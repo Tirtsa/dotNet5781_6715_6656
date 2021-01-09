@@ -28,9 +28,9 @@ namespace BL
 			//};
 			DO.BusStation stationDo = new DO.BusStation();
 			stationBo.CopyPropertiesTo(stationDo);
-			if (dl.GetStation(stationDo.BusStationKey).Latitude == 0)
+			if (stationDo.Latitude == 0)
 				stationDo.Latitude = rndLat.NextDouble() + 31;
-			if (dl.GetStation(stationDo.BusStationKey).Longitude == 0)
+			if (stationDo.Longitude == 0)
 				stationDo.Longitude = rndLong.NextDouble() + 34;
 			return stationDo;
 		}
@@ -38,9 +38,8 @@ namespace BL
         {
 			BO.BusStation stationBo = new BO.BusStation();
 			stationDo.CopyPropertiesTo(stationBo);
-			
-			stationBo.LinesThatPass = (from line in dl.GetAllLineStationsBy(s => s.StationKey == stationBo.BusStationKey)
-									   select line.LineId).ToList();
+			stationBo.LinesThatPass = from line in dl.GetAllLineStationsBy(s => s.StationKey == stationBo.BusStationKey)
+									  select line.LineId;
 			return stationBo;
         }
 

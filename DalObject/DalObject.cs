@@ -51,14 +51,11 @@ namespace DL
 
         public BusStation GetStation(int id)
         {
-            try
-            {
-                return DataSource.ListStations.Find(s => s.BusStationKey == id).Clone();
-            }
-            catch
-            {
-                throw new ArgumentException("Bus Station doesn't exist");
-            }
+                if (DataSource.ListStations.Find(s => s.BusStationKey == id) != null)
+                    return DataSource.ListStations.Find(s => s.BusStationKey == id).Clone();
+                else
+                    throw new ArgumentException("Bus Station doesn't exist");
+            
         }
         public void UpdateStation(BusStation station)
         {
