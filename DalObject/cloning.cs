@@ -10,7 +10,7 @@ namespace DL
     static class Cloning
     {
 
-        internal static T Clone<T>(this T original)//דרך שלישית - בונוס
+        internal static T Clone<T>(this T original)
         {
             T target = (T)Activator.CreateInstance(original.GetType());
             foreach (PropertyInfo item in typeof(T).GetProperties())

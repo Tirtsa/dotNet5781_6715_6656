@@ -31,6 +31,8 @@ namespace DL
         public void DeleteStation(int id)
         {
             var stationToDelete = DataSource.ListStations.Where(s => s.BusStationKey == id).FirstOrDefault();
+            if (stationToDelete == null)
+                throw new ArgumentException("It's not exist Bus Station with this key : " + id);
             DataSource.ListStations.Remove(stationToDelete);
         }
 
@@ -49,7 +51,14 @@ namespace DL
 
         public BusStation GetStation(int id)
         {
-            return DataSource.ListStations.Find(s => s.BusStationKey == id).Clone();
+            try
+            {
+                return DataSource.ListStations.Find(s => s.BusStationKey == id).Clone();
+            }
+            catch
+            {
+                throw new ArgumentException("Bus Station doesn't exist");
+            }
         }
         public void UpdateStation(BusStation station)
         {
@@ -59,8 +68,8 @@ namespace DL
                 DataSource.ListStations.Remove(sta);
                 DataSource.ListStations.Add(station.Clone());
             }
-            //else
-                //throw new exception that station to update doesn't exist 
+            else
+                throw new ArgumentException("station to update doesn't exist");
         }
 
         public void UpdateStation(int id, Action<BusStation> update)
@@ -73,9 +82,10 @@ namespace DL
         #region FollowingStations
         public void AddFollowingStations(BusStation station1, BusStation station2)
         {
-            if (DataSource.ListFollowingStations.FirstOrDefault(f => f.KeyStation1 == station1.BusStationKey 
-                && f.KeyStation2 == station2.BusStationKey) != null)
-                //throw new exception to alert on duplicate stations
+            if (DataSource.ListFollowingStations.FirstOrDefault(f => (f.KeyStation1 == station1.BusStationKey
+                && f.KeyStation2 == station2.BusStationKey) || (f.KeyStation1 == station2.BusStationKey
+                && f.KeyStation2 == station1.BusStationKey)) != null)
+                throw new ArgumentException("duplicate stations");
             DataSource.ListFollowingStations.Add( 
                 new FollowingStations
                 {
@@ -88,9 +98,11 @@ namespace DL
                     (new GeoCoordinate(station2.Latitude, station2.Longitude))*0.0012*0.5
                 });
         }
-        public void DeleteFollowingStations(int id)
+        public void DeleteFollowingStations(BusStation station1, BusStation station2)
         {
-            var followingStationToDelete = DataSource.ListFollowingStations.Where(f => f.Id == id).FirstOrDefault();
+            var followingStationToDelete = DataSource.ListFollowingStations.Where(f => (f.KeyStation1 == station1.BusStationKey
+                && f.KeyStation2 == station2.BusStationKey) || (f.KeyStation1 == station2.BusStationKey
+                && f.KeyStation2 == station1.BusStationKey)).FirstOrDefault();
             DataSource.ListFollowingStations.Remove(followingStationToDelete);
         }
         public IEnumerable<FollowingStations> GetAllFollowingStations()
@@ -105,38 +117,47 @@ namespace DL
                    where predicate(fs)
                    select fs.Clone();
         }
-        public FollowingStations GetFollowingStations(int id)
+        public FollowingStations GetFollowingStations(BusStation station1, BusStation station2)
         {
-            return DataSource.ListFollowingStations.Find(f => f.Id == id).Clone();
+            return DataSource.ListFollowingStations.Find(f => (f.KeyStation1 == station1.BusStationKey
+                && f.KeyStation2 == station2.BusStationKey) || (f.KeyStation1 == station2.BusStationKey
+                && f.KeyStation2 == station1.BusStationKey)).Clone();
         }
         public void UpdateFollowingStations(BusStation station1, BusStation station2)
         {
-            FollowingStations folStat = DataSource.ListFollowingStations.Find(s => s.KeyStation1 == station1.BusStationKey
-            && s.KeyStation2 == station2.BusStationKey);
+            FollowingStations folStat = DataSource.ListFollowingStations.Find(s => (s.KeyStation1 == station1.BusStationKey
+            && s.KeyStation2 == station2.BusStationKey) || (s.KeyStation1 == station2.BusStationKey
+            && s.KeyStation2 == station1.BusStationKey));
             if (folStat != null)
             {
                 DataSource.ListFollowingStations.Remove(folStat);
                 AddFollowingStations(station1, station2);
             }
-            //else throx exception
+            else
+                throw new ArgumentException("Following stations between " + station1 + " and " + station2 + " doesn't exist");
         }
 
-        public void UpdateFollowingStations(int id, Action<FollowingStations> update)
+        public void UpdateFollowingStations(BusStation busStation1, BusStation busStation2, Action<FollowingStations> update)
         {
-            throw new NotImplementedException();
+            FollowingStations following = DataSource.ListFollowingStations.Find(s => (s.KeyStation1 == busStation1.BusStationKey
+            && s.KeyStation2 == busStation2.BusStationKey) || (s.KeyStation1 == busStation2.BusStationKey
+            && s.KeyStation2 == busStation1.BusStationKey));
+            update(following);
         }
         #endregion
 
-        #region Line
+        #region BusLine
         public void AddLine(BusLine line)
         {
             if (DataSource.ListLines.FirstOrDefault(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area) != null)
-                //throw new 
+                throw new ArgumentException("Duplicate BusLine");
+            line.Id = DataSource.LineId++;
             DataSource.ListLines.Add(line.Clone());
         }
-        public void DeleteLine(int id)
+        public void DeleteLine(BusLine line)
         {
-            var lineToDelete = DataSource.ListLines.Where(t => t.Id == id).FirstOrDefault();
+            var lineToDelete = DataSource.ListLines.Where(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area).
+                FirstOrDefault();
             DataSource.ListLines.Remove(lineToDelete);
         }
         public IEnumerable<BusLine> GetAllLines()
@@ -151,24 +172,31 @@ namespace DL
                    where predicate(line)
                    select line.Clone();
         }
-        public BusLine GetLine(int id)
+        public BusLine GetLine(int lineId, Areas area)
         {
-            return DataSource.ListLines.Find(l => l.Id == id).Clone();
+            return DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area).Clone();
+        }
+        public BusLine GetLine (int Id)
+        {
+            return DataSource.ListLines.Find(l => l.Id == Id);
         }
         public void UpdateLine(BusLine line)
         {
             BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area);
             if (tempLine != null)
             {
+                line.Id = tempLine.Id;
                 DataSource.ListLines.Remove(tempLine);
                 DataSource.ListLines.Add(line.Clone());
             }
-            //else throw exception that line doesn't exist
+            else
+                throw new ArgumentException("line doesn't exist");
         }
 
-        public void UpdateLine(int id, Action<BusLine> update)
+        public void UpdateLine(BusLine line, Action<BusLine> update)
         {
-            throw new NotImplementedException();
+            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area);
+            update(tempLine);
         }
         #endregion
 
@@ -177,12 +205,14 @@ namespace DL
         {
             if (DataSource.ListLineStations.FirstOrDefault(s => s.Id == lineStation.Id)!= null)
                 throw new ArgumentException("Duplicate Stations");
+            lineStation.Id = DataSource.LineStationId++;
             DataSource.ListLineStations.Add(lineStation);
         }
 
-        public void DeleteLineStation(int id)
+        public void DeleteLineStation(LineStation lineStation)
         {
-            var lineStationToDelete = DataSource.ListLineStations.Where(t => t.Id == id).FirstOrDefault();
+            var lineStationToDelete = DataSource.ListLineStations.Where(t => t.LineId == lineStation.LineId && t.StationKey == 
+                lineStation.StationKey).FirstOrDefault();
             DataSource.ListLineStations.Remove(lineStationToDelete);
         }
 
@@ -199,26 +229,31 @@ namespace DL
                    select stat.Clone();
         }
 
-        public LineStation GetLineStation(int id)
+        public LineStation GetLineStation(int lineId, int stationKey)
         {
-            return DataSource.ListLineStations.FirstOrDefault(s => s.Id == id).Clone();
+            return DataSource.ListLineStations.FirstOrDefault(s => s.Id == lineId && s.StationKey == stationKey).Clone();
         }
 
 
         public void UpdateLineStation(LineStation station)
         {
-            LineStation tempStat = DataSource.ListLineStations.FirstOrDefault(s => s.Id == station.Id);
+            LineStation tempStat = DataSource.ListLineStations.FirstOrDefault(s => s.LineId == station.LineId && 
+            s.StationKey == station.StationKey);
             if (tempStat != null)
             {
+                station.Id = tempStat.Id;
                 DataSource.ListLineStations.Remove(tempStat);
                 DataSource.ListLineStations.Add(station);
             }
-            //else throw that line station doesn't exist
+            else
+                throw new ArgumentException("line station doesn't exist");
         }
 
-        public void UpdateLineStation(int id, Action<LineStation> update)
+        public void UpdateLineStation(LineStation station, Action<LineStation> update)
         {
-            throw new NotImplementedException();
+            LineStation tempStat = DataSource.ListLineStations.FirstOrDefault(s => s.LineId == station.LineId &&
+            s.StationKey == station.StationKey);
+            update(tempStat);
         }
         #endregion
 

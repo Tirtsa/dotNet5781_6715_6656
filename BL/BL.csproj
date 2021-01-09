@@ -45,6 +45,7 @@
     <Compile Include="BLIMP.cs" />
     <Compile Include="BusLine.cs" />
     <Compile Include="BusStation.cs" />
+    <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />
