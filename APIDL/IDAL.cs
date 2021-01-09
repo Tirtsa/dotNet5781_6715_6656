@@ -29,31 +29,32 @@ namespace APIDL
         #region BusLine
         IEnumerable<DO.BusLine> GetAllLines();
         IEnumerable<DO.BusLine> GetAllLinesBy(Predicate<DO.BusLine> predicate);
-        DO.BusLine GetLine(int id);
+        DO.BusLine GetLine(int id, Areas area);
+        DO.BusLine GetLine(int Id);
         void AddLine(DO.BusLine line);
         void UpdateLine(DO.BusLine line);
-        void UpdateLine(int id, Action<DO.BusLine> update);
-        void DeleteLine(int id);
+        void UpdateLine(BusLine line, Action<DO.BusLine> update);
+        void DeleteLine(BusLine line);
         #endregion
 
         #region LineStation
         IEnumerable<DO.LineStation> GetAllLineStations();
         IEnumerable<DO.LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate);
-        DO.LineStation GetLineStation(int id);
+        DO.LineStation GetLineStation(int lineId, int stationKey);
         void AddLineStation(DO.LineStation lineStation);
         void UpdateLineStation(DO.LineStation station);
-        void UpdateLineStation(int id, Action<DO.LineStation> update);
-        void DeleteLineStation(int id);
+        void UpdateLineStation(LineStation lineStation, Action<DO.LineStation> update);
+        void DeleteLineStation(LineStation lineStation);
         #endregion
 
         #region FollowingStations
         IEnumerable<DO.FollowingStations> GetAllFollowingStations();
-        IEnumerable<DO.FollowingStations> GetAllFollowingStationsBy(Predicate<DO.FollowingStations> predicate);
-        DO.FollowingStations GetFollowingStations(int id);
-        void AddFollowingStations(DO.BusStation station1, DO.BusStation station2);
-        void UpdateFollowingStations(DO.BusStation station1, DO.BusStation station2);
-        void UpdateFollowingStations(int id, Action<DO.FollowingStations> update);
-        void DeleteFollowingStations(int id);
+        IEnumerable<DO.FollowingStations> GetAllFollowingStationsBy(Predicate<FollowingStations> predicate);
+        DO.FollowingStations GetFollowingStations(BusStation station1, BusStation station2);
+        void AddFollowingStations(BusStation station1, BusStation station2);
+        void UpdateFollowingStations(BusStation station1, BusStation station2);
+        void UpdateFollowingStations(BusStation station1, BusStation station2, Action<FollowingStations> update);
+        void DeleteFollowingStations(BusStation station1, BusStation station2);
         #endregion
     }
 }

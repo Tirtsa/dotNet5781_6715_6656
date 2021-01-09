@@ -11,32 +11,137 @@ namespace BL
 {
 	public class BLIMP : IBL
     {
-		//static Random rnd = new Random(DateTime.Now.Millisecond);
-
 		readonly IDAL dl = DalFactory.GetDal();
+		static Random rndLat = new Random(DateTime.Now.Millisecond);
+		static Random rndLong = new Random(DateTime.Now.Millisecond);
 
-		private DO.BusLine BusLineConverter(BO.BusLine line)
+        #region BusStation
+		DO.BusStation BusStationBoDoAdapter (BO.BusStation stationBo)
+        {
+			//new DO.BusStation
+			//{
+			//	BusStationKey = stationBo.BusStationKey,
+			//	Address = stationBo.Address,
+			//	StationName = stationBo.StationName,
+			//	Latitude = rndLat.NextDouble() + 31,
+			//	Longitude = rndLong.NextDouble() + 34
+			//};
+			DO.BusStation stationDo = new DO.BusStation();
+			stationBo.CopyPropertiesTo(stationDo);
+			if (stationDo.Latitude == 0)
+				stationDo.Latitude = rndLat.NextDouble() + 31;
+			if (stationDo.Longitude == 0)
+				stationDo.Longitude = rndLong.NextDouble() + 34;
+			return stationDo;
+		}
+		BO.BusStation BusStationDoBoAdapter (DO.BusStation stationDo)
+        {
+			BO.BusStation stationBo = new BO.BusStation();
+			stationDo.CopyPropertiesTo(stationBo);
+			stationBo.LinesThatPass = from line in dl.GetAllLineStationsBy(s => s.StationKey == stationBo.BusStationKey)
+									  select line.LineId;
+			return stationBo;
+        }
+
+		public void AddStation(BO.BusStation newStation)
 		{
-			foreach(DO.BusLine busLine in DataSource.ListLines)
+			DO.BusStation stationToAdd = BusStationBoDoAdapter(newStation);
+			try
 			{
-				if (busLine.BusLineNumber == line.BusLineNumber && busLine.Area == line.Area)
-					return busLine;
+				dl.AddStation(stationToAdd);
 			}
-			//throw line doesnt exist
-			return null;
+			catch
+            {
+				throw new ArgumentException("BL failed to add station because : Duplicate Stations");
+            }
 		}
 
-		private DO.BusStation BusStationConverter(BO.BusStation station)
+		public void DeleteStation(int key)
 		{
-			foreach (DO.BusStation busStation in DataSource.ListStations)
+			try
 			{
-				if (busStation.BusStationKey == station.BusStationKey)
-					return busStation;
+				dl.DeleteStation(key);
+            }
+            catch
+            {
+				throw new ArgumentException("It's not exist Bus Station with this key : " + key);
 			}
-			//throw station doesnt exist
-			return null;
 		}
-		
+
+		public void UpdateBusStation(BO.BusStation station)
+		{
+			try
+			{
+				dl.UpdateStation(BusStationBoDoAdapter(station));
+			}
+			catch
+			{
+				throw new ArgumentException("This Bus Station not exist");
+			}
+			
+		}
+
+		public void UpdateBusStation(int id, Action<BO.BusStation> action)
+		{
+			//Action<DO.BusStation> newAction = action(BusLineDoBoAdapter(DO.BusStation));
+			//dl.UpdateStation(id, newAction);
+		}
+
+
+		public BO.BusStation GetBusStation(int key)
+		{
+			try
+            {
+				return BusStationDoBoAdapter(dl.GetStation(key));
+			}
+			catch
+            {
+				throw new ArgumentException("Bus station " + key + " doesn't exist");
+            }
+		}
+
+		public IEnumerable<BO.BusStation> GetAllBusStations()
+		{
+			try
+			{
+				return from bs in dl.GetAllStations()
+					   let stat1 = bs
+					   select BusStationDoBoAdapter(stat1);
+            }
+            catch
+            {
+				throw new ArgumentException("There is an error with recperation of all stations' list");
+            }
+		}
+		#endregion
+
+		#region BusLine
+		BO.BusLine BusLineDoBoAdapter(DO.BusLine lineDo)
+        {
+			BO.BusLine lineBo = new BO.BusLine();
+			lineDo.CopyPropertiesTo(lineBo);
+
+			lineBo.AllStationsOfLine = (from station in dl.GetAllLineStationsBy(s => s.LineId == lineBo.BusLineNumber)
+										   //let stationKey = station.StationKey
+									   orderby station.RankInLine
+									   select BusStationDoBoAdapter(dl.GetStation(station.StationKey))).ToList();
+			
+			for(int i=0; i<lineBo.AllStationsOfLine.Count()-1; i++)
+            {
+				lineBo.TotalDistance += dl.GetFollowingStations(BusStationBoDoAdapter(lineBo.AllStationsOfLine.ElementAt(i)),
+					BusStationBoDoAdapter(lineBo.AllStationsOfLine.ElementAt(i + 1))).Distance;
+            }
+			lineBo.TotalTime = lineBo.TotalDistance * 0.0012 * 0.5;
+			return lineBo;
+        }
+
+		DO.BusLine BusLineBoDoAdapter(BO.BusLine lineBo)
+        {
+			DO.BusLine lineDo = new DO.BusLine();
+			lineBo.CopyPropertiesTo(lineDo);
+			return lineDo;
+        }
+
 		public void AddBusLine(BO.BusLine newLine)
 		{
 			//int id = dl.AddLine(BusLineConverter(newLine));
@@ -46,54 +151,20 @@ namespace BL
 			}
 		}
 
-		public void AddStation(BO.BusStation newStation)
-		{
-			//int lineId = dl.AddStation(BusStationConverter(newStation));
-			foreach (DO.BusStation station in dl.GetAllStations())
-			{
-				if (newStation.BusStationKey == station.BusStationKey)
-				{
-					LineStation temp = new LineStation
-					{ 
-						Id = station.BusStationKey,
-						//LineId = lineId,
-						StationKey = station.BusStationKey,
-						RankInLine = 1
-					};
-				}
-			}
-		}
-
 		public void DeleteBusLine(int id)
 		{
 			//var busLine = DataSource.ListLines.Where(line => line.Id == id).FirstOrDefault();
-			dl.DeleteLine(id);
-		}
-
-		public void DeleteStation(int key)
-		{
-			//var busStation = DataSource.ListStations.Where(station => station.BusStationKey == key).FirstOrDefault();
-			dl.DeleteStation(key);
+			//dl.DeleteLine(id);
 		}
 
 		public void EditBusLine(BO.BusLine line)
 		{
-			dl.UpdateLine(BusLineConverter(line));
+			//dl.UpdateLine(BusLineConverter(line));
 		}
 
 		public void EditBusLine(int id, Action<DO.BusLine> action)
 		{
-			dl.UpdateLine(id, action);
-		}
-
-		public void EditBusStation(BO.BusStation station)
-		{
-			dl.UpdateStation(BusStationConverter(station));
-		}
-
-		public void EditBusStation(int id, Action<DO.BusStation> action)
-		{
-			dl.UpdateStation(id, action);
+			//dl.UpdateLine(id, action);
 		}
 
 		public BO.BusLine GetBusLine(int lineNumber, Areas area)
@@ -102,16 +173,6 @@ namespace BL
 			{
 				if (line.BusLineNumber == lineNumber && line.Area == area)
 					return line;
-			}
-			return null;
-		}
-
-		public BO.BusStation GetBusStation(int key)
-		{
-			foreach (BO.BusStation station in GetBusStations())
-			{
-				if (station.BusStationKey == key)
-					return station;
 			}
 			return null;
 		}
@@ -133,21 +194,6 @@ namespace BL
 			}
 			return tempLine;
 		}
-
-		public IEnumerable<BO.BusStation> GetBusStations()
-		{
-			IEnumerable<BO.BusStation> tempStation = null;
-			foreach (DO.BusStation busStation in DataSource.ListStations)
-			{
-				BO.BusStation station = new BO.BusStation
-				{
-					BusStationKey = busStation.BusStationKey,
-					StationName = busStation.StationName,
-					Address = busStation.Address
-				};
-				tempStation.Append(station);
-			}
-			return tempStation;
-		}
+		#endregion
 	}
 }

@@ -14,9 +14,9 @@ namespace BO
         public Areas Area { get; set; }
         public int FirstStationKey { get; set; }
         public int LastStationKey { get; set; }
-        public uint TotalDistance { get; set; }
+        public double TotalDistance { get; set; }
         public double TotalTime { get; set; }
-        public IEnumerable<LineStation> AllStationsOfLine { get; set; }
+        public IEnumerable<BusStation> AllStationsOfLine { get; set; }
         public override string ToString()
         {
             return this.ToStringProperty();
