@@ -11,8 +11,9 @@ namespace BLApi
     public interface IBL
     {
         #region BusLine
-        IEnumerable<BO.BusLine> GetBusLines();
+        IEnumerable<BO.BusLine> GetAllBusLines();
         BO.BusLine GetBusLine(int lineNumber, Areas area);
+        BO.BusLine GetBusLine(int id);
         void AddBusLine(BO.BusLine newLine);
         void EditBusLine(BO.BusLine line);
         void EditBusLine(int id, Action<DO.BusLine> action);
@@ -20,6 +21,7 @@ namespace BLApi
         #endregion
 
         #region BusStation
+        BO.BusStation BusStationDoBoAdapter(DO.BusStation stationDo);
         IEnumerable<BO.BusStation> GetAllBusStations();
         BO.BusStation GetBusStation(int key);
         void AddStation(BO.BusStation station);

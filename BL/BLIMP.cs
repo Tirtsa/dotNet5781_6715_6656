@@ -34,12 +34,13 @@ namespace BL
 				stationDo.Longitude = rndLong.NextDouble() + 34;
 			return stationDo;
 		}
-		BO.BusStation BusStationDoBoAdapter (DO.BusStation stationDo)
+		public BO.BusStation BusStationDoBoAdapter (DO.BusStation stationDo)
         {
 			BO.BusStation stationBo = new BO.BusStation();
 			stationDo.CopyPropertiesTo(stationBo);
-			stationBo.LinesThatPass = from line in dl.GetAllLineStationsBy(s => s.StationKey == stationBo.BusStationKey)
-									  select line.LineId;
+			List<int> test = (from line in dl.GetAllLineStationsBy(s => s.StationKey == stationBo.BusStationKey)
+										select line.LineId).ToList();
+			stationBo.LinesThatPass = test;
 			return stationBo;
         }
 
@@ -120,17 +121,16 @@ namespace BL
         {
 			BO.BusLine lineBo = new BO.BusLine();
 			lineDo.CopyPropertiesTo(lineBo);
-
-			lineBo.AllStationsOfLine = (from station in dl.GetAllLineStationsBy(s => s.LineId == lineBo.BusLineNumber)
-										   //let stationKey = station.StationKey
-									   orderby station.RankInLine
-									   select BusStationDoBoAdapter(dl.GetStation(station.StationKey))).ToList();
-			
-			for(int i=0; i<lineBo.AllStationsOfLine.Count()-1; i++)
-            {
-				lineBo.TotalDistance += dl.GetFollowingStations(BusStationBoDoAdapter(lineBo.AllStationsOfLine.ElementAt(i)),
-					BusStationBoDoAdapter(lineBo.AllStationsOfLine.ElementAt(i + 1))).Distance;
-            }
+			List<int> request= (from station in dl.GetAllLineStationsBy(s => s.LineId == dl.GetLine(lineBo.BusLineNumber, lineBo.Area).Id)
+							//let stationKey = station.StationKey
+						orderby station.RankInLine
+						select station.StationKey).ToList();
+			lineBo.AllStationsOfLine = request;
+			//for(int i=0; i<lineBo.AllStationsOfLine.Count()-1; i++)
+   //         {
+			//	lineBo.TotalDistance += dl.GetFollowingStations(BusStationBoDoAdapter(GetBusStation(lineBo.AllStationsOfLine.
+			//		ElementAt(i))),BusStationBoDoAdapter(GetBusStation(lineBo.AllStationsOfLine.ElementAt(i + 1)))).Distance;
+   //         }
 			lineBo.TotalTime = lineBo.TotalDistance * 0.0012 * 0.5;
 			return lineBo;
         }
@@ -144,11 +144,18 @@ namespace BL
 
 		public void AddBusLine(BO.BusLine newLine)
 		{
-			//int id = dl.AddLine(BusLineConverter(newLine));
-			foreach (DO.BusLine line in dl.GetAllLines())
-			{
-				new BO.BusLine { };
-			}
+			foreach (int item in newLine.AllStationsOfLine)
+				if (dl.GetStation(item) != null)
+					dl.AddLineStation();
+			//foreach element in list of station we will verify if station with this id exist, create lineStation and add 
+			//followingstation if necessary	
+			for (int i = 0; i < newLine.AllStationsOfLine.Count() - 1; i++)
+				if (dl.GetFollowingStations(dl.GetStation(newLine.AllStationsOfLine.ElementAt(i)), 
+					dl.GetStation(newLine.AllStationsOfLine.ElementAt(i+1))) == null)
+
+					dl.AddFollowingStations(dl.GetStation(newLine.AllStationsOfLine.ElementAt(i)), 
+						dl.GetStation(newLine.AllStationsOfLine.ElementAt(i+1)));
+			dl.AddLine(BusLineBoDoAdapter(newLine));
 		}
 
 		public void DeleteBusLine(int id)
@@ -167,33 +174,21 @@ namespace BL
 			//dl.UpdateLine(id, action);
 		}
 
+		public BO.BusLine GetBusLine(int id)
+        {
+			return BusLineDoBoAdapter(dl.GetLine(id));
+        }
 		public BO.BusLine GetBusLine(int lineNumber, Areas area)
 		{
-			foreach (BO.BusLine line in GetBusLines())
-			{
-				if (line.BusLineNumber == lineNumber && line.Area == area)
-					return line;
-			}
-			return null;
+			return BusLineDoBoAdapter(dl.GetLine(lineNumber, area));
 		}
 
-		public IEnumerable<BO.BusLine> GetBusLines()
+		public IEnumerable<BO.BusLine> GetAllBusLines()
 		{
-			IEnumerable<BO.BusLine> tempLine = null;
-			foreach (DO.BusLine busLine in DataSource.ListLines)
-			{
-				BO.BusLine line = new BO.BusLine
-				{
-					BusLineNumber = busLine.BusLineNumber,
-					Area = busLine.Area,
-					FirstStationKey = busLine.FirstStationKey,
-					LastStationKey = busLine.LastStationKey,
-					TotalTime = busLine.TotalTime
-				};
-				tempLine.Append(line);
-			}
-			return tempLine;
+			return from line in dl.GetAllLines()
+				   select BusLineDoBoAdapter(line);
 		}
+
 		#endregion
 	}
 }

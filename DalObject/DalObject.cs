@@ -171,7 +171,10 @@ namespace DL
         }
         public BusLine GetLine(int lineId, Areas area)
         {
-            return DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area).Clone();
+            if (DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area) != null)
+                return DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area).Clone();
+            else 
+                throw new ArgumentException("There is no line with this number and area" + lineId + area);
         }
         public BusLine GetLine (int Id)
         {

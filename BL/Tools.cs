@@ -16,11 +16,16 @@ namespace BO
             {
                 var value = prop.GetValue(t, null);
                 if (!(value is string) && value is IEnumerable)
+                {
+                    str += "\n" + suffix + prop.Name + ": ";
                     foreach (var item in (IEnumerable)value)
                         str += item.ToStringProperty("   ");
+                }
                 else
                     str += "\n" + suffix + prop.Name + ": " + value;
             }
+            if (t is ValueType)
+                return "   " + t;
             return str;
         }
     }

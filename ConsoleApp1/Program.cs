@@ -4,6 +4,7 @@ using BO;
 using APIDL;
 using DS;
 using System.Linq;
+using System.Collections.Generic;
 
 
 
@@ -47,6 +48,19 @@ namespace PlConsole
             //{
             //    myStation.BusStationKey = 45678;
             //}
+            Console.WriteLine(bl.GetBusLine(30, DO.Areas.Jerusalem));
+            List<int> test = (from item in dl.GetAllStations() 
+                                           select bl.BusStationDoBoAdapter(item).BusStationKey).ToList();
+            bl.AddBusLine(new BusLine
+            {
+                Area = DO.Areas.Center,
+                BusLineNumber = 52,
+                FirstStationKey = 38831,
+                LastStationKey = 39093,
+                AllStationsOfLine = test
+            }) ;
+            foreach(BusLine item in bl.GetAllBusLines())
+                Console.WriteLine(item);
 
             Console.ReadKey();
         }
