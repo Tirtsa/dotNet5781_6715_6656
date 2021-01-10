@@ -29,7 +29,6 @@ namespace DS
 
 		static void InitAllLists()
 		{
-
 			ListStations = new List<BusStation>
 			{
 				new BusStation
@@ -593,7 +592,7 @@ namespace DS
 					LineId = 4,
 					StationKey = 39019,
 					RankInLine = 3
-				},
+				}
 			};
 
 			ListFollowingStations = new List<FollowingStations>
@@ -625,6 +624,78 @@ namespace DS
 					AverageJourneyTime =
 						new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922))*0.0012*0.5,
 				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 39006,
+					KeyStation2 = 39007,
+					Distance = new GeoCoordinate(31.90281, 34.818922).GetDistanceTo(new GeoCoordinate(31.904567, 34.815296)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.90281, 34.818922).GetDistanceTo(new GeoCoordinate(31.904567, 34.815296))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 38894,
+					KeyStation2 = 39002,
+					Distance = new GeoCoordinate(31.813285, 34.775928).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.813285, 34.775928).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 39002,
+					KeyStation2 = 39006,
+					Distance = new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 39006,
+					KeyStation2 = 39024,
+					Distance = new GeoCoordinate(31.90281, 34.818922).GetDistanceTo(new GeoCoordinate(31.908499, 35.007955)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.90281, 34.818922).GetDistanceTo(new GeoCoordinate(31.908499, 35.007955))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 38903,
+					KeyStation2 = 39002,
+					Distance = new GeoCoordinate(31.878667, 31.878667).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.878667, 31.878667).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 39002,
+					KeyStation2 = 39024,
+					Distance = new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.908499, 35.007955)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.908499, 35.007955))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 38831,
+					KeyStation2 = 39004,
+					Distance = new GeoCoordinate(32.183921, 34.917806).GetDistanceTo(new GeoCoordinate(31.905052, 34.818909)),
+					AverageJourneyTime =
+						new GeoCoordinate(32.183921, 34.917806).GetDistanceTo(new GeoCoordinate(31.905052, 34.818909))*0.0012*0.5,
+				},
+				new FollowingStations
+				{
+					Id = FollowingStationsId++,
+					KeyStation1 = 39004,
+					KeyStation2 = 39019,
+					Distance = new GeoCoordinate(31.905052, 34.818909).GetDistanceTo(new GeoCoordinate(31.914816, 35.023028)),
+					AverageJourneyTime =
+						new GeoCoordinate(31.905052, 34.818909).GetDistanceTo(new GeoCoordinate(31.914816, 35.023028))*0.0012*0.5,
+				}
 			};
 		} 
 	}
