@@ -45,6 +45,7 @@ namespace APIDL
         void UpdateLineStation(DO.LineStation station);
         void UpdateLineStation(LineStation lineStation, Action<DO.LineStation> update);
         void DeleteLineStation(LineStation lineStation);
+        void DeleteLineStation(Predicate<LineStation> predicate);
         #endregion
 
         #region FollowingStations

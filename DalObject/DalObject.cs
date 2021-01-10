@@ -116,9 +116,12 @@ namespace DL
         }
         public FollowingStations GetFollowingStations(BusStation station1, BusStation station2)
         {
-            return DataSource.ListFollowingStations.Find(f => (f.KeyStation1 == station1.BusStationKey
-                && f.KeyStation2 == station2.BusStationKey) || (f.KeyStation1 == station2.BusStationKey
-                && f.KeyStation2 == station1.BusStationKey)).Clone();
+            if (DataSource.ListFollowingStations.Find(f => (f.KeyStation1 == station1.BusStationKey
+                 && f.KeyStation2 == station2.BusStationKey)) != null)
+                return DataSource.ListFollowingStations.Find(f => (f.KeyStation1 == station1.BusStationKey
+                    && f.KeyStation2 == station2.BusStationKey)).Clone();
+            else
+                return null;
         }
         public void UpdateFollowingStations(BusStation station1, BusStation station2)
         {
@@ -214,6 +217,15 @@ namespace DL
             var lineStationToDelete = DataSource.ListLineStations.Where(t => t.LineId == lineStation.LineId && t.StationKey == 
                 lineStation.StationKey).FirstOrDefault();
             DataSource.ListLineStations.Remove(lineStationToDelete);
+        }
+
+        public void DeleteLineStation(Predicate<LineStation> predicate)
+        {
+            var lineStationsToDelete = (from stat in DataSource.ListLineStations
+                                      where predicate(stat)
+                                      select stat).ToList();
+            foreach (var item in lineStationsToDelete)
+                DataSource.ListLineStations.Remove(item);
         }
 
         public IEnumerable<LineStation> GetAllLineStations()

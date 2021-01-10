@@ -49,19 +49,29 @@ namespace PlConsole
             //    myStation.BusStationKey = 45678;
             //}
             Console.WriteLine(bl.GetBusLine(30, DO.Areas.Jerusalem));
-            List<int> test = (from item in dl.GetAllStations() 
+            List<int> test = (from item in dl.GetAllStationsBy(s=>s.BusStationKey < 39020) 
                                            select bl.BusStationDoBoAdapter(item).BusStationKey).ToList();
-            bl.AddBusLine(new BusLine
+            BO.BusLine lineToTest = new BusLine
             {
                 Area = DO.Areas.Center,
                 BusLineNumber = 52,
                 FirstStationKey = 38831,
                 LastStationKey = 39093,
                 AllStationsOfLine = test
-            }) ;
+            };
+            bl.AddBusLine(lineToTest) ;
             foreach(BusLine item in bl.GetAllBusLines())
                 Console.WriteLine(item);
-
+            bl.DeleteBusLine(lineToTest);
+            foreach (BusLine item in bl.GetAllBusLines())
+                Console.WriteLine(item);
+            IEnumerable<LineStation> lineStatTest = bl.GetAllLineStationsBy(s => s.LineId == 52);
+            foreach (LineStation item in bl.GetAllLineStationsBy(s => s.LineId == 52))
+                Console.WriteLine(item); 
+            if (lineStatTest == null) //line stations doesn't exist but lineStatTest != null and not write "bravo"...!?
+                Console.WriteLine("bravo");
+            foreach(BusLine item in bl.GetAllBusLinesBy(l => l.BusLineNumber % 2 == 0))
+                Console.WriteLine(item);
             Console.ReadKey();
         }
     }

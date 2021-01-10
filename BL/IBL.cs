@@ -12,22 +12,36 @@ namespace BLApi
     {
         #region BusLine
         IEnumerable<BO.BusLine> GetAllBusLines();
+        IEnumerable<BO.BusLine> GetAllBusLinesBy(Predicate<BO.BusLine> predicate);
         BO.BusLine GetBusLine(int lineNumber, Areas area);
         BO.BusLine GetBusLine(int id);
         void AddBusLine(BO.BusLine newLine);
-        void EditBusLine(BO.BusLine line);
-        void EditBusLine(int id, Action<DO.BusLine> action);
-        void DeleteBusLine(int id);
+        void UpdateBusLine(BO.BusLine line);
+        void UpdateBusLine(int id, Action<DO.BusLine> action);
+        void DeleteBusLine(BO.BusLine line);
         #endregion
 
         #region BusStation
         BO.BusStation BusStationDoBoAdapter(DO.BusStation stationDo);
         IEnumerable<BO.BusStation> GetAllBusStations();
+        IEnumerable<BO.BusStation> GetAllBusStationsBy(Predicate<BO.BusStation> predicate);
         BO.BusStation GetBusStation(int key);
         void AddStation(BO.BusStation station);
         void UpdateBusStation(BO.BusStation station);
         void UpdateBusStation(int key, Action<BO.BusStation> action);
         void DeleteStation(int key);
+        #endregion
+
+        #region LineStation
+        IEnumerable<BO.LineStation> GetAllLineStations();
+        IEnumerable<BO.LineStation> GetAllLineStationsBy(Predicate<BO.LineStation> predicate);
+        BO.LineStation GetLineStation(int id);
+        BO.LineStation GetLineStation(int lineId, int stationId);
+        void AddLineStation(BO.LineStation lineStation);
+        void UpdateLineStation(BO.LineStation lineStation);
+        void DeleteLineStation(BO.LineStation lineStation);
+        void DeleteLineStation(int id);
+
         #endregion
     }
 }

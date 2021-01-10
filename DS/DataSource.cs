@@ -18,9 +18,9 @@ namespace DS
 		public static List<BusLine> ListLines;
 		public static List<LineStation> ListLineStations;
 		public static List<FollowingStations> ListFollowingStations;
-		public static int LineId = 0;
-		public static int LineStationId = 0;
-		public static int FollowingStationsId = 0;
+		public static int LineId = 1;
+		public static int LineStationId = 1;
+		public static int FollowingStationsId = 1;
 
 		static DataSource()
 		{
