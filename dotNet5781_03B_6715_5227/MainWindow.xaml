@@ -7,22 +7,26 @@
         mc:Ignorable="d"
         Title="אוטובוסים" TextBlock.TextAlignment="Center" Height="450" Width="800" Icon="bus.jpg">
     <Window.Resources>
-        
+
     </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="82*"/>
+            <ColumnDefinition Width="711*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Label Content="רשימת אוטובוסים של החברה" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" 
-               FontFamily="Corbel" FontWeight="Bold"/>
-        <Button x:Name="addBusButton" Content="הוספת אוטובוס" HorizontalAlignment="Left" Margin="50,0,0,0" Grid.Row="1"
-                VerticalAlignment="Center" Width="Auto" Click="AddBusButton_Click" BorderThickness="2"/>
-        <Label x:Name="mytest"/>
+               FontFamily="Corbel" FontWeight="Bold" Grid.Column="1" Margin="230.7,18,312.6,18"/>
+        <Button x:Name="addBusButton" Content="הוספת אוטובוס" HorizontalAlignment="Left" Margin="50,18,0,18" Grid.Row="1"
+                VerticalAlignment="Center" Width="Auto" Click="AddBusButton_Click" BorderThickness="2" Grid.ColumnSpan="2"/>
+        <Label x:Name="mytest" Grid.ColumnSpan="2" Margin="0,0,-0.4,0"/>
         <DataGrid x:Name="BusListDataGrid" AutoGenerateColumns="False" Grid.Row="2" IsReadOnly="True"
                   HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Right" Margin="0,0,46.6,0" Width="697"
-                  MouseDoubleClick="BusListDataGrid_MouseDoubleClick">
+                  MouseDoubleClick="BusListDataGrid_MouseDoubleClick" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>

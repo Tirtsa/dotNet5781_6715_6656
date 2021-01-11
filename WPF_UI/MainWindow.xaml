@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="מערכת תחנות וקווים - מיני פרויקט תשפ''א" TextBlock.TextAlignment="Center" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="BusStationsDg" AutoGenerateColumns="False" IsReadOnly="True" 
+                  HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Center" Height="315" 
+                  Margin="302,42,46.6,0" VerticalAlignment="Top" Width="445" Grid.Row="0" SelectionChanged="BusStationsDg_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="*" x:Name="ActionsOnStation" Header="פעולות על התחנה">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="ActionsOnStationGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="Delete" Content="מחק תחנה" HorizontalContentAlignment="Center" 
+                                        Grid.Column="0"/>
+                                <Button x:Name="Update" Content="עדכון התחנה" HorizontalContentAlignment="Center" 
+                                        Grid.Column="1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="LinesInStationColumn" Width="*" Header="קווים בתחנה" 
+                                    Binding="{Binding LinesThatPass}"/>
+                <DataGridTextColumn x:Name="StationsKeyColumn" Width="*" Header="תחנות" 
+                                    Binding="{Binding BusStationKey}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label Content="קווים בתחנה" HorizontalContentAlignment="Right" HorizontalAlignment="Left" 
+               Margin="112,42,0,0" VerticalAlignment="Top" Width="164"/>
+        <ListBox x:Name="LinesPassListBox" HorizontalAlignment="Left" Height="160" 
+                 Margin="140,89,0,0" VerticalAlignment="Top" Width="136"/>
+
+        <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="43,0,46.6,20"/>
     </Grid>
 </Window>

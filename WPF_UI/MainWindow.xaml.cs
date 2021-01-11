@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
+using BLApi;
 
 namespace WPF_UI
 {
@@ -20,9 +22,18 @@ namespace WPF_UI
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		static IBL bl;
 		public MainWindow()
 		{
+			bl = BlFactory.GetBL();
 			InitializeComponent();
+			BusStationsDg.ItemsSource = bl.GetAllBusStations();
 		}
-	}
+
+        private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+			BusStation selectedStation = (sender as DataGrid).CurrentItem as BusStation;
+			LinesPassListBox.ItemsSource = selectedStation.LinesThatPass;
+        }
+    }
 }
