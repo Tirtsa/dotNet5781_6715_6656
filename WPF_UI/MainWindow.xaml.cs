@@ -56,9 +56,16 @@ namespace WPF_UI
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             UpdateStationWindow updateStationWindow = new UpdateStationWindow { DataContext = BusStationsDg.SelectedItem };
-            updateStationWindow.ShowDialog();
+            updateStationWindow.Show();
+            Close();
         }
 
+        private void AddStationButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddStationWindow newWindow = new AddStationWindow();
+            newWindow.Show();
+            Close();
+        }
         private void Refresh()
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -74,5 +81,6 @@ namespace WPF_UI
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
         }
+
     }
 }

@@ -43,6 +43,6 @@
         <ListBox x:Name="LinesPassListBox" HorizontalAlignment="Left" Height="160" 
                  Margin="140,89,0,0" VerticalAlignment="Top" Width="136"/>
 
-        <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="43,0,46.6,20"/>
+        <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="43,0,46.6,20" Click="AddStationButton_Click"/>
     </Grid>
 </Window>

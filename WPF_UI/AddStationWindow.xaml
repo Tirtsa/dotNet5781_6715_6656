@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_UI"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="WPF_UI.AddStationWindow"
         mc:Ignorable="d"
-        Title="AddStationWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="AddStationWindow" Height="450" Width="800">
     <Grid>
 
         <Grid x:Name="grid1" VerticalAlignment="Center" HorizontalAlignment="Center" >

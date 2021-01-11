@@ -36,14 +36,11 @@ namespace WPF_UI
                 Address = addressTextBox.Text,
                 StationName = stationNameTextBox.Text
             });
+
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            Close();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource busStationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("busStationViewSource")));
-            // Charger les données en définissant la propriété CollectionViewSource.Source :
-            // busStationViewSource.Source = [source de données générique]
-        }
     }
 }

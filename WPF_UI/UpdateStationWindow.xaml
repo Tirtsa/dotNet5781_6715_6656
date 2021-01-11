@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_UI"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="WPF_UI.UpdateStationWindow"
         mc:Ignorable="d"
-        Title="UpdateStationWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="UpdateStationWindow" Height="450" Width="800">
 
     <Grid x:Name="grid1" HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
