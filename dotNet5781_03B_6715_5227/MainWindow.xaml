@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_6715_5227"
         mc:Ignorable="d"
-        Title="אוטובוסים" TextBlock.TextAlignment="Center" Height="450" Width="800" Icon="bus.jpg">
+        Title="אוטובוסים" TextBlock.TextAlignment="Center" Height="450" Width="800" Icon="bus.jpg"
+        Closing="DataWindow_Closing">
     <Window.Resources>
 
     </Window.Resources>

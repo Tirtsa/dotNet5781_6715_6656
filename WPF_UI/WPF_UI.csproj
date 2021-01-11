@@ -55,6 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddStationWindow.xaml.cs">
+      <DependentUpon>AddStationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateStationWindow.xaml.cs">
+      <DependentUpon>UpdateStationWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +77,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UpdateStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -90,6 +104,7 @@
     <None Include="Properties\DataSources\BLApi.BlFactory.datasource" />
     <None Include="Properties\DataSources\BLApi.IBL.datasource" />
     <None Include="Properties\DataSources\BO.BusLine.datasource" />
+    <None Include="Properties\DataSources\BO.BusStation.datasource" />
     <None Include="Properties\DataSources\BO.Weather.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

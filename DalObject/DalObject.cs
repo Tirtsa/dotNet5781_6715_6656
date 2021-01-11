@@ -30,7 +30,7 @@ namespace DL
 
         public void DeleteStation(int id)
         {
-            var stationToDelete = DataSource.ListStations.Where(s => s.BusStationKey == id).FirstOrDefault();
+            var stationToDelete = GetStation(id);
             if (stationToDelete == null)
                 throw new ArgumentException("It's not exist Bus Station with this key : " + id);
             DataSource.ListStations.Remove(stationToDelete);

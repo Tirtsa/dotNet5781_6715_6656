@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BO;
 using BLApi;
+using System.ComponentModel;
 
 namespace WPF_UI
 {
@@ -32,8 +33,46 @@ namespace WPF_UI
 
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			BusStation selectedStation = (sender as DataGrid).CurrentItem as BusStation;
+			BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
 			LinesPassListBox.ItemsSource = selectedStation.LinesThatPass;
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
+                bl.DeleteStation(selectedStation.BusStationKey);
+                //BusStationsDg.ItemsSource = bl.GetAllBusStations();
+
+                Refresh();
+            }
+			catch (Exception ex)
+            {
+                MessageBox.Show("An error occured " + ex);
+            }
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateStationWindow updateStationWindow = new UpdateStationWindow { DataContext = BusStationsDg.SelectedItem };
+            updateStationWindow.ShowDialog();
+        }
+
+        private void Refresh()
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                MainWindow newWindow = new MainWindow();
+                newWindow.Show();
+                Close();
+            }));
+
+        }
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
         }
     }
 }
