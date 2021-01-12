@@ -65,6 +65,14 @@ namespace WPF_UI
             newWindow.Show();
             Close();
         }
+
+        private void BusList_Click(object sender, RoutedEventArgs e)
+		{
+            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow();
+            newWindow.lbBusLines.ItemsSource = bl.GetAllBusLines();
+            newWindow.Show();
+        }
+
         private void Refresh()
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -75,6 +83,7 @@ namespace WPF_UI
             }));
 
         }
+
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

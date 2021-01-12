@@ -14,6 +14,16 @@ namespace BL
 		readonly IDAL dl = DalFactory.GetDal();
 		static Random rndLat = new Random(DateTime.Now.Millisecond);
 		static Random rndLong = new Random(DateTime.Now.Millisecond);
+		public IEnumerable<Areas> GetAreas()
+		{
+			var areas = ((IEnumerable<Areas>)Enum.GetValues(typeof(Areas))).Select
+				(area => new
+					{
+						Value = (int)area,
+						Text = area.ToString()
+					});
+			return (IEnumerable<Areas>)areas;
+		}
 
         #region BusStation
 		DO.BusStation BusStationBoDoAdapter (BO.BusStation stationBo)
@@ -174,6 +184,11 @@ namespace BL
 					RankInLine = i + 1
 				});
 			}
+		}
+
+		public Areas GetArea(int id)
+		{
+			return dl.GetLine(id).Area;
 		}
 
 		public void DeleteBusLine(BO.BusLine lineBo)

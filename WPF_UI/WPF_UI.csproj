@@ -55,13 +55,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddLineWindow.xaml.cs">
+      <DependentUpon>AddLineWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddStationWindow.xaml.cs">
       <DependentUpon>AddStationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayBusLinesWindow.xaml.cs">
+      <DependentUpon>DisplayBusLinesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateLineWindow.xaml.cs">
+      <DependentUpon>UpdateLineWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateStationWindow.xaml.cs">
       <DependentUpon>UpdateStationWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddLineWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddStationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplayBusLinesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -77,6 +94,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UpdateLineWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UpdateStationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +136,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\APIDL\APIDL.csproj">
+      <Project>{1eda3fbc-dc8d-404e-bc85-5c8f1416de67}</Project>
+      <Name>APIDL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BL\BL.csproj">
       <Project>{ed01269b-2766-48de-93ff-09797248e287}</Project>
       <Name>BL</Name>
