@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
+using BO;
 
 namespace WPF_UI
 {
@@ -25,22 +26,23 @@ namespace WPF_UI
         {
             bl = BlFactory.GetBL();
             InitializeComponent();
+
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.UpdateBusStation(new BO.BusStation
+            bl.UpdateBusStation(new BusStation
             {
-                BusStationKey = int.Parse(busStationKeyTextBox.Text),
+                BusStationKey = (int)busStationKeyLabel.Content,
                 Address = addressTextBox.Text,
-                StationName = stationNameTextBox.Text
+                StationName = stationNameTextBox.Text,
+               LinesThatPass = (DataContext as BusStation).LinesThatPass
             });
 
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
         }
-
     }
 }

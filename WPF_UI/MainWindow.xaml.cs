@@ -43,7 +43,6 @@ namespace WPF_UI
             {
                 BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
                 bl.DeleteStation(selectedStation.BusStationKey);
-                //BusStationsDg.ItemsSource = bl.GetAllBusStations();
 
                 Refresh();
             }
