@@ -26,9 +26,9 @@ namespace dotNet5781_03B_6715_5227
             InitializeComponent();
 
             myBus = new Bus();
-            this.DataContext = myBus;
+            DataContext = myBus;
 
-            this.busStatusComboBox.ItemsSource = Enum.GetValues(typeof(Bus.Status));
+            busStatusComboBox.ItemsSource = Enum.GetValues(typeof(Bus.Status));
 
         }
 

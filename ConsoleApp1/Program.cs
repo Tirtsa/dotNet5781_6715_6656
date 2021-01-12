@@ -41,7 +41,9 @@ namespace PlConsole
             }
             foreach (BusStation item in bl.GetAllBusStations())
                 Console.WriteLine(item);
-            //bl.DeleteStation(12345);
+            bl.DeleteStation(12345);
+            foreach (BusStation item in bl.GetAllBusStations())
+                Console.WriteLine(item);
             //bl.UpdateBusStation(new BusStation { Address = "MonNewtestAdresse", BusStationKey = 12345, StationName = "2etestNom" });
             //bl.UpdateBusStation(12345, testVoid); Need to define function's body
             //void testVoid (BusStation myStation)

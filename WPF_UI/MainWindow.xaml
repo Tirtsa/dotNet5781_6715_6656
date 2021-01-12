@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <DataGrid x:Name="BusStationsDg" AutoGenerateColumns="False" IsReadOnly="True" 
                   HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Center" Height="315" 
-                  Margin="302,42,46.6,0" VerticalAlignment="Top" Width="445" Grid.Row="0" SelectionChanged="BusStationsDg_SelectionChanged">
+                  Margin="193,42,30.6,0" VerticalAlignment="Top" Width="570" Grid.Row="0" SelectionChanged="BusStationsDg_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="*" x:Name="ActionsOnStation" Header="פעולות על התחנה">
                     <DataGridTemplateColumn.CellTemplate>
@@ -22,26 +22,29 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="Delete" Content="מחק תחנה" HorizontalContentAlignment="Center" 
-                                        Grid.Column="0" Click="Delete_Click"/>
-                                <Button x:Name="Update" Content="עדכון התחנה" HorizontalContentAlignment="Center" 
-                                        Grid.Column="1" Click="Update_Click"/>
+                                <Button x:Name="ViewArrivals" Content="לוח זמנים" HorizontalContentAlignment="Center" 
+                                        Grid.Column="0" Margin="2" Click="Delete_Click"/>
+                                <Button x:Name="Delete" Content="מחיקה" HorizontalContentAlignment="Center" 
+                                        Grid.Column="1" Margin="2" Click="Delete_Click"/>
+                                <Button x:Name="Update" Content="עדכון" HorizontalContentAlignment="Center" 
+                                        Grid.Column="2" Margin="2" Click="Update_Click"/>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="LinesInStationColumn" Width="*" Header="קווים בתחנה" 
-                                    Binding="{Binding LinesThatPass}"/>
-                <DataGridTextColumn x:Name="StationsKeyColumn" Width="*" Header="תחנות" 
+                <DataGridTextColumn x:Name="StationNameColumn" Width="Auto" Header="שם התחנה" 
+                                    Binding="{Binding StationName}"/>
+                <DataGridTextColumn x:Name="StationsKeyColumn" Width="*" Header="קוד תחנה" 
                                     Binding="{Binding BusStationKey}"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <Label Content="קווים בתחנה" HorizontalContentAlignment="Right" HorizontalAlignment="Left" 
-               Margin="112,42,0,0" VerticalAlignment="Top" Width="164"/>
+               Margin="33,42,0,0" VerticalAlignment="Top" Width="136"/>
         <ListBox x:Name="LinesPassListBox" HorizontalAlignment="Left" Height="160" 
-                 Margin="140,89,0,0" VerticalAlignment="Top" Width="136"/>
+                 Margin="33,73,0,0" VerticalAlignment="Top" Width="136"/>
 
         <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="43,0,46.6,20" Click="AddStationButton_Click"/>
     </Grid>
