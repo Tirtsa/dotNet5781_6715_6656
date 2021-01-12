@@ -53,7 +53,7 @@ namespace PlConsole
                                            select bl.BusStationDoBoAdapter(item).BusStationKey).ToList();
             BO.BusLine lineToTest = new BusLine
             {
-                Area = DO.Areas.Center,
+                Area = BO.Areas.Center,
                 BusLineNumber = 52,
                 FirstStationKey = 38831,
                 LastStationKey = 39093,

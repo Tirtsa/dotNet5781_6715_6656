@@ -10,14 +10,14 @@ namespace BLApi
 {
     public interface IBL
     {
-        IEnumerable<Areas> GetAreas();
 
         #region BusLine
+        DO.Areas AreasAdapter(BO.Areas areaBO);
+        IEnumerable<BO.Areas> GetAreas();
         IEnumerable<BO.BusLine> GetAllBusLines();
         IEnumerable<BO.BusLine> GetAllBusLinesBy(Predicate<BO.BusLine> predicate);
-        BO.BusLine GetBusLine(int lineNumber, Areas area);
+        BO.BusLine GetBusLine(int lineNumber, DO.Areas area);
         BO.BusLine GetBusLine(int id);
-        Areas GetArea(int id);
         void AddBusLine(BO.BusLine newLine);
         void UpdateBusLine(BO.BusLine line);
         void UpdateBusLine(int id, Action<DO.BusLine> action);

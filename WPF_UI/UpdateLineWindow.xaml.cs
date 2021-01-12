@@ -28,18 +28,12 @@ namespace WPF_UI
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
+			tbArea.Text = busLine.Area.ToString();
 			tbLineNumber.Text = busLine.BusLineNumber.ToString();
-			cbSelectArea.ItemsSource = bl.GetAreas();
 			cbFirstStop.ItemsSource = bl.GetAllLineStations();
 			cbLastStop.ItemsSource = bl.GetAllLineStations();
 			cbAddStop.ItemsSource = bl.GetAllBusStations();
 			stations = busLine.AllStationsOfLine;
-		}
-
-		private void cbSelectArea_Initialized(object sender, EventArgs e)
-		{//maybe change from cb to tb?
-			//cbSelectArea.SelectedItem = busLine.Area;
-			cbSelectArea.SelectedValue = busLine.Area;
 		}
 
 		private void cbFirstStop_Initialized(object sender, EventArgs e)

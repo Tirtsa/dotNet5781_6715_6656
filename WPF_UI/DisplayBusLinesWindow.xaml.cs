@@ -26,6 +26,7 @@ namespace WPF_UI
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
+			lbBusLines.ItemsSource = bl.GetAllBusLines();
 		}
 
 		private void AddLineButton_Click(object sender, RoutedEventArgs e)
