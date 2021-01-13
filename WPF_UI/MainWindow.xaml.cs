@@ -68,8 +68,18 @@ namespace WPF_UI
 
         private void BusList_Click(object sender, RoutedEventArgs e)
 		{
-            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow();
-            newWindow.lbBusLines.ItemsSource = bl.GetAllBusLines();
+            DataGrid tempDG = (DataGrid)sender;
+            BusStation tempS = (BusStation)tempDG.SelectedItem;
+            int key = tempS.BusStationKey;
+            List<BusLine> lines = new List<BusLine>();
+
+            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = tempS };
+            foreach (BusLine line in bl.GetAllBusLines())
+                foreach (int stop in line.AllStationsOfLine)
+                    if (stop == key)
+                        lines.Add(line);
+
+            newWindow.lbBusLines.ItemsSource = lines;
             newWindow.Show();
         }
 

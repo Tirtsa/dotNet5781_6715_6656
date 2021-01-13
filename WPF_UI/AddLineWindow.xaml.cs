@@ -28,7 +28,7 @@ namespace WPF_UI
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
-			cbArea.ItemsSource = bl.GetAreas();
+			//cbArea.ItemsSource = bl.GetAreas();
 			cbFirstStop.ItemsSource = bl.GetAllBusStations();
 			cbLastStop.ItemsSource = bl.GetAllBusStations();
 			cbAddStop.ItemsSource = bl.GetAllBusStations();
