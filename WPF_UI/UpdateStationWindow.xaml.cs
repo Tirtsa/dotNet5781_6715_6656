@@ -39,10 +39,18 @@ namespace WPF_UI
                 StationName = stationNameTextBox.Text,
                LinesThatPass = (DataContext as BusStation).LinesThatPass
             });
+            Close();
+        }
 
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-            Close();
         }
     }
 }

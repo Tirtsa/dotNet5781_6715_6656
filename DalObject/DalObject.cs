@@ -30,15 +30,17 @@ namespace DL
 
         public void DeleteStation(int id)
         {
-            BusStation stationToDelete = GetStation(id);
-            if (stationToDelete == null)
+            BusStation sta = DataSource.ListStations.Find(s => s.BusStationKey == id);
+            if (sta != null)
+                DataSource.ListStations.Remove(sta);
+            else
                 throw new ArgumentException("It's not exist Bus Station with this key : " + id);
-            DataSource.ListStations.Remove(stationToDelete);
         }
 
         public IEnumerable<BusStation> GetAllStations()
         {
             return from station in DataSource.ListStations
+                   orderby station.BusStationKey
                    select station.Clone();
         }
 
@@ -46,13 +48,15 @@ namespace DL
         {
             return from station in DataSource.ListStations
                    where predicate(station)
+                   orderby station.BusStationKey
                    select station.Clone();
         }
 
         public BusStation GetStation(int id)
         {
-                if (DataSource.ListStations.Find(s => s.BusStationKey == id) != null)
-                    return DataSource.ListStations.Find(s => s.BusStationKey == id).Clone();
+            BusStation station = DataSource.ListStations.Find(s => s.BusStationKey == id);
+                if (station != null)
+                    return station.Clone();
                 else
                     throw new ArgumentException("Bus Station doesn't exist");
             

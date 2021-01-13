@@ -26,7 +26,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Button x:Name="ViewArrivals" Content="לוח זמנים" HorizontalContentAlignment="Center" 
-                                        Grid.Column="0" Margin="2" Click="Delete_Click"/>
+                                        Grid.Column="0" Margin="2"/>
                                 <Button x:Name="Delete" Content="מחיקה" HorizontalContentAlignment="Center" 
                                         Grid.Column="1" Margin="2" Click="Delete_Click"/>
                                 <Button x:Name="Update" Content="עדכון" HorizontalContentAlignment="Center" 

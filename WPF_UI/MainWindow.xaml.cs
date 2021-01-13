@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using BO;
 using BLApi;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace WPF_UI
 {
@@ -24,12 +25,18 @@ namespace WPF_UI
 	public partial class MainWindow : Window
 	{
 		static IBL bl;
+        //private ObservableCollection<BusStation> AllStations ;
 		public MainWindow()
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
-			BusStationsDg.ItemsSource = bl.GetAllBusStations();
-		}
+
+            //IEnumerable<BusStation> stations = bl.GetAllBusStations();
+            //AllStations = new ObservableCollection<BusStation>(stations.Cast<BusStation>());
+            //BusStationsDg.ItemsSource = AllStations;
+            BusStationsDg.ItemsSource = bl.GetAllBusStations();
+
+        }
 
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -43,7 +50,7 @@ namespace WPF_UI
             {
                 BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
                 bl.DeleteStation(selectedStation.BusStationKey);
-
+                MessageBox.Show("התחנה נמחקה בהצלחה");
                 Refresh();
             }
 			catch (Exception ex)
@@ -85,20 +92,9 @@ namespace WPF_UI
 
         private void Refresh()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                MainWindow newWindow = new MainWindow();
-                newWindow.Show();
-                Close();
-            }));
-
+            MainWindow newWindow = new MainWindow();
+            newWindow.Show();
+            Close();
         }
-
-        void DataWindow_Closing(object sender, CancelEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-        }
-
     }
 }
