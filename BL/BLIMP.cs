@@ -14,16 +14,6 @@ namespace BL
 		readonly IDAL dl = DalFactory.GetDal();
 		static Random rndLat = new Random(DateTime.Now.Millisecond);
 		static Random rndLong = new Random(DateTime.Now.Millisecond);
-		public IEnumerable<Areas> GetAreas()
-		{
-			var areas = ((IEnumerable<Areas>)Enum.GetValues(typeof(Areas))).Select
-				(area => new
-					{
-						Value = (int)area,
-						Text = area.ToString()
-					});
-			return (IEnumerable<Areas>)areas;
-		}
 
         #region BusStation
 		DO.BusStation BusStationBoDoAdapter (BO.BusStation stationBo)
@@ -126,11 +116,52 @@ namespace BL
 		#endregion
 
 		#region BusLine
+		
+		public DO.Areas AreasAdapter(BO.Areas areaBO)
+		{
+			switch (areaBO)
+			{
+				case BO.Areas.General:
+					return DO.Areas.General;
+
+				case BO.Areas.North:
+					return DO.Areas.North;
+
+				case BO.Areas.South:
+					return DO.Areas.South;
+					
+				case BO.Areas.Center:
+					return DO.Areas.Center;
+
+				case BO.Areas.Jerusalem:
+					return DO.Areas.Jerusalem;
+			}
+			return DO.Areas.Jerusalem;
+		}
+
+        public IEnumerable<BO.Areas> GetAreas()
+        {
+            IEnumerable<BO.Areas> areas = Enumerable.Empty<BO.Areas>();
+            foreach (BO.Areas a in Enum.GetValues(typeof(BO.Areas)))
+            {
+                areas.Append(a);
+            }
+			return areas;
+		}
+			/*var areas = ((IEnumerable<BO.Areas>)Enum.GetValues(typeof(BO.Areas))).Select
+				(area => new
+					{
+						Value = (int)area,
+						Text = area.ToString()
+					});
+			return (IEnumerable<Areas>)areas;
+		}*/
 		BO.BusLine BusLineDoBoAdapter(DO.BusLine lineDo)
         {
 			BO.BusLine lineBo = new BO.BusLine();
 			lineDo.CopyPropertiesTo(lineBo);
-			DO.BusLine busLine = dl.GetLine(lineBo.BusLineNumber, lineBo.Area);
+
+			DO.BusLine busLine = dl.GetLine(lineBo.BusLineNumber, AreasAdapter(lineBo.Area));
 			List<int> request= (from station in dl.GetAllLineStationsBy(s => s.LineId == busLine.Id)
 						orderby station.RankInLine
 						select station.StationKey).ToList();
@@ -179,14 +210,14 @@ namespace BL
 			{
 				AddLineStation(new BO.LineStation
 				{
-					LineId = dl.GetLine(newLine.BusLineNumber, newLine.Area).Id,
+					LineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id,
 					StationKey = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey,
 					RankInLine = i + 1
 				});
 			}
 		}
 
-		public Areas GetArea(int id)
+		public DO.Areas GetArea(int id)
 		{
 			return dl.GetLine(id).Area;
 		}
@@ -235,7 +266,7 @@ namespace BL
 			return BusLineDoBoAdapter(dl.GetLine(id));
         }
 
-		public BO.BusLine GetBusLine(int lineNumber, Areas area)
+		public BO.BusLine GetBusLine(int lineNumber, DO.Areas area)
 		{
 			return BusLineDoBoAdapter(dl.GetLine(lineNumber, area));
 		}

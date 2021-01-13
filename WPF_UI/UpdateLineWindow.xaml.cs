@@ -22,36 +22,30 @@ namespace WPF_UI
 	public partial class UpdateLineWindow : Window
 	{
 		static IBL bl;
-		public BusLine busLine;
-		IEnumerable<int> stations;
+        public BusLine busLine;
+
+        IEnumerable<int> stations;
 		public UpdateLineWindow()
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
+            BusLine busLine = DataContext as BusLine;
+			tbArea.Text = busLine.Area.ToString();
 			tbLineNumber.Text = busLine.BusLineNumber.ToString();
-			cbSelectArea.ItemsSource = bl.GetAreas();
 			cbFirstStop.ItemsSource = bl.GetAllLineStations();
 			cbLastStop.ItemsSource = bl.GetAllLineStations();
 			cbAddStop.ItemsSource = bl.GetAllBusStations();
 			stations = busLine.AllStationsOfLine;
 		}
 
-		private void cbSelectArea_Initialized(object sender, EventArgs e)
-		{//maybe change from cb to tb?
-			//cbSelectArea.SelectedItem = busLine.Area;
-			cbSelectArea.SelectedValue = busLine.Area;
-		}
-
 		private void cbFirstStop_Initialized(object sender, EventArgs e)
 		{
-			//cbFirstStop.SelectedItem = busLine.FirstStationKey;
-			cbFirstStop.SelectedValue = busLine.FirstStationKey;
+			cbFirstStop.SelectedItem = busLine.FirstStationKey;
 		}
 
 		private void cbLastStop_Initialized(object sender, EventArgs e)
 		{
 			cbLastStop.SelectedItem = busLine.LastStationKey;
-			//cbLastStop.SelectedValue = busLine.LastStationKey;
 		}
 
 		private void AddStationButton_Click(object sender, RoutedEventArgs e)
