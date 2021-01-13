@@ -23,7 +23,7 @@ namespace WPF_UI
 	{
 		static IBL bl;
 		static BusLine busLine;
-		IEnumerable<int> stations;
+		IEnumerable<int> stations = Enumerable.Empty<int>();
 		public AddLineWindow()
 		{
 			bl = BlFactory.GetBL();
@@ -34,14 +34,29 @@ namespace WPF_UI
 			cbAddStop.ItemsSource = bl.GetAllBusStations();
 		}
 
-		private void AddStationButton_Click(object sender, RoutedEventArgs e)
-		{
-			BusStation stop = (BusStation)cbAddStop.SelectedItem;
-			//BusStation stop = (BusStation)cbAddStop.SelectedIValue;
+        private void AddStationButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbAddStop.SelectedIndex == -1)
+            {
+                MessageBox.Show("No station was selected!");
+                return; 
+            }
 
-			foreach (int stopKey in busLine.AllStationsOfLine)
-				if (stopKey == stop.BusStationKey)
-					return;
+            BusStation stop = (BusStation)cbAddStop.SelectedItem;
+            
+            if (busLine == null)
+            {
+                stations.Append(stop.BusStationKey);
+                MessageBox.Show("Station number: " + stop.BusStationKey.ToString() + " was successfully added.");
+                return;
+            }
+
+            foreach (int stopKey in busLine.AllStationsOfLine)
+                if (stopKey == stop.BusStationKey)
+                {
+                    MessageBox.Show("This station is already on the bus line");
+                    return;
+                }
 
 			stations.Append(stop.BusStationKey);
 		}

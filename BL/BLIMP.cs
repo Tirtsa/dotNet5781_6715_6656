@@ -139,11 +139,13 @@ namespace BL
 			return DO.Areas.Jerusalem;
 		}
 
-		public IEnumerable<BO.Areas> GetAreas()
-		{
-			IEnumerable<BO.Areas> areas = null;
-			foreach (BO.Areas a in Enum.GetValues(typeof(BO.Areas)))
-				areas.Append(a);
+        public IEnumerable<BO.Areas> GetAreas()
+        {
+            IEnumerable<BO.Areas> areas = Enumerable.Empty<BO.Areas>();
+            foreach (BO.Areas a in Enum.GetValues(typeof(BO.Areas)))
+            {
+                areas.Append(a);
+            }
 			return areas;
 		}
 			/*var areas = ((IEnumerable<BO.Areas>)Enum.GetValues(typeof(BO.Areas))).Select

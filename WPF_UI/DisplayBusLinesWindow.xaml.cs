@@ -26,7 +26,7 @@ namespace WPF_UI
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
-			lbBusLines.ItemsSource = bl.GetAllBusLines();
+            lbBusLines.ItemsSource = bl.GetAllBusLines();//.GetAllBusLinesBy();
 		}
 
 		private void AddLineButton_Click(object sender, RoutedEventArgs e)
@@ -37,14 +37,18 @@ namespace WPF_UI
 
 		private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
 		{
-			UpdateLineWindow updateLineWindow = new UpdateLineWindow();
-			updateLineWindow.busLine = (BusLine)lbBusLines.SelectedItem;
+			UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = lbBusLines.SelectedItem };
 			updateLineWindow.Show();
 		}
 
 		private void DeleteLineButton_Click(object sender, RoutedEventArgs e)
 		{
-			bl.DeleteBusLine((BusLine)lbBusLines.SelectedItem);
+            BusLine busLine = (BusLine)lbBusLines.SelectedItem;
+            bl.DeleteBusLine(busLine);
+            //foreach (int station in busLine.AllStationsOfLine)
+                //if (station == )
+            MessageBox.Show("Line " + busLine.FirstStationKey + " in the " + busLine.Area + " region, was deleted successfully.");
+            Close();
 		}
 	}
 }

@@ -9,8 +9,8 @@
     <Grid>
         <TextBox x:Name="tbArea" HorizontalAlignment="Left" Height="58" Margin="265,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" FontSize="24"  IsEnabled="False" IsReadOnly="True"/>
         <TextBox x:Name="tbLineNumber" HorizontalAlignment="Left" Height="37" Margin="83,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" FontSize="36" IsEnabled="False" IsReadOnly="True"/>
-        <ComboBox x:Name="cbFirstStop" Height="64" Margin="55,171,290,0" VerticalAlignment="Top" ItemsSource="{Binding}" Initialized="cbFirstStop_Initialized"/>
-        <ComboBox x:Name="cbLastStop" Height="64" Margin="290,171,55,0" VerticalAlignment="Top" ItemsSource="{Binding}" Initialized="cbLastStop_Initialized"/>
+        <ComboBox x:Name="cbFirstStop" Height="64" Margin="55,171,290,0" VerticalAlignment="Top" ItemsSource="{Binding}" Visibility="Hidden" Initialized="cbFirstStop_Initialized"/>
+        <ComboBox x:Name="cbLastStop" Height="64" Margin="290,171,55,0" VerticalAlignment="Top" ItemsSource="{Binding}" Visibility="Hidden" Initialized="cbLastStop_Initialized"/>
         <ComboBox x:Name="cbAddStop" Height="64" Margin="234,269,111.6,0" VerticalAlignment="Top" ItemsSource="{Binding}"/>
         <Button x:Name="AddStationButton" Content="הוסיף תחנה" HorizontalAlignment="Left" Height="31" Margin="106,287,0,0" VerticalAlignment="Top" Width="98" Click="AddStationButton_Click"/>
         <Button x:Name="UpdateLineButton" Content="עדכן קו" HorizontalAlignment="Left" Height="48" Margin="332,362,0,0" VerticalAlignment="Top" Width="152" Click="UpdateLineButton_Click"/>
