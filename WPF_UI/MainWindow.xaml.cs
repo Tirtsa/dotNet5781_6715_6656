@@ -73,8 +73,9 @@ namespace WPF_UI
             Close();
         }
 
-        private void BusList_Click(object sender, RoutedEventArgs e)
-		{
+
+        private void LinesPassListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
             DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow();
             newWindow.lbBusLines.ItemsSource = bl.GetAllBusLines();
             newWindow.Show();
@@ -86,5 +87,6 @@ namespace WPF_UI
             newWindow.Show();
             Close();
         }
+
     }
 }

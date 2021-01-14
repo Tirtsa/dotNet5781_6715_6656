@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="מערכת תחנות וקווים - מיני פרויקט תשפ''א" TextBlock.TextAlignment="Center" Height="450" Width="800">
+        Title="מערכת תחנות וקווים - מיני פרויקט תשפ''א" TextBlock.TextAlignment="Right" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -14,7 +14,7 @@
         <DataGrid x:Name="BusStationsDg" AutoGenerateColumns="False" IsReadOnly="True" 
                   HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Center" Height="315" 
                   Margin="193,42,30.6,0" VerticalAlignment="Top" Width="570" Grid.Row="0"
-                  SelectionChanged="BusStationsDg_SelectionChanged" MouseDoubleClick="BusList_Click">
+                  SelectionChanged="BusStationsDg_SelectionChanged" MouseDoubleClick="Update_Click">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="*" x:Name="ActionsOnStation" Header="פעולות על התחנה">
                     <DataGridTemplateColumn.CellTemplate>
@@ -45,7 +45,7 @@
         <Label Content="קווים בתחנה" HorizontalContentAlignment="Right" HorizontalAlignment="Left" 
                Margin="33,42,0,0" VerticalAlignment="Top" Width="136"/>
         <ListBox x:Name="LinesPassListBox" HorizontalAlignment="Left" Height="160" 
-                 Margin="33,73,0,0" VerticalAlignment="Top" Width="136"/>
+                 Margin="33,73,0,0" VerticalAlignment="Top" Width="136" MouseDoubleClick="LinesPassListBox_MouseDoubleClick"/>
 
         <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="43,0,46.6,20" Click="AddStationButton_Click"/>
     </Grid>
