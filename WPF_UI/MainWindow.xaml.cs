@@ -73,11 +73,20 @@ namespace WPF_UI
             Close();
         }
 
+        private void BusList_Click(object sender, RoutedEventArgs e)
+		{
+            DataGrid tempDG = (DataGrid)sender;
+            BusStation tempS = (BusStation)tempDG.SelectedItem;
+            int key = tempS.BusStationKey;
+            List<BusLine> lines = new List<BusLine>();
 
-        private void LinesPassListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow();
-            newWindow.lbBusLines.ItemsSource = bl.GetAllBusLines();
+            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = tempS };
+            foreach (BusLine line in bl.GetAllBusLines())
+                foreach (int stop in line.AllStationsOfLine)
+                    if (stop == key)
+                        lines.Add(line);
+
+            newWindow.lbBusLines.ItemsSource = lines;
             newWindow.Show();
         }
 
@@ -87,6 +96,5 @@ namespace WPF_UI
             newWindow.Show();
             Close();
         }
-
     }
 }

@@ -30,28 +30,27 @@ namespace WPF_UI
 			bl = BlFactory.GetBL();
 			InitializeComponent();
             BusLine busLine = DataContext as BusLine;
-			tbArea.Text = busLine.Area.ToString();
-			tbLineNumber.Text = busLine.BusLineNumber.ToString();
+			//tbArea.Text = busLine.Area.ToString();
+			//tbLineNumber.Text = busLine.BusLineNumber.ToString();
 			cbFirstStop.ItemsSource = bl.GetAllLineStations();
 			cbLastStop.ItemsSource = bl.GetAllLineStations();
 			cbAddStop.ItemsSource = bl.GetAllBusStations();
-			stations = busLine.AllStationsOfLine;
+			//stations = busLine.AllStationsOfLine;
 		}
 
 		private void cbFirstStop_Initialized(object sender, EventArgs e)
 		{
-			cbFirstStop.SelectedItem = busLine.FirstStationKey;
+			//cbFirstStop.SelectedItem = busLine.FirstStationKey;
 		}
 
 		private void cbLastStop_Initialized(object sender, EventArgs e)
 		{
-			cbLastStop.SelectedItem = busLine.LastStationKey;
+			//cbLastStop.SelectedItem = busLine.LastStationKey;
 		}
 
 		private void AddStationButton_Click(object sender, RoutedEventArgs e)
 		{
 			BusStation stop = (BusStation)cbAddStop.SelectedItem;
-			//BusStation stop = (BusStation)cbAddStop.SelectedIValue;
 
 			foreach (int stopKey in busLine.AllStationsOfLine)
 				if (stopKey == stop.BusStationKey)
