@@ -35,7 +35,7 @@ namespace WPF_UI
             //AllStations = new ObservableCollection<BusStation>(stations.Cast<BusStation>());
             //BusStationsDg.ItemsSource = AllStations;
             BusStationsDg.ItemsSource = bl.GetAllBusStations();
-
+            BusLinesDg.ItemsSource = bl.GetAllBusLines();
         }
 
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -74,7 +74,7 @@ namespace WPF_UI
         }
 
         private void BusList_Click(object sender, RoutedEventArgs e)
-		{
+        {
             DataGrid tempDG = (DataGrid)sender;
             BusStation tempS = (BusStation)tempDG.SelectedItem;
             int key = tempS.BusStationKey;
@@ -93,6 +93,44 @@ namespace WPF_UI
         private void Refresh()
         {
             MainWindow newWindow = new MainWindow();
+            newWindow.Show();
+            Close();
+        }
+
+        private void BusLinesDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BusLine selectedStation = BusLinesDg.SelectedItem as BusLine;
+            List<string> StationsInLine = new List<string>();
+            foreach (int item in selectedStation.AllStationsOfLine)
+                StationsInLine.Add(item + " : " + bl.GetBusStation(item).StationName  );
+            StationsListBox.ItemsSource = StationsInLine;
+        }
+
+        private void DeleteLine_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusLine selectedStation = BusLinesDg.SelectedItem as BusLine;
+                bl.DeleteBusLine(selectedStation);
+                MessageBox.Show("הקו נמחק בהצלחה");
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occured " + ex);
+            }
+        }
+
+        private void UpdateLine_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = BusLinesDg.SelectedItem };
+            updateLineWindow.Show();
+            Close();
+        }
+
+        private void AddLineButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddLineWindow newWindow = new AddLineWindow();
             newWindow.Show();
             Close();
         }
