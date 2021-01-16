@@ -47,6 +47,7 @@
         <ListBox x:Name="LinesPassListBox" HorizontalAlignment="Left" Height="160" 
                  Margin="33,73,0,0" VerticalAlignment="Top" Width="136"/>
 
-        <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="43,0,46.6,20" Click="AddStationButton_Click"/>
+        <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" Grid.Row="1" Margin="0,0.4,46.6,15" Click="AddStationButton_Click"/>
+        <Button x:Name="AddLineButton" Content="הוסף קו" HorizontalAlignment="Right" Grid.Row="1" Margin="0,0.4,132.6,15" Click="AddLineButton_Click" Width="49"/>
     </Grid>
 </Window>

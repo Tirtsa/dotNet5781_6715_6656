@@ -22,25 +22,17 @@ namespace WPF_UI
 	public partial class DisplayBusLinesWindow : Window
 	{
 		static IBL bl;
-        //static lbBusLines;
         public DisplayBusLinesWindow()
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
-            lbBusLines.ItemsSource = bl.GetAllBusLines();//GetAllBusLinesBy(c => c.AllStationsOfLine.Contains(Parent.Dispatcher));
 		}
 
 		private void AddLineButton_Click(object sender, RoutedEventArgs e)
 		{
-			AddLineWindow addLineWindow = new AddLineWindow();
-			addLineWindow.Show();
-		}
-
-		private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
-		{
-			UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = lbBusLines.SelectedItem };
-            //busLine
-			updateLineWindow.Show();
+			BusStation Station = (BusStation)DataContext;
+            AddLineToStationWindow newWindow = new AddLineToStationWindow { DataContext = Station };
+            newWindow.Show();
 		}
 
 		private void DeleteLineButton_Click(object sender, RoutedEventArgs e)
@@ -48,7 +40,7 @@ namespace WPF_UI
             BusStation Station = (BusStation)DataContext;
             BusLine busLine = (BusLine)lbBusLines.SelectedItem;
             busLine.AllStationsOfLine = busLine.AllStationsOfLine.Where(s => s != Station.BusStationKey);
-            //update
+            bl.UpdateBusLine(busLine);
             MessageBox.Show("Line " + busLine.BusLineNumber + " in the " + busLine.Area + " region, was deleted from " + Station.BusStationKey);
             Close();
 		}

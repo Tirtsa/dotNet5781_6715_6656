@@ -66,11 +66,23 @@ namespace WPF_UI
             Close();
         }
 
+        private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLineWindow updateLineWindow = new UpdateLineWindow();// { DataContext = lbBusLines.SelectedItem };
+            //busLine
+            updateLineWindow.Show();
+        }
+
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
             AddStationWindow newWindow = new AddStationWindow();
             newWindow.Show();
             Close();
+        }
+        private void AddLineButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddLineWindow newWindow = new AddLineWindow();
+            newWindow.Show();
         }
 
         private void BusList_Click(object sender, RoutedEventArgs e)
@@ -78,13 +90,17 @@ namespace WPF_UI
             DataGrid tempDG = (DataGrid)sender;
             BusStation tempS = (BusStation)tempDG.SelectedItem;
             int key = tempS.BusStationKey;
-            List<BusLine> lines = new List<BusLine>();
 
-            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = tempS };
+            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = bl.GetBusStation(tempS.BusStationKey) };
+
+            List<BusLine> lines = new List<BusLine>();
             foreach (BusLine line in bl.GetAllBusLines())
                 foreach (int stop in line.AllStationsOfLine)
                     if (stop == key)
+                    {
                         lines.Add(line);
+                        break;
+                    }
 
             newWindow.lbBusLines.ItemsSource = lines;
             newWindow.Show();

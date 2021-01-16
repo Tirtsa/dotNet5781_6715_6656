@@ -1,0 +1,17 @@
+﻿<Window x:Class="WPF_UI.AddLineToStationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_UI"
+        mc:Ignorable="d"
+        Title="AddLineToStationWindow" Height="200" Width="300">
+    <Grid>
+        <Button x:Name="AddLineButton" Content="הוסיף קו לתחנה" HorizontalAlignment="Left" Height="27" Margin="10,133,0,0" VerticalAlignment="Top" Width="99" Click="AddLineButton_Click"/>
+        <ComboBox x:Name="cbAreaSelect" HorizontalAlignment="Left" Height="36" Margin="25,53,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox x:Name="tbLineNumber" HorizontalAlignment="Right" Height="36" Margin="0,53,25,0" VerticalAlignment="Top" Width="110" TextWrapping="Wrap" PreviewKeyDown="tbLineNumber_PreviewKeyDown"/>
+        <Label Content="אזור" HorizontalAlignment="Left" Height="24" Margin="103,24,0,0" VerticalAlignment="Top" Width="32"/>
+        <Label Content="מספר" HorizontalAlignment="Left" Height="24" Margin="229,24,0,0" VerticalAlignment="Top" Width="40"/>
+
+    </Grid>
+</Window>

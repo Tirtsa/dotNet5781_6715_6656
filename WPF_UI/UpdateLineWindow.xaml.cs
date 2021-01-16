@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace WPF_UI
 		static IBL bl;
         public BusLine busLine;
 
-        IEnumerable<int> stations;
+        ObservableCollection<int> stations = new ObservableCollection<int>();
 		public UpdateLineWindow()
 		{
 			bl = BlFactory.GetBL();
@@ -38,16 +39,6 @@ namespace WPF_UI
 			//stations = busLine.AllStationsOfLine;
 		}
 
-		private void cbFirstStop_Initialized(object sender, EventArgs e)
-		{
-			//cbFirstStop.SelectedItem = busLine.FirstStationKey;
-		}
-
-		private void cbLastStop_Initialized(object sender, EventArgs e)
-		{
-			//cbLastStop.SelectedItem = busLine.LastStationKey;
-		}
-
 		private void AddStationButton_Click(object sender, RoutedEventArgs e)
 		{
 			BusStation stop = (BusStation)cbAddStop.SelectedItem;
@@ -56,7 +47,7 @@ namespace WPF_UI
 				if (stopKey == stop.BusStationKey)
 					return;
 
-			stations.Append(stop.BusStationKey);
+			stations.Add(stop.BusStationKey);
 		}
 
 		private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
