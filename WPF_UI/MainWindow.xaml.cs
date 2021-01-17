@@ -41,7 +41,17 @@ namespace WPF_UI
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 			BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
-			LinesPassListBox.ItemsSource = selectedStation.LinesThatPass;
+            //List<string> LinesInStation = new List<string>();
+            //foreach(int item in selectedStation.LinesThatPass)
+            //{
+            //    BusLine line = bl.GetBusLine(item);
+            //    LinesInStation.Add("קו " + line.BusLineNumber + "לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
+            //}
+            IEnumerable<string> LinesInStation = from lineId in selectedStation.LinesThatPass
+                             let line = bl.GetBusLine(lineId)
+                             select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
+
+            LinesPassListBox.ItemsSource = LinesInStation;
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -102,7 +112,7 @@ namespace WPF_UI
             BusLine selectedStation = BusLinesDg.SelectedItem as BusLine;
             List<string> StationsInLine = new List<string>();
             foreach (int item in selectedStation.AllStationsOfLine)
-                StationsInLine.Add(item + " : " + bl.GetBusStation(item).StationName  );
+                StationsInLine.Add(" תחנה " + item + " : " + bl.GetBusStation(item).StationName  );
             StationsListBox.ItemsSource = StationsInLine;
         }
 
@@ -123,16 +133,19 @@ namespace WPF_UI
 
         private void UpdateLine_Click(object sender, RoutedEventArgs e)
         {
-            UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = BusLinesDg.SelectedItem };
+            UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
             updateLineWindow.Show();
             Close();
         }
 
         private void AddLineButton_Click(object sender, RoutedEventArgs e)
         {
-            AddLineWindow newWindow = new AddLineWindow();
-            newWindow.Show();
+            AddBusLine window = new AddBusLine();
+            window.Show();
             Close();
+            //AddLineWindow newWindow = new AddLineWindow();
+            //newWindow.Show();
+            //Close();
         }
     }
 }
