@@ -66,7 +66,7 @@
                     <DataGrid x:Name="BusLinesDg" AutoGenerateColumns="False" IsReadOnly="True" 
                                 HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Right" Height="315" 
                                 Margin="20" VerticalAlignment="Center" Width="570" Grid.Row="0"
-                                SelectionChanged="BusLinesDg_SelectionChanged" MouseDoubleClick="Update_Click">
+                                SelectionChanged="BusLinesDg_SelectionChanged" MouseDoubleClick="UpdateLine_Click">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="*" x:Name="ActionsOnLine" Header="פעולות על הקו">
                                 <DataGridTemplateColumn.CellTemplate>

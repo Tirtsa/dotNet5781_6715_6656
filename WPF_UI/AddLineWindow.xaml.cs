@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
 using BO;
+using System.Collections.ObjectModel;
 
 namespace WPF_UI
 {
@@ -23,16 +24,16 @@ namespace WPF_UI
 	{
 		static IBL bl;
 		static BusLine busLine;
-		IEnumerable<int> stations = Enumerable.Empty<int>();
-		public AddLineWindow()
+        static ObservableCollection<int> stations = new ObservableCollection<int>();
+        public AddLineWindow()
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
-			//cbArea.ItemsSource = bl.GetAreas();
-			cbFirstStop.ItemsSource = bl.GetAllBusStations();
-			cbLastStop.ItemsSource = bl.GetAllBusStations();
-			cbAddStop.ItemsSource = bl.GetAllBusStations();
-		}
+            cbArea.ItemsSource = Enum.GetValues(typeof(BO.Areas));
+            cbFirstStop.ItemsSource = bl.GetAllBusStations();
+            cbLastStop.ItemsSource = bl.GetAllBusStations();
+            cbAddStop.ItemsSource = bl.GetAllBusStations();
+        }
 
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
@@ -46,7 +47,7 @@ namespace WPF_UI
             
             if (busLine == null)
             {
-                stations.Append(stop.BusStationKey);
+                stations.Add(stop.BusStationKey);
                 MessageBox.Show("Station number: " + stop.BusStationKey.ToString() + " was successfully added.");
                 return;
             }
@@ -69,26 +70,42 @@ namespace WPF_UI
 
 		private void AddLineButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (tbLineNumber.Text.Length == 0 || cbArea.SelectedIndex == -1 || cbFirstStop.SelectedIndex == -1 || cbLastStop.SelectedIndex == -1)
-				MessageBox.Show("Not all fields are filled in");
-			else
-			{
-				LineStation first = (LineStation)cbFirstStop.SelectedValue;
-				stations.Prepend(first.StationKey);
-				LineStation last = (LineStation)cbLastStop.SelectedValue;
-				stations.Append(last.StationKey);
+            try
+            {
+                if (tbLineNumber.Text.Length == 0 || cbArea.SelectedIndex == -1 || cbFirstStop.SelectedIndex == -1 || cbLastStop.SelectedIndex == -1)
+                    throw new Exception();
+                else
+                {
+                    BusStation addStopField = (BusStation)cbAddStop.SelectedItem;
+                    bool found = false;
+                    foreach (int stop in stations)
+                        if (stop == addStopField.BusStationKey)
+                            found = true;
+                    if (!found)
+                        stations.Add(addStopField.BusStationKey);
 
-				busLine = new BusLine
-				{
-					BusLineNumber = int.Parse(tbLineNumber.Text),
-					Area = (Areas)cbArea.SelectedItem,
-					FirstStationKey = first.StationKey,
-					LastStationKey = last.StationKey,
-					AllStationsOfLine = stations
-				};
-				bl.AddBusLine(busLine);
-			}
-		}
+                    BusStation last = (BusStation)cbLastStop.SelectedValue;
+                    stations.Add(last.BusStationKey); BusStation first = (BusStation)cbFirstStop.SelectedValue;
+
+                    stations.Prepend(first.BusStationKey);
+
+                    busLine = new BusLine {
+                        BusLineNumber = int.Parse(tbLineNumber.Text),
+                        Area = (BO.Areas)cbArea.SelectedItem,
+                        FirstStationKey = first.BusStationKey,
+                        LastStationKey = last.BusStationKey,
+                        AllStationsOfLine = stations
+                    };
+                    bl.AddBusLine(busLine);
+                    Close();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Not all fields are filled in");
+            }
+
+        }
 	}
 }
 

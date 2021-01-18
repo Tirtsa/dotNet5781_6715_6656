@@ -133,19 +133,21 @@ namespace WPF_UI
 
         private void UpdateLine_Click(object sender, RoutedEventArgs e)
         {
-            UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
+            UpdateLineWindow updateLineWindow = new UpdateLineWindow();
             updateLineWindow.Show();
-            Close();
+            //UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
+            //updateLineWindow.Show();
+            //Close();
         }
 
         private void AddLineButton_Click(object sender, RoutedEventArgs e)
         {
-            AddBusLine window = new AddBusLine();
-            window.Show();
-            Close();
-            //AddLineWindow newWindow = new AddLineWindow();
-            //newWindow.Show();
+            //AddBusLine window = new AddBusLine();
+            //window.Show();
             //Close();
+            AddLineWindow newWindow = new AddLineWindow();
+            newWindow.Show();
+            Close();
         }
     }
 }
