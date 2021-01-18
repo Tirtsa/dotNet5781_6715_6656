@@ -31,8 +31,8 @@ namespace WPF_UI
 		private void AddLineButton_Click(object sender, RoutedEventArgs e)
 		{
 			BusStation Station = (BusStation)DataContext;
-            AddLineToStationWindow newWindow = new AddLineToStationWindow { DataContext = Station };
-            newWindow.Show();
+            //AddLineToStationWindow newWindow = new AddLineToStationWindow { DataContext = Station };
+            //newWindow.Show();
 		}
 
 		private void DeleteLineButton_Click(object sender, RoutedEventArgs e)
