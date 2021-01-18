@@ -81,7 +81,7 @@ namespace WPF_UI
 				busLine = new BusLine
 				{
 					BusLineNumber = int.Parse(tbLineNumber.Text),
-					Area = (BO.Areas)cbArea.SelectedItem,
+					Area = (Areas)cbArea.SelectedItem,
 					FirstStationKey = first.StationKey,
 					LastStationKey = last.StationKey,
 					AllStationsOfLine = stations

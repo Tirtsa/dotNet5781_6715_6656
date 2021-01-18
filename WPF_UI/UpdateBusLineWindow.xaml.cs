@@ -22,10 +22,13 @@ namespace WPF_UI
     public partial class UpdateBusLineWindow : Window
     {
         static IBL bl;
+        BusLine myLine;
         public UpdateBusLineWindow()
         {
             bl = BlFactory.GetBL();
             InitializeComponent();
+
+            areaComboBox.ItemsSource = Enum.GetValues(typeof(Areas));
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -41,6 +44,8 @@ namespace WPF_UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            myLine = DataContext as BusLine;
+
             List<string> myStationsList = (from key in (DataContext as BusLine).AllStationsOfLine
                                            let station = bl.GetBusStation(key)
                                            select (" תחנה " + station.BusStationKey + " : " + station.StationName)).ToList();
@@ -68,14 +73,13 @@ namespace WPF_UI
         {
             try
             {
-                bl.UpdateBusLine(new BusLine {
-                    BusLineNumber = (int)busLineNumberLabel.Content,
-                    Area = (Areas)Enum.Parse(typeof(Areas), areaTextBox.Text),
-                    FirstStationKey = (int)LineStationsListBox.Items.GetItemAt(0),
-                    LastStationKey = (int)LineStationsListBox.Items.GetItemAt(LineStationsListBox.Items.Count - 1),
-                    AllStationsOfLine = from string item in LineStationsListBox.Items
-                                        select int.Parse(item.Substring(item.IndexOf(" תחנה " + 6), 5))
-                });
+                string test;
+                foreach (string item in LineStationsListBox.Items)
+                    test = item.Substring(6, 5);
+                myLine.AllStationsOfLine = from string item in LineStationsListBox.Items
+                                           select int.Parse(item.Substring(6, 5));
+                bl.UpdateBusLine(myLine);
+                Close();
             }
             catch (Exception ex)
             {

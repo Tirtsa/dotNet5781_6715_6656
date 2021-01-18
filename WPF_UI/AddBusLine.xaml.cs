@@ -22,10 +22,16 @@ namespace WPF_UI
     public partial class AddBusLine : Window
     {
         static IBL bl;
+        BusLine myLine;
         public AddBusLine()
         {
             bl = BlFactory.GetBL();
             InitializeComponent();
+
+            myLine = new BusLine();
+            DataContext = myLine;
+
+            areaComboBox.ItemsSource = Enum.GetValues(typeof(Areas));
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -61,16 +67,12 @@ namespace WPF_UI
         {
             try
             {
-                int lineNumber;
-                int.TryParse(busLineNumberTextBox.Text, out lineNumber);
-                bl.AddBusLine(new BusLine {
-                    BusLineNumber = lineNumber,
-                    Area = (Areas)Enum.Parse(typeof(Areas), areaTextBox.Text),
-                    FirstStationKey = (int)LineStationsListBox.Items.GetItemAt(0),
-                    LastStationKey = (int)LineStationsListBox.Items.GetItemAt(LineStationsListBox.Items.Count - 1),
-                    AllStationsOfLine = from string item in LineStationsListBox.Items
-                                        select int.Parse(item.Substring(item.IndexOf(" תחנה " + 6), 5))
-                });
+                myLine.AllStationsOfLine = from string item in LineStationsListBox.Items
+                                           select int.Parse(item.Substring(6,5));
+                bl.AddBusLine(myLine);
+                myLine = new BusLine();
+                DataContext = myLine;
+                LineStationsListBox.Items.Clear();
             }
             catch (Exception ex)
             {

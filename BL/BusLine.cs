@@ -8,8 +8,8 @@ using DO;
 
 namespace BO
 {
-	public class BusLine
-	{
+    public class BusLine
+    {
         public int BusLineNumber { get; set; }
         public Areas Area { get; set; }
         public int FirstStationKey { get; set; }
@@ -21,5 +21,5 @@ namespace BO
         {
             return this.ToStringProperty();
         }
-	}
+    }
 }

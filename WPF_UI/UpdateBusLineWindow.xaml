@@ -25,7 +25,7 @@
             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מספר קו"/>
             <Label x:Name="busLineNumberLabel" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="0" Content="{Binding BusLineNumber}"/>
             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": איזור"/>
-            <TextBox x:Name="areaTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            <ComboBox x:Name="areaComboBox" Width="120" VerticalAlignment="Center" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה הראשונה"/>
             <TextBox x:Name="firstStationKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding FirstStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה האחרונה"/>

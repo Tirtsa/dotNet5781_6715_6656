@@ -22,19 +22,19 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מספר קו"/>
-            <TextBox x:Name="busLineNumberTextBox" Width="120" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="0"/>
+            <TextBox x:Name="busLineNumberTextBox" Width="120" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="0" Text="{Binding BusLineNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": איזור"/>
-            <TextBox x:Name="areaTextBox" Width="120" VerticalAlignment="Center" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            <ComboBox x:Name="areaComboBox" Width="120" VerticalAlignment="Center" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0" SelectedItem="{Binding Area}"/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה הראשונה"/>
-            <TextBox x:Name="firstStationKeyTextBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            <TextBox x:Name="firstStationKeyTextBox" Width="120" VerticalAlignment="Center" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0" Text="{Binding FirstStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה האחרונה"/>
             <TextBox x:Name="lastStationKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LastStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מרחק כולל"/>
-            <TextBox x:Name="totalDistanceTextBox" Width="120" VerticalAlignment="Center" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            <TextBox x:Name="totalDistanceTextBox" Width="120" VerticalAlignment="Center" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0" Text="{Binding TotalDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": זמן נסיעה כולל"/>
-            <TextBox x:Name="totalTimeTextBox" Width="120" VerticalAlignment="Center" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            <TextBox x:Name="totalTimeTextBox" Width="120" VerticalAlignment="Center" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0" Text="{Binding TotalTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
         </Grid>
-        <ListBox x:Name="LineStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="158" Margin="57,282,0,0" VerticalAlignment="Top" Width="289"/>
+        <ListBox x:Name="LineStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="158" Margin="57,282,0,0" VerticalAlignment="Top" Width="289" ItemsSource="{Binding AllStationsOfLine}"/>
         <Label Content=": רשימת התחנות בקו" HorizontalAlignment="Left" Margin="228,242,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
         <Button x:Name="AddLineButton" Content="הוסף קו" HorizontalAlignment="Left" Margin="448,474,0,0" VerticalAlignment="Top" Width="75" Click="AddLineButton_Click"/>
         <Button x:Name="CancelButton" Content="ביטול" HorizontalAlignment="Left" Margin="317,474,0,0" VerticalAlignment="Top" Width="75" Click="CancelButton_Click"/>
