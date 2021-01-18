@@ -139,23 +139,6 @@ namespace BL
 			return DO.Areas.Jerusalem;
 		}
 
-        public IEnumerable<BO.Areas> GetAreas()
-        {
-            IEnumerable<BO.Areas> areas = Enumerable.Empty<BO.Areas>();
-            foreach (BO.Areas a in Enum.GetValues(typeof(BO.Areas)))
-            {
-                areas.Append(a);
-            }
-			return areas;
-		}
-			/*var areas = ((IEnumerable<BO.Areas>)Enum.GetValues(typeof(BO.Areas))).Select
-				(area => new
-					{
-						Value = (int)area,
-						Text = area.ToString()
-					});
-			return (IEnumerable<Areas>)areas;
-		}*/
 		BO.BusLine BusLineDoBoAdapter(DO.BusLine lineDo)
         {
 			BO.BusLine lineBo = new BO.BusLine();
@@ -239,8 +222,10 @@ namespace BL
 		{
 			try
 			{
-				dl.UpdateLine(BusLineBoDoAdapter(line));
-			}
+                DeleteBusLine(line);
+                AddBusLine(line);
+                dl.UpdateLine(BusLineBoDoAdapter(line));
+            }
 			catch
 			{
 				throw new ArgumentException("This Line not exist " + line.BusLineNumber);

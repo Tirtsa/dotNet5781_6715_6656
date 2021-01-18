@@ -48,8 +48,8 @@ namespace WPF_UI
             //    LinesInStation.Add("קו " + line.BusLineNumber + "לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
             //}
             IEnumerable<string> LinesInStation = from lineId in selectedStation.LinesThatPass
-                             let line = bl.GetBusLine(lineId)
-                             select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
+                                                 let line = bl.GetBusLine(lineId)
+                                                 select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
 
             LinesPassListBox.ItemsSource = LinesInStation;
         }
@@ -76,11 +76,23 @@ namespace WPF_UI
             Close();
         }
 
+        private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLineWindow updateLineWindow = new UpdateLineWindow();// { DataContext = lbBusLines.SelectedItem };
+            //busLine
+            updateLineWindow.Show();
+        }
+
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
             AddStationWindow newWindow = new AddStationWindow();
             newWindow.Show();
             Close();
+        }
+        private void AddLineButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddBusLine newWindow = new AddBusLine();
+            newWindow.Show();
         }
 
         private void BusList_Click(object sender, RoutedEventArgs e)
@@ -88,13 +100,17 @@ namespace WPF_UI
             DataGrid tempDG = (DataGrid)sender;
             BusStation tempS = (BusStation)tempDG.SelectedItem;
             int key = tempS.BusStationKey;
-            List<BusLine> lines = new List<BusLine>();
 
-            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = tempS };
+            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = bl.GetBusStation(tempS.BusStationKey) };
+
+            List<BusLine> lines = new List<BusLine>();
             foreach (BusLine line in bl.GetAllBusLines())
                 foreach (int stop in line.AllStationsOfLine)
                     if (stop == key)
+                    {
                         lines.Add(line);
+                        break;
+                    }
 
             newWindow.lbBusLines.ItemsSource = lines;
             newWindow.Show();
@@ -112,7 +128,7 @@ namespace WPF_UI
             BusLine selectedStation = BusLinesDg.SelectedItem as BusLine;
             List<string> StationsInLine = new List<string>();
             foreach (int item in selectedStation.AllStationsOfLine)
-                StationsInLine.Add(" תחנה " + item + " : " + bl.GetBusStation(item).StationName  );
+                StationsInLine.Add("תחנה" + item + " : " + bl.GetBusStation(item).StationName  );
             StationsListBox.ItemsSource = StationsInLine;
         }
 
@@ -133,20 +149,8 @@ namespace WPF_UI
 
         private void UpdateLine_Click(object sender, RoutedEventArgs e)
         {
-            UpdateLineWindow updateLineWindow = new UpdateLineWindow();
-            updateLineWindow.Show();
-            //UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
-            //updateLineWindow.Show();
-            //Close();
-        }
-
-        private void AddLineButton_Click(object sender, RoutedEventArgs e)
-        {
-            //AddBusLine window = new AddBusLine();
-            //window.Show();
-            //Close();
-            AddLineWindow newWindow = new AddLineWindow();
-            newWindow.Show();
+            UpdateBusLineWindow updateBusLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
+            updateBusLineWindow.Show();
             Close();
         }
     }

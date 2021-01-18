@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,22 +14,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
 using BO;
-using System.Collections.ObjectModel;
 
 namespace WPF_UI
 {
-	/// <summary>
-	/// Interaction logic for AddLineWindow.xaml
-	/// </summary>
-	public partial class AddLineWindow : Window
-	{
-		static IBL bl;
-		static BusLine busLine;
+    /// <summary>
+    /// Interaction logic for AddLineWindow.xaml
+    /// </summary>
+    public partial class AddLineWindow : Window
+    {
+        static IBL bl;
+        static BusLine busLine;
         static ObservableCollection<int> stations = new ObservableCollection<int>();
         public AddLineWindow()
-		{
-			bl = BlFactory.GetBL();
-			InitializeComponent();
+        {
+            bl = BlFactory.GetBL();
+            InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Areas));
             cbFirstStop.ItemsSource = bl.GetAllBusStations();
             cbLastStop.ItemsSource = bl.GetAllBusStations();
@@ -40,11 +40,11 @@ namespace WPF_UI
             if (cbAddStop.SelectedIndex == -1)
             {
                 MessageBox.Show("No station was selected!");
-                return; 
+                return;
             }
 
             BusStation stop = (BusStation)cbAddStop.SelectedItem;
-            
+
             if (busLine == null)
             {
                 stations.Add(stop.BusStationKey);
@@ -58,22 +58,22 @@ namespace WPF_UI
                     MessageBox.Show("This station is already on the bus line");
                     return;
                 }
+            stations.Add(stop.BusStationKey);
+        }
 
-			stations.Append(stop.BusStationKey);
-		}
+        private void tbLineNumber_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            int key = (int)e.Key;
+            e.Handled = !(key > 33 && key < 44 || key > 73 && key < 84 || key == 2);
+        }
 
-		private void tbLineNumber_PreviewKeyDown(object sender, KeyEventArgs e)
-		{
-			int key = (int)e.Key;
-			e.Handled = !(key > 33 && key < 44 || key > 73 && key < 84 || key == 2);
-		}
-
-		private void AddLineButton_Click(object sender, RoutedEventArgs e)
-		{
+        private void AddLineButton_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 if (tbLineNumber.Text.Length == 0 || cbArea.SelectedIndex == -1 || cbFirstStop.SelectedIndex == -1 || cbLastStop.SelectedIndex == -1)
                     throw new Exception();
+
                 else
                 {
                     BusStation addStopField = (BusStation)cbAddStop.SelectedItem;
@@ -104,8 +104,7 @@ namespace WPF_UI
             {
                 MessageBox.Show("Not all fields are filled in");
             }
-
         }
-	}
+    }
 }
 

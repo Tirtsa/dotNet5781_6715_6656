@@ -13,7 +13,6 @@ namespace BLApi
 
         #region BusLine
         DO.Areas AreasAdapter(BO.Areas areaBO);
-        IEnumerable<BO.Areas> GetAreas();
         IEnumerable<BO.BusLine> GetAllBusLines();
         IEnumerable<BO.BusLine> GetAllBusLinesBy(Predicate<BO.BusLine> predicate);
         BO.BusLine GetBusLine(int lineNumber, DO.Areas area);
