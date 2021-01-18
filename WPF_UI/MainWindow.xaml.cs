@@ -143,12 +143,5 @@ namespace WPF_UI
             updateLineWindow.Show();
             Close();
         }
-
-        private void AddLineButton_Click(object sender, RoutedEventArgs e)
-        {
-            AddLineWindow newWindow = new AddLineWindow();
-            newWindow.Show();
-            Close();
-        }
     }
 }
