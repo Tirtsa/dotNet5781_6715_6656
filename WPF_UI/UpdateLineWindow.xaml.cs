@@ -24,8 +24,6 @@ namespace WPF_UI
 	{
 		static IBL bl;
         public BusLine busLine;
-
-        ObservableCollection<int> stations = new ObservableCollection<int>();
 		public UpdateLineWindow()
 		{
 			bl = BlFactory.GetBL();
@@ -34,10 +32,15 @@ namespace WPF_UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            AllStationsListBox.SelectedIndex = 0;
+            LineStationsListBox.SelectedIndex = 0;
             busLine = DataContext as BusLine;
 
             tbArea.Text = Enum.GetName(typeof(BO.Areas), busLine.Area);
 			tbLineNumber.Text = busLine.BusLineNumber.ToString();
+
+            tbTotalDistance.Text = busLine.TotalDistance.ToString();
+            tbTotalTime.Text = busLine.TotalTime.ToString();
 
             List<string> myStationsList = (from key in (DataContext as BusLine).AllStationsOfLine
                                            let station = bl.GetBusStation(key)
@@ -53,7 +56,10 @@ namespace WPF_UI
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             string currentItemText = AllStationsListBox.SelectedValue.ToString();
-            LineStationsListBox.Items.Add(currentItemText);
+            if (!LineStationsListBox.Items.Cast<String>().Any(s => s.ToString() == currentItemText))
+                LineStationsListBox.Items.Add(currentItemText);
+            else
+                MessageBox.Show("תחנה זו כבר ברשימה");
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -65,35 +71,32 @@ namespace WPF_UI
         private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {//move up and down
+                busLine.TotalDistance = double.Parse(tbTotalDistance.Text);
+                busLine.TotalTime = double.Parse(tbTotalTime.Text);
+
                 string test;
                 foreach (string item in LineStationsListBox.Items)
                     test = item.Substring(6, 5);
                 busLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                             select int.Parse(item.Substring(6, 5));
-                bl.UpdateBusLine(busLine);
-                Close();
-                //multiples
-                //nothing selected
-                //move up and down
-                //first last update
+                
+                LineStationsListBox.SelectedIndex = 0;
+                BusStation selected = LineStationsListBox.SelectedItem as BusStation;
+                busLine.FirstStationKey = selected.BusStationKey;
+                
+                LineStationsListBox.SelectedIndex = LineStationsListBox.Items.Count - 1;
+                selected = LineStationsListBox.SelectedItem as BusStation;
+                busLine.LastStationKey = selected.BusStationKey;
 
-                //LineStation first = (LineStation)cbFirstStop.SelectedValue;
-                //LineStation last = (LineStation)cbLastStop.SelectedValue;
-
-                ////first and last
                 //if (busLine.AllStationsOfLine.First() != first.StationKey)
                 //    busLine.AllStationsOfLine.Prepend(first.StationKey);
 
                 //else if (busLine.AllStationsOfLine.Last() != last.StationKey)
                 //    busLine.AllStationsOfLine.Append(last.StationKey);
 
-                //BusLine tempLine = new BusLine {
-                //    FirstStationKey = first.StationKey,
-                //    LastStationKey = last.StationKey,
-                //    AllStationsOfLine = stations
-                //};
-                //bl.UpdateBusLine(tempLine);
+                bl.UpdateBusLine(busLine);
+                Close();
             }
             catch (Exception ex)
             {

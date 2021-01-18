@@ -170,12 +170,12 @@ namespace BL
 		public void AddBusLine(BO.BusLine newLine)
 		{
 			//1. Verify if all stations of list exists
-			foreach (int item in newLine.AllStationsOfLine)
-			{
-				if (dl.GetStation(item) == null)
-					throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
-						" add it to line");
-			}
+			//foreach (int item in newLine.AllStationsOfLine)
+			//{
+			//	if (dl.GetStation(item) == null)
+			//		throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
+			//			" add it to line");
+			//}
 			
 			for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
             {
