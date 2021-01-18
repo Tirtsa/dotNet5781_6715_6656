@@ -87,6 +87,7 @@ namespace WPF_UI
             AddLineWindow newWindow = new AddLineWindow();
             //AddBusLine newWindow = new AddBusLine();
             newWindow.Show();
+            Close();
         }
 
         private void BusList_Click(object sender, RoutedEventArgs e)
