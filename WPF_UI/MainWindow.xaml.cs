@@ -76,13 +76,6 @@ namespace WPF_UI
             Close();
         }
 
-        private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateLineWindow updateLineWindow = new UpdateLineWindow();// { DataContext = lbBusLines.SelectedItem };
-            //busLine
-            updateLineWindow.Show();
-        }
-
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
             AddStationWindow newWindow = new AddStationWindow();
@@ -91,7 +84,8 @@ namespace WPF_UI
         }
         private void AddLineButton_Click(object sender, RoutedEventArgs e)
         {
-            AddBusLine newWindow = new AddBusLine();
+            AddLineWindow newWindow = new AddLineWindow();
+            //AddBusLine newWindow = new AddBusLine();
             newWindow.Show();
         }
 
@@ -149,8 +143,9 @@ namespace WPF_UI
 
         private void UpdateLine_Click(object sender, RoutedEventArgs e)
         {
-            UpdateBusLineWindow updateBusLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
-            updateBusLineWindow.Show();
+            UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = BusLinesDg.SelectedItem };
+            //UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
+            updateLineWindow.Show();
             Close();
         }
     }

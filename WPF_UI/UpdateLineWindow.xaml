@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="UpdateLineWindow" Height="450" Width="500" Loaded="Window_Loaded">
+        Title="UpdateLineWindow" Height="550" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid>
-        <TextBox x:Name="tbArea" HorizontalAlignment="Left" Height="58" Margin="265,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" FontSize="36"  IsEnabled="False" IsReadOnly="True"/>
-        <TextBox x:Name="tbLineNumber" HorizontalAlignment="Left" Height="58" Margin="83,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" FontSize="30" IsEnabled="False" IsReadOnly="True"/>
-        <ComboBox x:Name="cbFirstStop" Height="64" Margin="55,171,290,0" VerticalAlignment="Top" ItemsSource="{Binding}"/>
-        <ComboBox x:Name="cbLastStop" Height="64" Margin="290,171,55,0" VerticalAlignment="Top" ItemsSource="{Binding}"/>
-        <ComboBox x:Name="cbAddStop" Height="64" Margin="234,269,111.6,0" VerticalAlignment="Top" ItemsSource="{Binding}"/>
-        <Button x:Name="AddStationButton" Content="הוסיף תחנה" HorizontalAlignment="Left" Height="31" Margin="106,287,0,0" VerticalAlignment="Top" Width="98" Click="AddStationButton_Click"/>
-        <Button x:Name="UpdateLineButton" Content="עדכן קו" HorizontalAlignment="Left" Height="48" Margin="332,362,0,0" VerticalAlignment="Top" Width="152" Click="UpdateLineButton_Click"/>
-        <Label x:Name="LabelFirst" Content="תחנה ראשונה" HorizontalAlignment="Left" Height="40" Margin="62,131,0,0" VerticalAlignment="Top" Width="130" FontSize="20"/>
-        <Label x:Name="LabelLast" Content="תחנה אחרונה" HorizontalAlignment="Left" Height="40" Margin="298,131,0,0" VerticalAlignment="Top" Width="130" FontSize="20"/>
+        <TextBox x:Name="tbArea" HorizontalAlignment="Left" Height="58" Margin="470,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" FontSize="36"  IsEnabled="False" IsReadOnly="True"/>
+        <TextBox x:Name="tbLineNumber" HorizontalAlignment="Left" Height="58" Margin="134,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" FontSize="30" IsEnabled="False" IsReadOnly="True"/>
+        <TextBox x:Name="totalDistanceTextBox" Width="179" VerticalAlignment="Center" Text="{Binding TotalDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="0,173,87.6,301.8" Height="46" HorizontalAlignment="Right" Grid.Column="0"/>
+        <TextBox x:Name="totalTimeTextBox" Width="188" VerticalAlignment="Center" Text="{Binding TotalTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="0,173,509.6,301.8" Height="46" HorizontalAlignment="Right" Grid.Column="0"/>
+        <Button x:Name="UpdateLineButton" Content="עדכן קו" Height="31" Margin="340,466,0,0" VerticalAlignment="Top" Click="UpdateLineButton_Click" HorizontalAlignment="Left" Width="111"/>
+        <ListBox x:Name="AllStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right"  Height="158" Margin="470,286,0,0" VerticalAlignment="Top" Width="289"/>
+        <ListBox x:Name="LineStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="158" Margin="33,286,0,0" VerticalAlignment="Top" Width="289"/>
+        <Button x:Name="AddButton" Content="&lt;&lt; הוסף" HorizontalAlignment="Left" Margin="364,295,0,0" VerticalAlignment="Top" Width="73" Click="AddButton_Click"/>
+        <Button x:Name="RemoveButton" Content="הורד &gt;&gt;" HorizontalAlignment="Left" Margin="364,343,0,0" VerticalAlignment="Top" Width="73" Click="RemoveButton_Click"/>
+        <Label x:Name="LabelTotalDist" Content="מרחק כולל" HorizontalAlignment="Left" Height="40" Margin="600,133,0,0" VerticalAlignment="Top" Width="106" FontSize="20"/>
+        <Label x:Name="LabelTotalTime" Content="זמן נסיעה כולל" HorizontalAlignment="Left" Height="40" Margin="148,133,0,0" VerticalAlignment="Top" Width="136" FontSize="20"/>
+        <Label x:Name="LabelRegion" Content=":אזור" HorizontalAlignment="Left" Height="40" Margin="666,69,0,0" VerticalAlignment="Top" Width="50" FontSize="20"/>
+        <Label x:Name="LabelNumber" Content=":מספר קו" HorizontalAlignment="Left" Height="40" Margin="234,65,0,0" VerticalAlignment="Top" Width="88" FontSize="20"/>
+        <Label x:Name="LabelAllStations" Content="רשימת כל התחנות" HorizontalAlignment="Left" Height="40" Margin="587,246,0,0" VerticalAlignment="Top" Width="172" FontSize="20"/>
+        <Label x:Name="LabelBusStations" Content="רשימת תחנות בקו" HorizontalAlignment="Left" Height="40" Margin="150,246,0,0" VerticalAlignment="Top" Width="172" FontSize="20"/>
     </Grid>
 </Window>
