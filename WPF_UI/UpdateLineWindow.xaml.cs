@@ -30,46 +30,66 @@ namespace WPF_UI
 		{
 			bl = BlFactory.GetBL();
 			InitializeComponent();
-            BusLine busLine = DataContext as BusLine;
-			//tbArea.Text = busLine.Area.ToString();
-			//tbLineNumber.Text = busLine.BusLineNumber.ToString();
-			cbFirstStop.ItemsSource = bl.GetAllLineStations();
-			cbLastStop.ItemsSource = bl.GetAllLineStations();
+			cbFirstStop.ItemsSource = bl.GetAllBusStations();
+			cbLastStop.ItemsSource = bl.GetAllBusStations();
 			cbAddStop.ItemsSource = bl.GetAllBusStations();
-			//stations = busLine.AllStationsOfLine;
 		}
 
-		private void AddStationButton_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            busLine = DataContext as BusLine;
+			tbArea.Text = Enum.GetName(typeof(BO.Areas), busLine.Area);
+			tbLineNumber.Text = busLine.BusLineNumber.ToString();
+
+            cbFirstStop.SelectedItem = bl.GetAllBusStations().Where(s => s.BusStationKey == busLine.FirstStationKey);
+            cbLastStop.SelectedValue = bl.GetAllBusStations().Where(s => s.BusStationKey == busLine.LastStationKey);
+        }
+
+            private void AddStationButton_Click(object sender, RoutedEventArgs e)
 		{
-			BusStation stop = (BusStation)cbAddStop.SelectedItem;
+            try
+            {
+                if ((BusStation)cbAddStop.SelectedItem == null)
+                    throw new ArgumentNullException();
+                BusStation stop = (BusStation)cbAddStop.SelectedItem;
 
-			foreach (int stopKey in busLine.AllStationsOfLine)
-				if (stopKey == stop.BusStationKey)
-					return;
+                foreach (int stopKey in busLine.AllStationsOfLine)
+                    if (stopKey == stop.BusStationKey)
+                        return;
 
-			stations.Add(stop.BusStationKey);
+                stations.Add(stop.BusStationKey);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("You have not selected a station to add");
+            }
 		}
 
 		private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
-		{
-			LineStation first = (LineStation)cbFirstStop.SelectedValue;
-			LineStation last = (LineStation)cbLastStop.SelectedValue;
+        {
+            try
+            {
+                LineStation first = (LineStation)cbFirstStop.SelectedValue;
+                LineStation last = (LineStation)cbLastStop.SelectedValue;
 
-			//first and last
-			if (busLine.AllStationsOfLine.First() != first.StationKey)
-				busLine.AllStationsOfLine.Prepend(first.StationKey);
+                //first and last
+                if (busLine.AllStationsOfLine.First() != first.StationKey)
+                    busLine.AllStationsOfLine.Prepend(first.StationKey);
 
-			else if (busLine.AllStationsOfLine.Last() != last.StationKey)
-				busLine.AllStationsOfLine.Append(last.StationKey);
+                else if (busLine.AllStationsOfLine.Last() != last.StationKey)
+                    busLine.AllStationsOfLine.Append(last.StationKey);
 
-			BusLine tempLine = new BusLine {
-				FirstStationKey = first.StationKey,
-				LastStationKey = last.StationKey,
-				AllStationsOfLine = stations,
-				//TotalDistance = ,
-				//TotalTime = 
-			};
-			bl.UpdateBusLine(tempLine);
-		}
+                BusLine tempLine = new BusLine {
+                    FirstStationKey = first.StationKey,
+                    LastStationKey = last.StationKey,
+                    AllStationsOfLine = stations
+                };
+                bl.UpdateBusLine(tempLine);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("You have not filled in all the fields");
+            }
+}
 	}
 }

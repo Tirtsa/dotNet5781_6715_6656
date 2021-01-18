@@ -91,7 +91,7 @@ namespace WPF_UI
         }
         private void AddLineButton_Click(object sender, RoutedEventArgs e)
         {
-            AddLineWindow newWindow = new AddLineWindow();
+            AddBusLine newWindow = new AddBusLine();
             newWindow.Show();
         }
 
