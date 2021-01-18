@@ -8,19 +8,19 @@
         Title="AddLineWindow" Height="450" Width="500">
     <Grid>
         <Button x:Name="AddLineButton" Content="הוסיף קו" HorizontalAlignment="Left" Height="51" Margin="337,359,0,0" VerticalAlignment="Top" Width="147" FontSize="20" Click="AddLineButton_Click"/>
-        
-        <TextBox x:Name="tbLineNumber" HorizontalAlignment="Left" Height="38" Margin="199,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" FontSize="24" PreviewKeyDown="tbLineNumber_PreviewKeyDown" MaxLength="3" />
-        <Label x:Name="label1" Content="Line Number" HorizontalAlignment="Left" Height="38" Margin="35,39,0,0" VerticalAlignment="Top" Width="140" FontSize="22"/>
 
-        <ComboBox x:Name="cbArea" HorizontalAlignment="Left" Height="39" Margin="199,101,0,0" VerticalAlignment="Top" Width="175" ItemsSource="{Binding Areas}"/>
-        <Label x:Name="label2" Content="Region" HorizontalAlignment="Left" Height="38" Margin="35,101,0,0" VerticalAlignment="Top" Width="140" FontSize="22"/>
-        
-        <ComboBox x:Name="cbFirstStop" HorizontalAlignment="Left" Height="38" Margin="199,173,0,0" VerticalAlignment="Top" Width="175"/>
-        <Label x:Name="label3" Content="First Stop" HorizontalAlignment="Left" Height="38" Margin="35,173,0,0" VerticalAlignment="Top" Width="140" FontSize="22"/>
-        
-        <ComboBox x:Name="cbLastStop" HorizontalAlignment="Left" Height="38" Margin="199,236,0,0" VerticalAlignment="Top" Width="175"/>
-        <Label x:Name="label4" Content="Last Stop" HorizontalAlignment="Left" Height="38" Margin="35,236,0,0" VerticalAlignment="Top" Width="140" FontSize="22"/>
-        
+        <TextBox x:Name="tbLineNumber" HorizontalAlignment="Left" Height="38" Margin="59,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" FontSize="24" PreviewKeyDown="tbLineNumber_PreviewKeyDown" MaxLength="3" />
+        <Label x:Name="label1" Content=":מספר קו" HorizontalAlignment="Left" Height="38" Margin="287,39,0,0" VerticalAlignment="Top" Width="140" FontSize="22"/>
+
+        <ComboBox x:Name="cbArea" HorizontalAlignment="Left" Height="39" Margin="59,101,0,0" VerticalAlignment="Top" Width="175" ItemsSource="{Binding Areas}"/>
+        <Label x:Name="label2" Content=":אזור" HorizontalAlignment="Left" Height="38" Margin="287,101,0,0" VerticalAlignment="Top" Width="140" FontSize="22"/>
+
+        <ComboBox x:Name="cbFirstStop" HorizontalAlignment="Left" Height="38" Margin="59,173,0,0" VerticalAlignment="Top" Width="175"/>
+        <Label x:Name="label3" Content=":תחנה ראשונה" HorizontalAlignment="Left" Height="38" Margin="287,173,0,0" VerticalAlignment="Top" Width="150" FontSize="22"/>
+
+        <ComboBox x:Name="cbLastStop" HorizontalAlignment="Left" Height="38" Margin="59,236,0,0" VerticalAlignment="Top" Width="175"/>
+        <Label x:Name="label4" Content=":תחנה אחרונה" HorizontalAlignment="Left" Height="38" Margin="287,236,0,0" VerticalAlignment="Top" Width="150" FontSize="22"/>
+
         <ComboBox x:Name="cbAddStop" Height="39" Margin="199,301,119.6,0" VerticalAlignment="Top"/>
         <Button x:Name="AddStationButton" Content="הוסיף תחנה" HorizontalAlignment="Left" Height="31" Margin="59,309,0,0" VerticalAlignment="Top" Width="98" Click="AddStationButton_Click" FontSize="16"/>
 
