@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBusLines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusLine>
-    <Id> LineId++</Id>
+    <Id>1</Id>
     <BusLineNumber>12</BusLineNumber>
     <Area>Areas.Center</Area>
     <FirstStationKey>38831</FirstStationKey>
@@ -9,7 +9,7 @@
     <TotalTime>20</TotalTime>
 </BusLine>
   <BusLine>
-    <Id> LineId++</Id>
+    <Id>2</Id>
     <BusLineNumber>30</BusLineNumber>
     <Area>Areas.Jerusalem</Area>
     <FirstStationKey>38894</FirstStationKey>
@@ -17,7 +17,7 @@
     <TotalTime>15</TotalTime>
   </BusLine>
   <BusLine>
-    <Id> LineId++</Id>
+    <Id>3</Id>
     <BusLineNumber>50</BusLineNumber>
     <Area>Areas.North</Area>
     <FirstStationKey>38903</FirstStationKey>
@@ -25,7 +25,7 @@
     <TotalTime>30</TotalTime>
   </BusLine>
   <BusLine>
-    <Id> LineId++</Id>
+    <Id>4</Id>
     <BusLineNumber>113</BusLineNumber>
     <Area>Areas.Center</Area>
     <FirstStationKey>38831</FirstStationKey>

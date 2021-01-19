@@ -8,7 +8,6 @@ namespace DO
 {
     public class FollowingStations
     {
-        public int Id { get; set; }
         public int KeyStation1 { get; set; }
         public int KeyStation2 { get; set; }
         public double Distance { get; set; }

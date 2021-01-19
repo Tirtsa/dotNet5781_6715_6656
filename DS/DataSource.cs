@@ -509,35 +509,30 @@ namespace DS
 			{
 				new LineStation
 				{
-					Id = LineStationId++,
 					LineId = 1,
 					StationKey = 38831,
 					RankInLine = 1
                 }, 
 				new LineStation
 				{
-					Id = LineStationId++,
 					LineId = 1,
 					StationKey = 38894,
 					RankInLine = 2
 				}, 
 				new LineStation
 				{
-					Id = LineStationId++,
 					LineId = 1,
 					StationKey = 39002,
 					RankInLine = 3
 				}, 
 				new LineStation
 				{
-					Id = LineStationId++,
-					LineId = 1,
+                    LineId = 1,
 					StationKey = 39006,
 					RankInLine = 4
 				}, 
 				new LineStation
 				{
-					Id = LineStationId++,
 					LineId = 1,
 					StationKey = 39007,
 					RankInLine = 5
@@ -545,28 +540,28 @@ namespace DS
 
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 2,
 					StationKey = 38894,
 					RankInLine = 1
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 2,
 					StationKey = 39002,
 					RankInLine = 2
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 2,
 					StationKey = 39006,
 					RankInLine = 3
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 2,
 					StationKey = 39024,
 					RankInLine = 4
@@ -574,21 +569,21 @@ namespace DS
 
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 3,
 					StationKey = 38903,
 					RankInLine = 1
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 3,
 					StationKey = 39002,
 					RankInLine = 2
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 3,
 					StationKey = 39024,
 					RankInLine = 3
@@ -596,21 +591,21 @@ namespace DS
 
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 4,
 					StationKey = 38831,
 					RankInLine = 1
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 4,
 					StationKey = 39004,
 					RankInLine = 2
 				},
 				new LineStation
 				{
-					Id = LineStationId++,
+					
 					LineId = 4,
 					StationKey = 39019,
 					RankInLine = 3
@@ -621,7 +616,7 @@ namespace DS
 			{
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 38831,
 					KeyStation2 = 38894,
 					Distance = new GeoCoordinate(32.183921, 34.917806).GetDistanceTo(new GeoCoordinate(31.813285, 34.775928)),
@@ -630,7 +625,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 38894,
 					KeyStation2 = 39002,
 					Distance = new GeoCoordinate(31.813285, 34.775928).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766)),
@@ -639,7 +634,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 39002,
 					KeyStation2 = 39006,
 					Distance = new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922)),
@@ -648,7 +643,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 39006,
 					KeyStation2 = 39007,
 					Distance = new GeoCoordinate(31.90281, 34.818922).GetDistanceTo(new GeoCoordinate(31.904567, 34.815296)),
@@ -657,7 +652,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 38894,
 					KeyStation2 = 39002,
 					Distance = new GeoCoordinate(31.813285, 34.775928).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766)),
@@ -666,7 +661,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 39002,
 					KeyStation2 = 39006,
 					Distance = new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.90281, 34.818922)),
@@ -675,7 +670,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 39006,
 					KeyStation2 = 39024,
 					Distance = new GeoCoordinate(31.90281, 34.818922).GetDistanceTo(new GeoCoordinate(31.908499, 35.007955)),
@@ -684,7 +679,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 38903,
 					KeyStation2 = 39002,
 					Distance = new GeoCoordinate(31.878667, 31.878667).GetDistanceTo(new GeoCoordinate(31.95111, 34.819766)),
@@ -693,7 +688,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 39002,
 					KeyStation2 = 39024,
 					Distance = new GeoCoordinate(31.95111, 34.819766).GetDistanceTo(new GeoCoordinate(31.908499, 35.007955)),
@@ -702,7 +697,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 38831,
 					KeyStation2 = 39004,
 					Distance = new GeoCoordinate(32.183921, 34.917806).GetDistanceTo(new GeoCoordinate(31.905052, 34.818909)),
@@ -711,7 +706,7 @@ namespace DS
 				},
 				new FollowingStations
 				{
-					Id = FollowingStationsId++,
+					
 					KeyStation1 = 39004,
 					KeyStation2 = 39019,
 					Distance = new GeoCoordinate(31.905052, 34.818909).GetDistanceTo(new GeoCoordinate(31.914816, 35.023028)),
