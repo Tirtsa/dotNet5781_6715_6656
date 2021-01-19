@@ -20,10 +20,9 @@ namespace WPF_UI
     /// </summary>
     public partial class AddStationWindow : Window
     {
-        static IBL bl;
+        static IBL bl = BlFactory.GetBL();
         public AddStationWindow()
         {
-            bl = BlFactory.GetBL();
             InitializeComponent();
         }
 

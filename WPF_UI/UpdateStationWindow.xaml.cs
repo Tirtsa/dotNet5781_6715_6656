@@ -21,12 +21,10 @@ namespace WPF_UI
     /// </summary>
     public partial class UpdateStationWindow : Window
     {
-        static IBL bl;
+        static IBL bl = BlFactory.GetBL();
         public UpdateStationWindow()
         {
-            bl = BlFactory.GetBL();
             InitializeComponent();
-
         }
 
 

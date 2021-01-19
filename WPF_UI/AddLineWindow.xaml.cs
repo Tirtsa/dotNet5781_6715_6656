@@ -22,12 +22,11 @@ namespace WPF_UI
     /// </summary>
     public partial class AddLineWindow : Window
     {
-        static IBL bl;
+        static IBL bl = BlFactory.GetBL();
         static BusLine busLine;
         static ObservableCollection<int> stations = new ObservableCollection<int>();
         public AddLineWindow()
         {
-            bl = BlFactory.GetBL();
             InitializeComponent();
             
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Areas));

@@ -22,11 +22,10 @@ namespace WPF_UI
 	/// </summary>
 	public partial class UpdateLineWindow : Window
 	{
-		static IBL bl;
+        static IBL bl = BlFactory.GetBL();
         public BusLine busLine;
 		public UpdateLineWindow()
 		{
-			bl = BlFactory.GetBL();
 			InitializeComponent();
 		}
 
@@ -72,7 +71,7 @@ namespace WPF_UI
         private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
         {
             try
-            {//move up and down
+            {
                 busLine.TotalDistance = double.Parse(tbTotalDistance.Text);
                 busLine.TotalTime = double.Parse(tbTotalTime.Text);
 

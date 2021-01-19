@@ -15,7 +15,6 @@ namespace APIDL
     // Delete - delete an instance
     public interface IDAL
     {
-
         #region Station
         IEnumerable<DO.BusStation> GetAllStations();
         IEnumerable<DO.BusStation> GetAllStationsBy(Predicate<DO.BusStation> predicate);
@@ -56,6 +55,13 @@ namespace APIDL
         void UpdateFollowingStations(BusStation station1, BusStation station2);
         void UpdateFollowingStations(BusStation station1, BusStation station2, Action<FollowingStations> update);
         void DeleteFollowingStations(BusStation station1, BusStation station2);
+        #endregion
+
+        #region LineTrip
+        DO.LineTrip GetLineTrip(int id);
+        IEnumerable<DO.LineTrip> GetAllLineTrips();
+        void AddLineTrip(LineTrip trip);
+        void DeleteLineTrip(LineTrip trip);
         #endregion
     }
 }
