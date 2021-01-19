@@ -8,7 +8,6 @@ namespace DO
 {
     public class LineStation
     {
-        public int Id { get; set; }
         public int LineId { get; set; }
         public int StationKey { get; set; }
         public int RankInLine { get; set; }

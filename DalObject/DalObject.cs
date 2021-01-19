@@ -83,14 +83,12 @@ namespace DL
         #region FollowingStations
         public void AddFollowingStations(BusStation station1, BusStation station2)
         {
-            if (DataSource.ListFollowingStations.FirstOrDefault(f => (f.KeyStation1 == station1.BusStationKey
-                && f.KeyStation2 == station2.BusStationKey) || (f.KeyStation1 == station2.BusStationKey
-                && f.KeyStation2 == station1.BusStationKey)) != null)
+            if (DataSource.ListFollowingStations.FirstOrDefault(f => f.KeyStation1 == station1.BusStationKey
+                && f.KeyStation2 == station2.BusStationKey) != null)
                 throw new ArgumentException("duplicate stations");
             DataSource.ListFollowingStations.Add( 
                 new FollowingStations
                 {
-                    Id = DS.DataSource.FollowingStationsId++,
                     KeyStation1 = station1.BusStationKey,
                     KeyStation2 = station2.BusStationKey,
                     Distance = new GeoCoordinate(station1.Latitude, station1.Longitude).GetDistanceTo
@@ -101,9 +99,8 @@ namespace DL
         }
         public void DeleteFollowingStations(BusStation station1, BusStation station2)
         {
-            var followingStationToDelete = DataSource.ListFollowingStations.Where(f => (f.KeyStation1 == station1.BusStationKey
-                && f.KeyStation2 == station2.BusStationKey) || (f.KeyStation1 == station2.BusStationKey
-                && f.KeyStation2 == station1.BusStationKey)).FirstOrDefault();
+            var followingStationToDelete = DataSource.ListFollowingStations.Where(f => f.KeyStation1 == station1.BusStationKey
+                && f.KeyStation2 == station2.BusStationKey).FirstOrDefault();
             DataSource.ListFollowingStations.Remove(followingStationToDelete);
         }
         public IEnumerable<FollowingStations> GetAllFollowingStations()
@@ -120,18 +117,17 @@ namespace DL
         }
         public FollowingStations GetFollowingStations(BusStation station1, BusStation station2)
         {
-            if (DataSource.ListFollowingStations.Find(f => (f.KeyStation1 == station1.BusStationKey
-                 && f.KeyStation2 == station2.BusStationKey)) != null)
-                return DataSource.ListFollowingStations.Find(f => (f.KeyStation1 == station1.BusStationKey
-                    && f.KeyStation2 == station2.BusStationKey)).Clone();
+            FollowingStations fsToReturn = DataSource.ListFollowingStations.Find(f => f.KeyStation1 == station1.BusStationKey
+                 && f.KeyStation2 == station2.BusStationKey);
+            if (fsToReturn != null)
+                return fsToReturn.Clone();
             else
                 return null;
         }
         public void UpdateFollowingStations(BusStation station1, BusStation station2)
         {
-            FollowingStations folStat = DataSource.ListFollowingStations.Find(s => (s.KeyStation1 == station1.BusStationKey
-            && s.KeyStation2 == station2.BusStationKey) || (s.KeyStation1 == station2.BusStationKey
-            && s.KeyStation2 == station1.BusStationKey));
+            FollowingStations folStat = DataSource.ListFollowingStations.Find(s => s.KeyStation1 == station1.BusStationKey
+            && s.KeyStation2 == station2.BusStationKey);
             if (folStat != null)
             {
                 DataSource.ListFollowingStations.Remove(folStat);
@@ -143,9 +139,8 @@ namespace DL
 
         public void UpdateFollowingStations(BusStation busStation1, BusStation busStation2, Action<FollowingStations> update)
         {
-            FollowingStations following = DataSource.ListFollowingStations.Find(s => (s.KeyStation1 == busStation1.BusStationKey
-            && s.KeyStation2 == busStation2.BusStationKey) || (s.KeyStation1 == busStation2.BusStationKey
-            && s.KeyStation2 == busStation1.BusStationKey));
+            FollowingStations following = DataSource.ListFollowingStations.Find(s => s.KeyStation1 == busStation1.BusStationKey
+            && s.KeyStation2 == busStation2.BusStationKey);
             update(following);
         }
         #endregion
@@ -178,8 +173,9 @@ namespace DL
         }
         public BusLine GetLine(int lineId, Areas area)
         {
-            if (DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area) != null)
-                return DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area).Clone();
+            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area);
+            if (tempLine != null)
+                return tempLine.Clone();
             else 
                 throw new ArgumentException("There is no line with this number and area" + lineId + area);
         }
@@ -210,16 +206,16 @@ namespace DL
         #region LineStation
         public void AddLineStation(LineStation lineStation)
         {
-            if (DataSource.ListLineStations.FirstOrDefault(s => s.Id == lineStation.Id)!= null)
+            if (DataSource.ListLineStations.FirstOrDefault(s => (s.LineId == lineStation.LineId 
+                && s.StationKey == lineStation.StationKey)) != null)
                 throw new ArgumentException("Duplicate Stations");
-            lineStation.Id = DataSource.LineStationId++;
             DataSource.ListLineStations.Add(lineStation);
         }
 
         public void DeleteLineStation(LineStation lineStation)
         {
-            var lineStationToDelete = DataSource.ListLineStations.Where(t => t.LineId == lineStation.LineId && t.StationKey == 
-                lineStation.StationKey).FirstOrDefault();
+            var lineStationToDelete = DataSource.ListLineStations.Where(t => t.LineId == lineStation.LineId &&
+            t.StationKey == lineStation.StationKey).FirstOrDefault();
             DataSource.ListLineStations.Remove(lineStationToDelete);
         }
 
@@ -247,7 +243,7 @@ namespace DL
 
         public LineStation GetLineStation(int lineId, int stationKey)
         {
-            return DataSource.ListLineStations.FirstOrDefault(s => s.Id == lineId && s.StationKey == stationKey).Clone();
+            return DataSource.ListLineStations.FirstOrDefault(s => s.LineId == lineId && s.StationKey == stationKey).Clone();
         }
 
 
@@ -257,7 +253,6 @@ namespace DL
             s.StationKey == station.StationKey);
             if (tempStat != null)
             {
-                station.Id = tempStat.Id;
                 DataSource.ListLineStations.Remove(tempStat);
                 DataSource.ListLineStations.Add(station);
             }
