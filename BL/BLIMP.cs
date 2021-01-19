@@ -169,15 +169,15 @@ namespace BL
 
 		public void AddBusLine(BO.BusLine newLine)
 		{
-			//1. Verify if all stations of list exists
-			//foreach (int item in newLine.AllStationsOfLine)
-			//{
-			//	if (dl.GetStation(item) == null)
-			//		throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
-			//			" add it to line");
-			//}
-			
-			for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
+            //1. Verify if all stations of list exists
+            foreach (int item in newLine.AllStationsOfLine)
+            {
+                if (dl.GetStation(item) == null)
+                    throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
+                        " add it to line");
+            }
+
+            for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
             {
 				//2. Add FollowingStations if it's necessary
 				DO.BusStation station1 = dl.GetStation(newLine.AllStationsOfLine.ElementAt(i));
@@ -188,16 +188,16 @@ namespace BL
 
 			dl.AddLine(BusLineBoDoAdapter(newLine));//add lint to can then add lisStations with LineId (attributed in dl.AddLine)
 
-            //3. Create corresponding line stations
-            int lineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
-			for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
+			//3. Create corresponding line stations
+			int newLineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
+			for (int i = 0; i < (newLine.AllStationsOfLine.Count()); i++)
 			{
-                int station = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey;
-                if (GetLineStation(lineId, station) == null)
+                int stationKey = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey;
+                if (GetLineStation(newLineId, stationKey) == null)
                 {
                     AddLineStation(new BO.LineStation {
-                        LineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id,
-                        StationKey = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey,
+                        LineId = newLineId,
+                        StationKey = stationKey,
                         RankInLine = i + 1
                     });
                 }

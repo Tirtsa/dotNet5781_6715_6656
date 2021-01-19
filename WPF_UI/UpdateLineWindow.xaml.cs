@@ -66,6 +66,7 @@ namespace WPF_UI
         {
             int currentItemIndex = LineStationsListBox.SelectedIndex;
             LineStationsListBox.Items.RemoveAt(currentItemIndex);
+            LineStationsListBox.SelectedIndex = currentItemIndex;
         }
 
         private void UpdateLineButton_Click(object sender, RoutedEventArgs e)
@@ -75,27 +76,17 @@ namespace WPF_UI
                 busLine.TotalDistance = double.Parse(tbTotalDistance.Text);
                 busLine.TotalTime = double.Parse(tbTotalTime.Text);
 
-                string test;
-                foreach (string item in LineStationsListBox.Items)
-                    test = item.Substring(6, 5);
                 busLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                             select int.Parse(item.Substring(6, 5));
-                
-                LineStationsListBox.SelectedIndex = 0;
-                BusStation selected = LineStationsListBox.SelectedItem as BusStation;
-                busLine.FirstStationKey = selected.BusStationKey;
-                
-                LineStationsListBox.SelectedIndex = LineStationsListBox.Items.Count - 1;
-                selected = LineStationsListBox.SelectedItem as BusStation;
-                busLine.LastStationKey = selected.BusStationKey;
 
-                //if (busLine.AllStationsOfLine.First() != first.StationKey)
-                //    busLine.AllStationsOfLine.Prepend(first.StationKey);
+                string lbFirst = (string)LineStationsListBox.Items.GetItemAt(0);
+                busLine.FirstStationKey = int.Parse(lbFirst.Substring(6, 5));
 
-                //else if (busLine.AllStationsOfLine.Last() != last.StationKey)
-                //    busLine.AllStationsOfLine.Append(last.StationKey);
+                string lbLast = (string)LineStationsListBox.Items.GetItemAt(LineStationsListBox.Items.Count - 1);
+                busLine.LastStationKey = int.Parse(lbLast.Substring(6, 5));
 
                 bl.UpdateBusLine(busLine);
+                DataContext = busLine;
                 Close();
             }
             catch (Exception ex)

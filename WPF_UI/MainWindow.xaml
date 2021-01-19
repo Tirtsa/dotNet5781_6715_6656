@@ -52,7 +52,7 @@
                     <Label Content=": קווים בתחנה" HorizontalContentAlignment="Right" HorizontalAlignment="Left" 
                             VerticalAlignment="Center" Width="136" Height="26" Margin="155,30,0,309.6"/>
                     <ListBox x:Name="LinesPassListBox" HorizontalAlignment="Left" Height="160" HorizontalContentAlignment="Right"
-                                Margin="65,56,0,0" VerticalAlignment="Top" Width="226"/>
+                                Margin="43,56,0,0" VerticalAlignment="Top" Width="248"/>
 
                     <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 20, 30" Click="AddStationButton_Click" Width="63" Grid.RowSpan="2"/>
                 </Grid>
@@ -96,9 +96,9 @@
                     </DataGrid>
 
                     <Label Content=": רשימת התחנות" HorizontalContentAlignment="Right" HorizontalAlignment="Left" 
-                            VerticalAlignment="Center" Width="136" Height="26" Margin="131,25,0,314.6"/>
+                            VerticalAlignment="Center" Width="136" Height="26" Margin="174,25,0,314.6"/>
                     <ListBox x:Name="StationsListBox" HorizontalAlignment="Left" Height="237" HorizontalContentAlignment="Right"
-                                Margin="56,56,0,0" VerticalAlignment="Top" Width="211" />
+                                Margin="27,56,0,0" VerticalAlignment="Top" Width="283" />
                     <Button x:Name="AddLineButton" Content="הוסף קו" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 20, 30" Click="AddLineButton_Click" Width="63" Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
