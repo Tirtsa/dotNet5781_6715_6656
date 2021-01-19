@@ -79,17 +79,18 @@ namespace WPF_UI
     
                     busLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                                 select int.Parse(item.Substring(6, 5));
-                   
-                    LineStationsListBox.SelectedIndex = 0;
-                    BusStation selected = LineStationsListBox.SelectedItem as BusStation;
+
+                    string lbFirst = (string)LineStationsListBox.Items.GetItemAt(0);
+                    int lbf = int.Parse(lbFirst.Substring(6, 5));
                     BusStation firstStation = cbFirstStop.SelectedValue as BusStation;
-                    if (firstStation != selected)
+                    if (firstStation.BusStationKey != lbf)
                         busLine.AllStationsOfLine.Append(firstStation.BusStationKey);
 
-                    LineStationsListBox.SelectedIndex = LineStationsListBox.Items.Count - 1;
-                    selected = LineStationsListBox.SelectedItem as BusStation;
+                    
+                    string lbLast = (string)LineStationsListBox.Items.GetItemAt(LineStationsListBox.Items.Count - 1);
+                    int lbl = int.Parse(lbLast.Substring(6, 5));
                     BusStation lastStation = cbLastStop.SelectedValue as BusStation;
-                    if (lastStation != selected)
+                    if (lastStation.BusStationKey != lbl)
                         busLine.AllStationsOfLine.Append(lastStation.BusStationKey);
                     
                     busLine.BusLineNumber = int.Parse(tbLineNumber.Text);

@@ -169,15 +169,15 @@ namespace BL
 
 		public void AddBusLine(BO.BusLine newLine)
 		{
-			//1. Verify if all stations of list exists
-			//foreach (int item in newLine.AllStationsOfLine)
-			//{
-			//	if (dl.GetStation(item) == null)
-			//		throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
-			//			" add it to line");
-			//}
-			
-			for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
+            //1. Verify if all stations of list exists
+            foreach (int item in newLine.AllStationsOfLine)
+            {
+                if (dl.GetStation(item) == null)
+                    throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
+                        " add it to line");
+            }
+
+            for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
             {
 				//2. Add FollowingStations if it's necessary
 				DO.BusStation station1 = dl.GetStation(newLine.AllStationsOfLine.ElementAt(i));
@@ -189,7 +189,7 @@ namespace BL
 			dl.AddLine(BusLineBoDoAdapter(newLine));//add lint to can then add lisStations with LineId (attributed in dl.AddLine)
 
 			//3. Create corresponding line stations
-			for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
+			for (int i = 0; i < (newLine.AllStationsOfLine.Count()); i++)
 			{
 				AddLineStation(new BO.LineStation
 				{
