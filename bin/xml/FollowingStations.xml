@@ -738,4 +738,34 @@
     <Distance>10380,2226514659</Distance>
     <AverageJourneyTime>6,22813359087951</AverageJourneyTime>
   </FollowingStations>
+  <FollowingStations>
+    <KeyStation1>38839</KeyStation1>
+    <KeyStation2>38886</KeyStation2>
+    <Distance>7456,25501386931</Distance>
+    <AverageJourneyTime>4,47375300832158</AverageJourneyTime>
+  </FollowingStations>
+  <FollowingStations>
+    <KeyStation1>38886</KeyStation1>
+    <KeyStation2>38890</KeyStation2>
+    <Distance>1718,90318891049</Distance>
+    <AverageJourneyTime>1,03134191334629</AverageJourneyTime>
+  </FollowingStations>
+  <FollowingStations>
+    <KeyStation1>38890</KeyStation1>
+    <KeyStation2>39006</KeyStation2>
+    <Distance>10286,1590247836</Distance>
+    <AverageJourneyTime>6,17169541487018</AverageJourneyTime>
+  </FollowingStations>
+  <FollowingStations>
+    <KeyStation1>39006</KeyStation1>
+    <KeyStation2>40052</KeyStation2>
+    <Distance>76928,5898972539</Distance>
+    <AverageJourneyTime>46,1571539383524</AverageJourneyTime>
+  </FollowingStations>
+  <FollowingStations>
+    <KeyStation1>38834</KeyStation1>
+    <KeyStation2>38836</KeyStation2>
+    <Distance>12630,5829777913</Distance>
+    <AverageJourneyTime>7,57834978667479</AverageJourneyTime>
+  </FollowingStations>
 </ArrayOfFollowingStations>

@@ -246,13 +246,6 @@
     <Longitude> 34,878765</Longitude>
   </BusStation>
   <BusStation>
-    <BusStationKey> 38879</BusStationKey>
-    <Address>  רחוב:התאנה  עיר: יציץ רציף:   קומה:  </Address>
-    <StationName> התאנה/הגפן</StationName>
-    <Latitude> 31,865457</Latitude>
-    <Longitude> 34,859437</Longitude>
-  </BusStation>
-  <BusStation>
     <BusStationKey> 38880</BusStationKey>
     <Address>  רחוב:התאנה  עיר: יציץ רציף:   קומה:  </Address>
     <StationName> התאנה/האלון</StationName>
@@ -905,9 +898,16 @@
   </BusStation>
   <BusStation>
     <BusStationKey>38832</BusStationKey>
-    <Address>  רחוב:הרצל  עיר: קרית עקרון רציף:   קומה:  </Address>
-    <StationName> הרצל/צומת בילו</StationName>
-    <Latitude>31,6744279762145</Latitude>
-    <Longitude>34,2244770798015</Longitude>
+    <Address>  רחוב:הרצליה  עיר: קרית עקרון רציף:   קומה:  </Address>
+    <StationName> הרצל/כפר בילו</StationName>
+    <Latitude>31,3968599477768</Latitude>
+    <Longitude>34,7834134827291</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey>40052</BusStationKey>
+    <Address>סתם כתובת</Address>
+    <StationName>שם התחנה</StationName>
+    <Latitude>31,9644871251492</Latitude>
+    <Longitude>34,0076639344951</Longitude>
   </BusStation>
 </ArrayOfBusStations>

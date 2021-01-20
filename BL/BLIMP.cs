@@ -341,47 +341,47 @@ namespace BL
         #endregion
 
         #region LineTrip
-        DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
-        {
-            DO.LineTrip lineTripDo = new DO.LineTrip();
-            lineTripBo.CopyPropertiesTo(lineTripDo);
-            return lineTripDo;
-        }
-        BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
-        {
-            BO.LineTrip lineTripBo = new BO.LineTrip();
-            lineTripDo.CopyPropertiesTo(lineTripBo);
-            return lineTripBo;
-        }
-        public BO.LineTrip GetLineTrip(int id)
-        {
-            return LineTripDoBoAdapter(dl.GetLineTrip(id));
-        }
-        public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
-        {
-            return from trip in dl.GetAllLineTrips()
-                   where trip.LineNumber == line.BusLineNumber
-                   select LineTripDoBoAdapter(trip);
-        }
-        public IEnumerable<BO.LineTrip> GetAllLineTrips()
-        {
-            return from trip in dl.GetAllLineTrips()
-                   select LineTripDoBoAdapter(trip);
-        }
-        public void AddLineTrip(BO.LineTrip trip)
-        {
-            dl.AddLineTrip(LineTripBoDoAdapter(trip));
-        }
-        public void DeleteLineTrip(BO.LineTrip trip)
-        {
-            dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
-        }
-        public TimeSpan CalculateDistance(BO.LineStation station)
-        {
-            //from Departure to station
-            //needs data source
-            return TimeSpan.Zero;
-        }
+        //DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
+        //{
+        //    DO.LineTrip lineTripDo = new DO.LineTrip();
+        //    lineTripBo.CopyPropertiesTo(lineTripDo);
+        //    return lineTripDo;
+        //}
+        //BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
+        //{
+        //    BO.LineTrip lineTripBo = new BO.LineTrip();
+        //    lineTripDo.CopyPropertiesTo(lineTripBo);
+        //    return lineTripBo;
+        //}
+        //public BO.LineTrip GetLineTrip(int id)
+        //{
+        //    return LineTripDoBoAdapter(dl.GetLineTrip(id));
+        //}
+        //public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
+        //{
+        //    return from trip in dl.GetAllLineTrips()
+        //           where trip.LineNumber == line.BusLineNumber
+        //           select LineTripDoBoAdapter(trip);
+        //}
+        //public IEnumerable<BO.LineTrip> GetAllLineTrips()
+        //{
+        //    return from trip in dl.GetAllLineTrips()
+        //           select LineTripDoBoAdapter(trip);
+        //}
+        //public void AddLineTrip(BO.LineTrip trip)
+        //{
+        //    dl.AddLineTrip(LineTripBoDoAdapter(trip));
+        //}
+        //public void DeleteLineTrip(BO.LineTrip trip)
+        //{
+        //    dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
+        //}
+        //public TimeSpan CalculateDistance(BO.LineStation station)
+        //{
+        //    //from Departure to station
+        //    //needs data source
+        //    return TimeSpan.Zero;
+        //}
         #endregion
     }
 }

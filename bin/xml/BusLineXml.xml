@@ -1,43 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBusLines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusLine>
-    <Id>5</Id>
-    <BusLineNumber>18</BusLineNumber>
-    <Area>South</Area>
-    <FirstStationKey>38836</FirstStationKey>
-    <LastStationKey>39069</LastStationKey>
-    <TotalTime>0</TotalTime>
-  </BusLine>
-  <BusLine>
-    <Id>2</Id>
-    <BusLineNumber>30</BusLineNumber>
-    <Area>South</Area>
-    <FirstStationKey>38832</FirstStationKey>
-    <LastStationKey>39091</LastStationKey>
-    <TotalTime>0</TotalTime>
-  </BusLine>
-  <BusLine>
-    <Id>3</Id>
-    <BusLineNumber>40</BusLineNumber>
+    <Id>7</Id>
+    <BusLineNumber>125</BusLineNumber>
     <Area>General</Area>
-    <FirstStationKey>38832</FirstStationKey>
-    <LastStationKey>38881</LastStationKey>
-    <TotalTime>0</TotalTime>
-  </BusLine>
-  <BusLine>
-    <Id>6</Id>
-    <BusLineNumber>52</BusLineNumber>
-    <Area>South</Area>
-    <FirstStationKey>38838</FirstStationKey>
-    <LastStationKey>38890</LastStationKey>
-    <TotalTime>0</TotalTime>
-  </BusLine>
-  <BusLine>
-    <Id>1</Id>
-    <BusLineNumber>72</BusLineNumber>
-    <Area>Jerusalem</Area>
-    <FirstStationKey>38842</FirstStationKey>
-    <LastStationKey>38904</LastStationKey>
+    <FirstStationKey>38834</FirstStationKey>
+    <LastStationKey>38836</LastStationKey>
     <TotalTime>0</TotalTime>
   </BusLine>
 </ArrayOfBusLines>
