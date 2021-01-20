@@ -10,7 +10,7 @@ namespace BO
 {
     public class BusLine
     {
-        int Id { get; set; }
+        public int Id { get; private set; }
         public int BusLineNumber { get; set; }
         public Areas Area { get; set; }
         public int FirstStationKey { get; set; }

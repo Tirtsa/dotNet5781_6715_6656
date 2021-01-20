@@ -271,7 +271,7 @@ namespace DL
         #region LineTrip
         public LineTrip GetLineTrip(int id)
         {
-            LineTrip trip = DataSource.ListLineTrips.Find(s => s.Id == id);
+            LineTrip trip = DataSource.ListLineTrips.Find(t => t.Id == id);
             if (trip != null)
                 return trip.Clone();
             else
@@ -292,6 +292,12 @@ namespace DL
         {
             var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
             DataSource.ListLineTrips.Remove(tripToDelete);
+        }
+        public TimeSpan CalculateDistance(LineTrip trip)
+        {   //xelement
+            //GetTripsForABus(GetBusLine(trip.Id));
+            //from Departure to station
+            return TimeSpan.Zero;
         }
         #endregion
     }

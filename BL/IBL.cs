@@ -51,7 +51,7 @@ namespace BLApi
         IEnumerable<BO.LineTrip> GetAllLineTrips();
         void AddLineTrip(BO.LineTrip trip);
         void DeleteLineTrip(BO.LineTrip trip);
-        TimeSpan CalculateDistance(BO.LineStation station);
+        TimeSpan CalculateDistance(BO.LineTrip trip);
         #endregion
     }
 }

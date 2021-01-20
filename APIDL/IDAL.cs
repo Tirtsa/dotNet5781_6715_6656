@@ -62,6 +62,7 @@ namespace APIDL
         IEnumerable<DO.LineTrip> GetAllLineTrips();
         void AddLineTrip(LineTrip trip);
         void DeleteLineTrip(LineTrip trip);
+        TimeSpan CalculateDistance(LineTrip trip);
         #endregion
     }
 }

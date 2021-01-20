@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="LineTripWindow" Height="450" Width="800">
+        Title="LineTripWindow" Height="450" Width="800" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        
+        <Button x:Name="startSimulationButton" Content="להתחיל סימולציה" Margin="493,347,15,15" FontSize="36" Click="startSimulationButton_Click"/>
+        <TextBlock x:Name="timerTB"  Text="{Binding}" FontSize="56" TextAlignment="Center" Foreground="#FF37F10E" Height="77" Margin="0,0,-0.4,343" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="268">
+            <TextBlock.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </TextBlock.Background>
+        </TextBlock>
+        <ListBox x:Name="lbStations" HorizontalAlignment="Left" Height="340" Margin="33,55,0,0" VerticalAlignment="Top" Width="300" SelectionChanged="lbStations_SelectionChanged"/>
+        <Label x:Name="stationsLabel" Content="תחנות" HorizontalAlignment="Left" Height="40" Margin="244,10,0,0" VerticalAlignment="Top" Width="89" FontSize="24"/>
+        <ListBox x:Name="lbBuses" HorizontalAlignment="Left" Height="173" Margin="390,144,0,0" VerticalAlignment="Top" Width="374"/>
+        <Label x:Name="busesLabel" Content="קווים שעוברים בתחנה זו" HorizontalAlignment="Left" Height="40" Margin="506,99,0,0" VerticalAlignment="Top" Width="258" FontSize="24"/>
+
     </Grid>
 </Window>

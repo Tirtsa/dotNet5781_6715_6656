@@ -216,7 +216,7 @@ namespace BL
 			return dl.GetLine(id).Area;
 		}
 
-		public void DeleteBusLine(BO.BusLine lineBo)
+        public void DeleteBusLine(BO.BusLine lineBo)
 		{
             try
             {
@@ -353,7 +353,7 @@ namespace BL
         public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
         {
             return from trip in dl.GetAllLineTrips()
-                   where trip.LineNumber == line.BusLineNumber
+                   where trip.LineId == line.Id
                    select LineTripDoBoAdapter(trip);
         }
         public IEnumerable<BO.LineTrip> GetAllLineTrips()
@@ -369,11 +369,9 @@ namespace BL
         {
             dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
         }
-        public TimeSpan CalculateDistance(BO.LineStation station)
+        public TimeSpan CalculateDistance(BO.LineTrip trip)
         {
-            //from Departure to station
-            //needs data source
-            return TimeSpan.Zero;
+            return dl.CalculateDistance(LineTripBoDoAdapter(trip));
         }
         #endregion
     }

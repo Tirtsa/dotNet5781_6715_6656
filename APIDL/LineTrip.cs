@@ -10,6 +10,7 @@ namespace DO
     {
         public int Id { get; set; }
         public int LineNumber { get; set; }
+        public int LineId { get; set; }
         public DateTime Departure { get; set; }
         public DateTime Arrival { get; set; }
         public string Destination { get; set; }
