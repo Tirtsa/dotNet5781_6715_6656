@@ -189,14 +189,14 @@ namespace BL
 			dl.AddLine(BusLineBoDoAdapter(newLine));//add lint to can then add lisStations with LineId (attributed in dl.AddLine)
 
 			//3. Create corresponding line stations
-			int newLineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
+			int lineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
 			for (int i = 0; i < (newLine.AllStationsOfLine.Count()); i++)
 			{
                 int stationKey = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey;
-                if (GetLineStation(newLineId, stationKey) == null)
+                if (GetLineStation(lineId, stationKey) == null)
                 {
                     AddLineStation(new BO.LineStation {
-                        LineId = newLineId,
+                        LineId = lineId,
                         StationKey = stationKey,
                         RankInLine = i + 1
                     });
