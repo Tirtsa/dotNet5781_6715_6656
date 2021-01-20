@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLineTrip xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LineTrip>
+    <Id>1</Id>
+    <LineNumber>18</LineNumber>
+    <LineId>5</LineId>
+    <Departure>13:50</Departure>
+    <Arrival>13:55</Arrival>
+    <Destination>ביאליק/ירמיהו</Destination>
+  </LineTrip>
+</ArrayOfLineTrip>

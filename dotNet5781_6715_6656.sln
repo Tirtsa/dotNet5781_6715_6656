@@ -19,20 +19,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalObject", "DalObject\DalO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS", "DS\DS.csproj", "{0A7F3A5A-D0D4-4056-8AB3-4D7D9E34C444}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XML", "XML", "{FDA89526-852C-4625-8D71-EA15244F9A34}"
-	ProjectSection(SolutionItems) = preProject
-		BusLineXml.xml = BusLineXml.xml
-		BusStationXml.xml = BusStationXml.xml
-		config.xml = config.xml
-		FollowingStations.xml = FollowingStations.xml
-		LineStationXml.xml = LineStationXml.xml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "ConsoleApp1\UI.csproj", "{BA59C749-434D-4C15-AE57-87799E5C212E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_UI", "WPF_UI\WPF_UI.csproj", "{7BB3BA27-2928-48C7-A1E9-26E5C5022828}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXML", "DalXML\DalXML.csproj", "{4A8A9B21-E2FB-4F67-836A-55246410EB57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{28A4F24C-EBB7-4440-B948-B6B0A82DC019}"
+	ProjectSection(SolutionItems) = preProject
+		bin\xml\BusLineXml.xml = bin\xml\BusLineXml.xml
+		bin\xml\BusStationXml.xml = bin\xml\BusStationXml.xml
+		bin\config.xml = bin\config.xml
+		bin\xml\FollowingStations.xml = bin\xml\FollowingStations.xml
+		bin\xml\IdXml.xml = bin\xml\IdXml.xml
+		bin\xml\LineStationXml.xml = bin\xml\LineStationXml.xml
+		LineTripXml.xml = LineTripXml.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

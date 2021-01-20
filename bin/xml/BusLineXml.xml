@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfBusLines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BusLine>
+    <Id>7</Id>
+    <BusLineNumber>125</BusLineNumber>
+    <Area>General</Area>
+    <FirstStationKey>38834</FirstStationKey>
+    <LastStationKey>38836</LastStationKey>
+    <TotalTime>0</TotalTime>
+  </BusLine>
+</ArrayOfBusLines>

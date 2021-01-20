@@ -21,10 +21,12 @@ namespace WPF_UI
     /// </summary>
     public partial class UpdateStationWindow : Window
     {
-        static IBL bl = BlFactory.GetBL();
+        static IBL bl;
         public UpdateStationWindow()
         {
+            bl = BlFactory.GetBL();
             InitializeComponent();
+
         }
 
 
@@ -49,6 +51,15 @@ namespace WPF_UI
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            LinesPassCbBox.ItemsSource = from lineId in (DataContext as BusStation).LinesThatPass
+                                         let line = bl.GetBusLine(lineId)
+                                         select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
+
+            LinesPassCbBox.SelectedItem = LinesPassCbBox.Items.GetItemAt(0);
         }
     }
 }

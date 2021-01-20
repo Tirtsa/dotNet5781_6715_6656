@@ -162,6 +162,7 @@ namespace DL
         public IEnumerable<BusLine> GetAllLines()
         {
             return from line in DataSource.ListLines
+                   orderby line.BusLineNumber
                    select line.Clone();
         }
 
@@ -171,13 +172,13 @@ namespace DL
                    where predicate(line)
                    select line.Clone();
         }
-        public BusLine GetLine(int lineNum, Areas area)
+        public BusLine GetLine(int lineId, Areas area)
         {
-            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == lineNum && l.Area == area);
+            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area);
             if (tempLine != null)
                 return tempLine.Clone();
             else 
-                throw new ArgumentException("There is no line with this number and area" + lineNum + area);
+                throw new ArgumentException("There is no line with this number and area" + lineId + area);
         }
         public BusLine GetLine (int Id)
         {
@@ -243,7 +244,10 @@ namespace DL
 
         public LineStation GetLineStation(int lineId, int stationKey)
         {
-            return DataSource.ListLineStations.FirstOrDefault(s => s.LineId == lineId && s.StationKey == stationKey).Clone();
+            LineStation lsToReturn = DataSource.ListLineStations.FirstOrDefault(s => s.LineId == lineId && s.StationKey == stationKey);
+            if (lsToReturn == null)
+                return null;
+            return lsToReturn.Clone();
         }
 
 
@@ -269,36 +273,30 @@ namespace DL
         #endregion
 
         #region LineTrip
-        public LineTrip GetLineTrip(int id)
-        {
-            LineTrip trip = DataSource.ListLineTrips.Find(t => t.Id == id);
-            if (trip != null)
-                return trip.Clone();
-            else
-                throw new ArgumentException("This trip doesn't exist");
-        }
-        public IEnumerable<LineTrip> GetAllLineTrips()
-        {
-            return from trip in DataSource.ListLineTrips
-                   select trip;
-        }
-        public void AddLineTrip(LineTrip trip)
-        {
-            if(DataSource.ListLineTrips.FirstOrDefault(t => t.Id == trip.Id) != null)
-                throw new ArgumentException("Duplicate trip");
-            DataSource.ListLineTrips.Add(trip.Clone());
-        }
-        public void DeleteLineTrip(LineTrip trip)
-        {
-            var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
-            DataSource.ListLineTrips.Remove(tripToDelete);
-        }
-        public TimeSpan CalculateDistance(LineTrip trip)
-        {   //xelement
-            //GetTripsForABus(GetBusLine(trip.Id));
-            //from Departure to station
-            return TimeSpan.Zero;
-        }
+        //public LineTrip GetLineTrip(int id)
+        //{
+        //    LineTrip trip = DataSource.ListLineTrips.Find(s => s.Id == id);
+        //    if (trip != null)
+        //        return trip.Clone();
+        //    else
+        //        throw new ArgumentException("This trip doesn't exist");
+        //}
+        //public IEnumerable<LineTrip> GetAllLineTrips()
+        //{
+        //    return from trip in DataSource.ListLineTrips
+        //           select trip;
+        //}
+        //public void AddLineTrip(LineTrip trip)
+        //{
+        //    if(DataSource.ListLineTrips.FirstOrDefault(t => t.Id == trip.Id) != null)
+        //        throw new ArgumentException("Duplicate trip");
+        //    DataSource.ListLineTrips.Add(trip.Clone());
+        //}
+        //public void DeleteLineTrip(LineTrip trip)
+        //{
+        //    var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
+        //    DataSource.ListLineTrips.Remove(tripToDelete);
+        //}
         #endregion
     }
 }

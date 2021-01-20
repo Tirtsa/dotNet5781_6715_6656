@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace DalXML
+namespace DL
 {
     class XMLTools
     {

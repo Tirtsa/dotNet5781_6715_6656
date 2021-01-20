@@ -64,7 +64,7 @@ namespace WPF_UI
             }
 			catch (Exception ex)
             {
-                MessageBox.Show("An error occured " + ex);
+                MessageBox.Show(ex.Message);
             }
         }
 

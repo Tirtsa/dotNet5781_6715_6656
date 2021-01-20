@@ -56,19 +56,18 @@ namespace BL
             }
 		}
 
-		public void DeleteStation(int key)
-		{
-			try
-			{
-				dl.DeleteStation(key);
-            }
-            catch
+        public void DeleteStation(int key)
+        {
+            foreach (DO.BusLine line in dl.GetAllLines())
             {
-				throw new ArgumentException("It's not exist Bus Station with this key : " + key);
-			}
-		}
+                if (GetLineStation(line.Id, key) != null)
+                    throw new ArgumentException(" לא ניתן למחוק את התחנה כי קו " + line.BusLineNumber
+                        + " עובר בה. אם ברצונכם למחוק את התחנה מחקו אותה קודם מהקו ");
+            }
+            dl.DeleteStation(key);
 
-		public void UpdateBusStation(BO.BusStation station)
+        }
+        public void UpdateBusStation(BO.BusStation station)
 		{
 			try
 			{
@@ -102,17 +101,22 @@ namespace BL
 
 		public IEnumerable<BO.BusStation> GetAllBusStations()
 		{
-			try
-			{
-				return from bs in dl.GetAllStations()
-					   let stat1 = bs
-					   select BusStationDoBoAdapter(stat1);
+            try
+            {
+                //var listTemp = dl.GetAllStations().ToList();
+                //List<BO.BusStation> listStations = new List<BO.BusStation>();
+                //foreach (var item in listTemp)
+                //    listStations.Add(BusStationDoBoAdapter(item));
+                //return listStations;
+                return from bs in dl.GetAllStations()
+                       let stat1 = bs
+                       select BusStationDoBoAdapter(stat1);
             }
             catch
             {
-				throw new ArgumentException("There is an error with recperation of all stations' list");
+                throw new ArgumentException("There is an error with recperation of all stations' list");
             }
-		}
+        }
 
 		public IEnumerable<BO.BusStation> GetAllBusStationsBy(Predicate<BO.BusStation> predicate)
         {
@@ -151,7 +155,7 @@ namespace BL
 			BO.BusLine lineBo = new BO.BusLine();
 			lineDo.CopyPropertiesTo(lineBo);
 
-			DO.BusLine busLine = dl.GetLine(lineBo.Id);
+			DO.BusLine busLine = dl.GetLine(lineBo.BusLineNumber, AreasAdapter(lineBo.Area));
 			List<int> request= (from station in dl.GetAllLineStationsBy(s => s.LineId == busLine.Id)
 						orderby station.RankInLine
 						select station.StationKey).ToList();
@@ -196,14 +200,14 @@ namespace BL
 			dl.AddLine(BusLineBoDoAdapter(newLine));//add lint to can then add lisStations with LineId (attributed in dl.AddLine)
 
 			//3. Create corresponding line stations
-			int newLineId = newLine.Id;
-			for (int i = 0; i < (newLine.AllStationsOfLine.Count()); i++)
+			int lineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
+			for (int i = 0; i < newLine.AllStationsOfLine.Count(); i++)
 			{
                 int stationKey = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey;
-                if (GetLineStation(newLineId, stationKey) == null)
+                if (GetLineStation(lineId, stationKey) == null)
                 {
                     AddLineStation(new BO.LineStation {
-                        LineId = newLineId,
+                        LineId = lineId,
                         StationKey = stationKey,
                         RankInLine = i + 1
                     });
@@ -216,12 +220,12 @@ namespace BL
 			return dl.GetLine(id).Area;
 		}
 
-        public void DeleteBusLine(BO.BusLine lineBo)
+		public void DeleteBusLine(BO.BusLine lineBo)
 		{
             try
             {
 				dl.DeleteLine(BusLineBoDoAdapter(lineBo));
-				dl.DeleteLineStation(s => s.LineId == lineBo.BusLineNumber);
+				dl.DeleteLineStation(s => s.LineId == lineBo.Id);
             }
             catch
             {
@@ -235,7 +239,7 @@ namespace BL
 			{
                 DeleteBusLine(line);
                 AddBusLine(line);
-                dl.UpdateLine(BusLineBoDoAdapter(line));
+                //dl.UpdateLine(BusLineBoDoAdapter(line));
             }
 			catch
 			{
@@ -312,8 +316,11 @@ namespace BL
         }
 		public BO.LineStation GetLineStation(int lineId, int stationId)
         {
-			return LineStationDoBoAdapter(dl.GetLineStation(lineId, stationId));
-
+            DO.LineStation ls = dl.GetLineStation(lineId, stationId);
+            if (ls != null)
+                return LineStationDoBoAdapter(dl.GetLineStation(lineId, stationId));
+            else
+                return null;
 		}
 		public void AddLineStation(BO.LineStation lineStation)
         {
@@ -334,45 +341,47 @@ namespace BL
         #endregion
 
         #region LineTrip
-        DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
-        {
-            DO.LineTrip lineTripDo = new DO.LineTrip();
-            lineTripBo.CopyPropertiesTo(lineTripDo);
-            return lineTripDo;
-        }
-        BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
-        {
-            BO.LineTrip lineTripBo = new BO.LineTrip();
-            lineTripDo.CopyPropertiesTo(lineTripBo);
-            return lineTripBo;
-        }
-        public BO.LineTrip GetLineTrip(int id)
-        {
-            return LineTripDoBoAdapter(dl.GetLineTrip(id));
-        }
-        public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
-        {
-            return from trip in dl.GetAllLineTrips()
-                   where trip.LineId == line.Id
-                   select LineTripDoBoAdapter(trip);
-        }
-        public IEnumerable<BO.LineTrip> GetAllLineTrips()
-        {
-            return from trip in dl.GetAllLineTrips()
-                   select LineTripDoBoAdapter(trip);
-        }
-        public void AddLineTrip(BO.LineTrip trip)
-        {
-            dl.AddLineTrip(LineTripBoDoAdapter(trip));
-        }
-        public void DeleteLineTrip(BO.LineTrip trip)
-        {
-            dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
-        }
-        public TimeSpan CalculateDistance(BO.LineTrip trip)
-        {
-            return dl.CalculateDistance(LineTripBoDoAdapter(trip));
-        }
+        //DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
+        //{
+        //    DO.LineTrip lineTripDo = new DO.LineTrip();
+        //    lineTripBo.CopyPropertiesTo(lineTripDo);
+        //    return lineTripDo;
+        //}
+        //BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
+        //{
+        //    BO.LineTrip lineTripBo = new BO.LineTrip();
+        //    lineTripDo.CopyPropertiesTo(lineTripBo);
+        //    return lineTripBo;
+        //}
+        //public BO.LineTrip GetLineTrip(int id)
+        //{
+        //    return LineTripDoBoAdapter(dl.GetLineTrip(id));
+        //}
+        //public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
+        //{
+        //    return from trip in dl.GetAllLineTrips()
+        //           where trip.LineNumber == line.BusLineNumber
+        //           select LineTripDoBoAdapter(trip);
+        //}
+        //public IEnumerable<BO.LineTrip> GetAllLineTrips()
+        //{
+        //    return from trip in dl.GetAllLineTrips()
+        //           select LineTripDoBoAdapter(trip);
+        //}
+        //public void AddLineTrip(BO.LineTrip trip)
+        //{
+        //    dl.AddLineTrip(LineTripBoDoAdapter(trip));
+        //}
+        //public void DeleteLineTrip(BO.LineTrip trip)
+        //{
+        //    dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
+        //}
+        //public TimeSpan CalculateDistance(BO.LineStation station)
+        //{
+        //    //from Departure to station
+        //    //needs data source
+        //    return TimeSpan.Zero;
+        //}
         #endregion
     }
 }
