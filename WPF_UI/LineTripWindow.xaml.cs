@@ -28,7 +28,7 @@ namespace WPF_UI
         private Stopwatch stopWatch;
         private bool isTimerRun;
         private Thread timerThread;
-        private TimeSpan start;
+        private TimeSpan start = TimeSpan.Zero;
         public LineTripWindow()
         {
             InitializeComponent();
@@ -37,9 +37,7 @@ namespace WPF_UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             stopWatch = new Stopwatch();
-            start = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-            timerTB.Text = start.ToString();
-            StartClock();
+            timerTB.Text = stopWatch.Elapsed.ToString();
 
             lbStations.ItemsSource = from station in bl.GetAllBusStations()
                                      select " תחנה " + station.BusStationKey + " : " + station.StationName;
@@ -88,8 +86,10 @@ namespace WPF_UI
         }
 
         private void startSimulationButton_Click(object sender, RoutedEventArgs e)
-        {
-
+        {   
+            timerTB.Text = start.ToString();
+            start = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            StartClock();
         }
         private void lbStations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

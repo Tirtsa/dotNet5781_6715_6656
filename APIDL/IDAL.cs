@@ -57,12 +57,12 @@ namespace APIDL
         void DeleteFollowingStations(BusStation station1, BusStation station2);
         #endregion
 
-        #region LineTrip
-        DO.LineTrip GetLineTrip(int id);
-        IEnumerable<DO.LineTrip> GetAllLineTrips();
-        void AddLineTrip(LineTrip trip);
-        void DeleteLineTrip(LineTrip trip);
-        TimeSpan CalculateDistance(LineTrip trip);
-        #endregion
+        //#region LineTrip
+        //DO.LineTrip GetLineTrip(int id);
+        //IEnumerable<DO.LineTrip> GetAllLineTrips();
+        //void AddLineTrip(LineTrip trip);
+        //void DeleteLineTrip(LineTrip trip);
+        //TimeSpan CalculateDistance(LineTrip trip);
+        //#endregion
     }
 }

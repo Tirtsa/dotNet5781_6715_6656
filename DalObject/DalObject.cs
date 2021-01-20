@@ -297,6 +297,12 @@ namespace DL
         //    var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
         //    DataSource.ListLineTrips.Remove(tripToDelete);
         //}
+        //public TimeSpan CalculateDistance(LineTrip trip)
+        //{   //xelement
+        //    //GetTripsForABus(GetBusLine(trip.Id));
+        //    //from Departure to station
+        //    return TimeSpan.Zero;
+        //}
         #endregion
     }
 }

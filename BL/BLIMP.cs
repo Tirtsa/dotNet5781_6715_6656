@@ -376,11 +376,9 @@ namespace BL
         //{
         //    dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
         //}
-        //public TimeSpan CalculateDistance(BO.LineStation station)
+        //public TimeSpan CalculateDistance(BO.LineTrip trip)
         //{
-        //    //from Departure to station
-        //    //needs data source
-        //    return TimeSpan.Zero;
+        //    return dl.CalculateDistance(LineTripBoDoAdapter(trip));
         //}
         #endregion
     }
