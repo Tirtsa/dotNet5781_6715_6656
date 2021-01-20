@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using System.IO;
 using System.Device.Location;
 
-namespace DalXML
+namespace DL
 {
     public class DalXML : IDAL
     {
@@ -27,6 +27,7 @@ namespace DalXML
         string linesPath = @"BusLineXml.xml";
         string followingStationsPath = @"FollowingStations.xml";
         string lineStationsPath = @"LineStationXml.xml";
+        string idPath = @"IdXml.xml";
         #endregion
 
         #region BusStation
@@ -69,6 +70,16 @@ namespace DalXML
         public IEnumerable<BusStation> GetAllStations()
         {
             XElement stationsRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
+            //IEnumerable<XElement> test = from station in stationsRootElem.Elements()
+            //                select station;
+            //IEnumerable<BusStation> testI = (from station in test
+            //                                 select new BusStation() {
+            //                                     BusStationKey = Convert.ToInt32(station.Element("BusStationKey").Value),
+            //                                     Address = station.Element("Address").Value,
+            //                                     StationName = station.Element("StationName").Value,
+            //                                     Latitude = double.Parse(station.Element("Latitude").Value),
+            //                                     Longitude = double.Parse(station.Element("Longitude").Value)
+            //                                 }).ToArray();
             return from station in stationsRootElem.Elements()
                    let s = new BusStation() {
                        BusStationKey = Convert.ToInt32(station.Element("BusStationKey").Value),
@@ -138,9 +149,9 @@ namespace DalXML
         #endregion
 
         #region BusLine
-        static int LineId = 5;
         public void AddLine(BusLine line)
         {
+            XElement idRootElem = XMLTools.LoadListFromXMLElement(idPath);
             XElement linesRootElem = XMLTools.LoadListFromXMLElement(linesPath);
             XElement myLine = (from l in linesRootElem.Elements()
                                   where Convert.ToInt32(l.Element("BusLineNumber").Value) == line.BusLineNumber
@@ -151,7 +162,16 @@ namespace DalXML
 
             //Creation of new XElement
             if (line.Id == 0)
-                line.Id = LineId++;
+            {
+                XElement elementId = (from id in idRootElem.Elements()
+                                  //where id.Element("Name").Value == "LineId"
+                                  select id).FirstOrDefault();
+                int test = Convert.ToInt32(elementId.Value);
+                line.Id = Convert.ToInt32(elementId.Value);
+                elementId.Value = (Convert.ToInt32(elementId.Value) + 1).ToString();
+                XMLTools.SaveListToXMLElement(idRootElem, idPath);
+            }
+                
             XElement lineElem = new XElement("BusLine", 
                                           new XElement("Id", line.Id.ToString()),
                                           new XElement("BusLineNumber", line.BusLineNumber.ToString()),
@@ -264,7 +284,7 @@ namespace DalXML
         {
             XElement lineStationsRootElem = XMLTools.LoadListFromXMLElement(lineStationsPath);
             XElement myLineStation = (from ls in lineStationsRootElem.Elements()
-                                  where Convert.ToInt32(ls.Element("lineId").Value) == lineStation.LineId
+                                  where Convert.ToInt32(ls.Element("LineId").Value) == lineStation.LineId
                                     && Convert.ToInt32(ls.Element("StationKey").Value) == lineStation.StationKey
                                   select ls).FirstOrDefault();
 
@@ -301,20 +321,20 @@ namespace DalXML
         public void DeleteLineStation(Predicate<LineStation> predicate)
         {
             XElement lineStationsRootElem = XMLTools.LoadListFromXMLElement(lineStationsPath);
-            XElement myLineStation = (from lineStat in lineStationsRootElem.Elements()
+            IEnumerable<XElement> myLineStation = (from lineStat in lineStationsRootElem.Elements()
                                       let ls = new LineStation() {
                                           LineId = Convert.ToInt32(lineStat.Element("LineId").Value),
                                           StationKey = Convert.ToInt32(lineStat.Element("StationKey").Value),
                                           RankInLine = Convert.ToInt32(lineStat.Element("RankInLine").Value)
                                       }
                                       where predicate(ls)
-                                      select lineStat).FirstOrDefault();
+                                      select lineStat).ToList();
 
             if (myLineStation == null)
                 throw new ArgumentException("Line Station doesn't exist");
 
-
-            myLineStation.Remove();
+            foreach (var item in myLineStation)
+                myLineStation.Remove();
             XMLTools.SaveListToXMLElement(lineStationsRootElem, lineStationsPath);
         }
 
@@ -440,6 +460,17 @@ namespace DalXML
         public FollowingStations GetFollowingStations(BusStation station1, BusStation station2)
         {
             XElement followingStationsRootElem = XMLTools.LoadListFromXMLElement(followingStationsPath);
+            //XElement test = (from fs in followingStationsRootElem.Elements()
+            //                 where Convert.ToInt32(fs.Element("KeyStation1").Value) == station1.BusStationKey
+            //                 && Convert.ToInt32(fs.Element("KeyStation2").Value) == station2.BusStationKey
+            //                 select fs).FirstOrDefault();
+            //FollowingStations foltest = new FollowingStations();
+            //foltest.KeyStation1 = Convert.ToInt32(test.Element("KeyStation1").Value);
+            //foltest.KeyStation2 = Convert.ToInt32(test.Element("KeyStation2").Value);
+            //Double distancetest;
+            //Double.TryParse(test.Element("Distance").Value, out distancetest);
+            //foltest.Distance = Convert.ToDouble(test.Element("Distance").Value);
+            //foltest.AverageJourneyTime = double.Parse(test.Element("AverageJourneyTime").Value);
             return (from fs in followingStationsRootElem.Elements()
                     where Convert.ToInt32(fs.Element("KeyStation1").Value) == station1.BusStationKey
                     && Convert.ToInt32(fs.Element("KeyStation2").Value) == station2.BusStationKey

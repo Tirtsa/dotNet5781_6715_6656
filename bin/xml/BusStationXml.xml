@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBusStations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusStation>
-    <BusStationKey> 38831</BusStationKey>
-    <Address>  רחוב:בן יהודה 76 עיר: כפר סבא רציף:   קומה:  </Address>
-    <StationName> בי''ס בר לב/בן יהודה</StationName>
-    <Latitude> 32,183921</Latitude>
-    <Longitude> 34,917806</Longitude>
-  </BusStation>
-  <BusStation>
-    <BusStationKey>38832</BusStationKey>
-    <Address>  רחוב:הרצל  עיר: קרית עקרון רציף:   קומה:  </Address>
-    <StationName> הרצל/צומת בילו</StationName>
-    <Latitude> 31,870034</Latitude>
-    <Longitude> 34,819541</Longitude>
-  </BusStation>
-  <BusStation>
     <BusStationKey> 38833</BusStationKey>
     <Address>  רחוב:הנחשול 30 עיר: ראשון לציון רציף:   קומה:  </Address>
     <StationName> הנחשול/הדייגים</StationName>
@@ -55,13 +41,6 @@
     <StationName> הבנים/אלי כהן</StationName>
     <Latitude> 31,862305</Latitude>
     <Longitude> 34,821857</Longitude>
-  </BusStation>
-  <BusStation>
-    <BusStationKey> 38840</BusStationKey>
-    <Address>  רחוב:וייצמן 11 עיר: קרית עקרון רציף:   קומה:  </Address>
-    <StationName> ויצמן/הבנים</StationName>
-    <Latitude> 31,865085</Latitude>
-    <Longitude> 34,822237</Longitude>
   </BusStation>
   <BusStation>
     <BusStationKey> 38841</BusStationKey>
@@ -531,5 +510,404 @@
     <StationName> שדרות יעקב/יוסף הנשיא</StationName>
     <Latitude> 31,950254</Latitude>
     <Longitude> 34,819244</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39002</BusStationKey>
+    <Address>  רחוב:שדרות יעקב 59 עיר: ראשון לציון רציף:   קומה:  </Address>
+    <StationName> שדרות יעקב/עזרא</StationName>
+    <Latitude> 31,95111</Latitude>
+    <Longitude> 34,819766</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39004</BusStationKey>
+    <Address>  רחוב:יהודה לייב יוספזון  עיר: רחובות רציף:   קומה:  </Address>
+    <StationName> לייב יוספזון/יעקב ברמן</StationName>
+    <Latitude> 31,905052</Latitude>
+    <Longitude> 34,818909</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39005</BusStationKey>
+    <Address>  רחוב:הרב יעקב ברמן 4 עיר: רחובות רציף:   קומה:  </Address>
+    <StationName> הרב יעקב ברמן/הרב יהודה צבי מלצר</StationName>
+    <Latitude> 31,901879</Latitude>
+    <Longitude> 34,819443</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39006</BusStationKey>
+    <Address>  רחוב:הרב יעקב ברמן  עיר: רחובות רציף:   קומה:  </Address>
+    <StationName> ברמן/מלצר</StationName>
+    <Latitude> 31,90281</Latitude>
+    <Longitude> 34,818922</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39007</BusStationKey>
+    <Address>  רחוב:הנשיא הראשון 55 עיר: רחובות רציף:   קומה:  </Address>
+    <StationName> הנשיא הראשון/מכון ויצמן</StationName>
+    <Latitude> 31,904567</Latitude>
+    <Longitude> 34,815296</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39008</BusStationKey>
+    <Address>  רחוב:הנשיא הראשון 56 עיר: רחובות רציף:   קומה:  </Address>
+    <StationName> הנשיא הראשון/קיפניס</StationName>
+    <Latitude> 31,904755</Latitude>
+    <Longitude> 34,816661</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39012</BusStationKey>
+    <Address>  רחוב:הירדן 23 עיר: באר יעקב רציף:   קומה:  </Address>
+    <StationName> הירדן/הערבה</StationName>
+    <Latitude> 31,937387</Latitude>
+    <Longitude> 34,838609</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39013</BusStationKey>
+    <Address>  רחוב:הירדן 22 עיר: באר יעקב רציף:   קומה:  </Address>
+    <StationName> הירדן/חרוד</StationName>
+    <Latitude> 31,936925</Latitude>
+    <Longitude> 34,838341</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39014</BusStationKey>
+    <Address>  רחוב:שדרות האלונים  עיר: באר יעקב רציף:   קומה:  </Address>
+    <StationName> האלונים/הדקל</StationName>
+    <Latitude> 31,939037</Latitude>
+    <Longitude> 34,831964</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39017</BusStationKey>
+    <Address>  רחוב:שדרות האלונים  עיר: באר יעקב רציף:   קומה:  </Address>
+    <StationName> האלונים א/הדקל</StationName>
+    <Latitude> 31,939656</Latitude>
+    <Longitude> 34,832104</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39018</BusStationKey>
+    <Address>  רחוב:דרך הזית  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> פארק תעשיות שילת</StationName>
+    <Latitude> 31,914324</Latitude>
+    <Longitude> 35,023589</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39019</BusStationKey>
+    <Address>  רחוב:דרך הזית  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> פארק תעשיות שילת</StationName>
+    <Latitude> 31,914816</Latitude>
+    <Longitude> 35,023028</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39024</BusStationKey>
+    <Address>  רחוב:  עיר: מודיעין מכבים רעות רציף:   קומה:  </Address>
+    <StationName> עיריית מודיעין מכבים רעות</StationName>
+    <Latitude> 31,908499</Latitude>
+    <Longitude> 35,007955</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39028</BusStationKey>
+    <Address>  רחוב:חיים ברלב 30 עיר: מודיעין מכבים רעות רציף:   קומה:  </Address>
+    <StationName> חיים ברלב/מרדכי מקלף</StationName>
+    <Latitude> 31,907828</Latitude>
+    <Longitude> 35,000614</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39029</BusStationKey>
+    <Address>  רחוב:חיים ברלב  עיר: מודיעין מכבים רעות רציף:   קומה:  </Address>
+    <StationName> חיים ברלב/מרדכי מקלף</StationName>
+    <Latitude> 31,907603</Latitude>
+    <Longitude> 35,000816</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39035</BusStationKey>
+    <Address>  רחוב:אפרים קישון 20 עיר: באר יעקב רציף:   קומה:  </Address>
+    <StationName> אלמוג סנטר/אפרים קישון</StationName>
+    <Latitude> 31,941611</Latitude>
+    <Longitude> 34,843114</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39039</BusStationKey>
+    <Address>  רחוב:רבאט  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> גן חק''ל/רבאט</StationName>
+    <Latitude> 31,931068</Latitude>
+    <Longitude> 34,884936</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39040</BusStationKey>
+    <Address>  רחוב:רבאט  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> גן חק''ל/רבאט</StationName>
+    <Latitude> 31,931204</Latitude>
+    <Longitude> 34,884956</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39041</BusStationKey>
+    <Address>  רחוב:דוכיפת  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> קניון צ. רמלה לוד/דוכיפת</StationName>
+    <Latitude> 31,933379</Latitude>
+    <Longitude> 34,887207</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39042</BusStationKey>
+    <Address>  רחוב:היצירה 2 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> היצירה/התקווה</StationName>
+    <Latitude> 31,929318</Latitude>
+    <Longitude> 34,880069</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39043</BusStationKey>
+    <Address>  רחוב:היצירה  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> היצירה/התקווה</StationName>
+    <Latitude> 31,929199</Latitude>
+    <Longitude> 34,879993</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39044</BusStationKey>
+    <Address>  רחוב:עמל  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> עמל/היצירה</StationName>
+    <Latitude> 31,932402</Latitude>
+    <Longitude> 34,881442</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39049</BusStationKey>
+    <Address>  רחוב:ישראל פרנקל 10 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> פרנקל/ויתקין</StationName>
+    <Latitude> 31,936159</Latitude>
+    <Longitude> 34,864906</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39050</BusStationKey>
+    <Address>  רחוב:ישראל פרנקל 11 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> פרנקל/ויתקין</StationName>
+    <Latitude> 31,936022</Latitude>
+    <Longitude> 34,86495</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39051</BusStationKey>
+    <Address>  רחוב:ישראל פרנקל 17 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> ישראל פרנקל/דוב הוז</StationName>
+    <Latitude> 31,935488</Latitude>
+    <Longitude> 34,863972</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39052</BusStationKey>
+    <Address>  רחוב:גיורא יוספטל 6 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> יוספטל/הדס</StationName>
+    <Latitude> 31,936109</Latitude>
+    <Longitude> 34,857638</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39056</BusStationKey>
+    <Address>  רחוב:שמחה הולצברג  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> אהרון בוגנים/משה שרת</StationName>
+    <Latitude> 31,933413</Latitude>
+    <Longitude> 34,853906</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39057</BusStationKey>
+    <Address>  רחוב:שמחה הולצברג 10 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> גרשון ש''ץ/שמחה הולצברג</StationName>
+    <Latitude> 31,932532</Latitude>
+    <Longitude> 34,853223</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39058</BusStationKey>
+    <Address>  רחוב:שמחה הולצברג 4 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> הולצברג/שץ</StationName>
+    <Latitude> 31,93166</Latitude>
+    <Longitude> 34,853149</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39059</BusStationKey>
+    <Address>  רחוב:לוי אשכול 11 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> אשכול/הרב שפירא</StationName>
+    <Latitude> 31,929827</Latitude>
+    <Longitude> 34,857194</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39060</BusStationKey>
+    <Address>  רחוב:יהודה שטיין  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> יהודה שטיין/קרן היסוד</StationName>
+    <Latitude> 31,926545</Latitude>
+    <Longitude> 34,855866</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39066</BusStationKey>
+    <Address>  רחוב:שמשון הגיבור  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> שמשון הגיבור/המסגד</StationName>
+    <Latitude> 31,926441</Latitude>
+    <Longitude> 34,866014</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39068</BusStationKey>
+    <Address>  רחוב:ח.נ. ביאליק 19 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> ביאליק/חניתה</StationName>
+    <Latitude> 31,924484</Latitude>
+    <Longitude> 34,870366</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39069</BusStationKey>
+    <Address>  רחוב:ח.נ. ביאליק 43 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> ביאליק/ירמיהו</StationName>
+    <Latitude> 31,92055</Latitude>
+    <Longitude> 34,868205</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39070</BusStationKey>
+    <Address>  רחוב:א.ס. לוי 1 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> א.ס לוי/סעדיה מרדכי</StationName>
+    <Latitude> 31,9209</Latitude>
+    <Longitude> 34,861221</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39071</BusStationKey>
+    <Address>  רחוב:שדרות דוד רזיאל 5 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> רזיאל/זכריה</StationName>
+    <Latitude> 31,923666</Latitude>
+    <Longitude> 34,862813</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39072</BusStationKey>
+    <Address>  רחוב:חרוד  עיר: ישרש רציף:   קומה:  </Address>
+    <StationName> חרוד א</StationName>
+    <Latitude> 31,912572</Latitude>
+    <Longitude> 34,850134</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39073</BusStationKey>
+    <Address>  רחוב:חרוד  עיר: ישרש רציף:   קומה:  </Address>
+    <StationName> חרוד/הירדן</StationName>
+    <Latitude> 31,915977</Latitude>
+    <Longitude> 34,848217</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39075</BusStationKey>
+    <Address>  רחוב:הירדן  עיר: ישרש רציף:   קומה:  </Address>
+    <StationName> הירדן/דן</StationName>
+    <Latitude> 31,915489</Latitude>
+    <Longitude> 34,852139</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39076</BusStationKey>
+    <Address>  רחוב:עוזי חיטמן 44 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> עוזי חיטמן/שושנה דמארי</StationName>
+    <Latitude> 31,917022</Latitude>
+    <Longitude> 34,868261</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39077</BusStationKey>
+    <Address>  רחוב:עוזי חיטמן 24 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> עוזי חיטמן/דליה רביקוביץ</StationName>
+    <Latitude> 31,918782</Latitude>
+    <Longitude> 34,870995</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39078</BusStationKey>
+    <Address>  רחוב:עוזי חיטמן 10 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> עוזי חיטמן/חנוך לוין</StationName>
+    <Latitude> 31,918696</Latitude>
+    <Longitude> 34,873447</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39079</BusStationKey>
+    <Address>  רחוב:אהוד מנור  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> אהוד מנור/חיטמן</StationName>
+    <Latitude> 31,916945</Latitude>
+    <Longitude> 34,874461</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39080</BusStationKey>
+    <Address>  רחוב:שושנה דמארי 18 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> שושנה דמארי/אהוד מנור</StationName>
+    <Latitude> 31,916141</Latitude>
+    <Longitude> 34,872134</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39081</BusStationKey>
+    <Address>  רחוב:שושנה דמארי  עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> שושנה דמארי/אהוד מנור</StationName>
+    <Latitude> 31,916235</Latitude>
+    <Longitude> 34,873652</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39082</BusStationKey>
+    <Address>  רחוב:אהוד מנור 9 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> אהוד מנור/עוזי חיטמן</StationName>
+    <Latitude> 31,917837</Latitude>
+    <Longitude> 34,874646</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39083</BusStationKey>
+    <Address>  רחוב:עוזי חיטמן 44 עיר: רמלה רציף:   קומה:  </Address>
+    <StationName> עוזי חיטמן/שושנה דמארי</StationName>
+    <Latitude> 31,917072</Latitude>
+    <Longitude> 34,868374</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39086</BusStationKey>
+    <Address>  רחוב:דרך האורנים  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> דרך האורנים/ברוש</StationName>
+    <Latitude> 31,92072</Latitude>
+    <Longitude> 35,016294</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39087</BusStationKey>
+    <Address>  רחוב:שקד 20 עיר: שילת רציף:   קומה:  </Address>
+    <StationName> שקד/האורנים</StationName>
+    <Latitude> 31,922468</Latitude>
+    <Longitude> 35,01438</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39088</BusStationKey>
+    <Address>  רחוב:דרך החרוב  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> דרך החרוב/גפן</StationName>
+    <Latitude> 31,919711</Latitude>
+    <Longitude> 35,020017</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39089</BusStationKey>
+    <Address>  רחוב:דרך החרוב  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> דרך החרוב/גפן</StationName>
+    <Latitude> 31,919795</Latitude>
+    <Longitude> 35,019979</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39090</BusStationKey>
+    <Address>  רחוב:דרך החרוב  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> החרוב א</StationName>
+    <Latitude> 31,919163</Latitude>
+    <Longitude> 35,02323</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39091</BusStationKey>
+    <Address>  רחוב:דרך החרוב  עיר: שילת רציף:   קומה:  </Address>
+    <StationName> החרוב א</StationName>
+    <Latitude> 31,919207</Latitude>
+    <Longitude> 35,0234</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39092</BusStationKey>
+    <Address>  רחוב:  עיר: כפר רות רציף:   קומה:  </Address>
+    <StationName> כפר רות</StationName>
+    <Latitude> 31,910544</Latitude>
+    <Longitude> 35,034349</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey> 39093</BusStationKey>
+    <Address>  רחוב:  עיר: כפר רות רציף:   קומה:  </Address>
+    <StationName> כפר רות</StationName>
+    <Latitude> 31,910485</Latitude>
+    <Longitude> 35,034441</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey>38840</BusStationKey>
+    <Address>  רחוב:וייצמן 11 עיר: קרית עקרון רציף:   קומה:  </Address>
+    <StationName> ויצמן/הבנים</StationName>
+    <Latitude>31,2930601315075</Latitude>
+    <Longitude>34,7560413758066</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey>38832</BusStationKey>
+    <Address>  רחוב:הרצל  עיר: קרית עקרון רציף:   קומה:  </Address>
+    <StationName> הרצל/צומת בילו</StationName>
+    <Latitude>31,6744279762145</Latitude>
+    <Longitude>34,2244770798015</Longitude>
   </BusStation>
 </ArrayOfBusStations>

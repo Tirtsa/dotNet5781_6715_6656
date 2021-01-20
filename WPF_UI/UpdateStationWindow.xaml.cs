@@ -27,7 +27,7 @@ namespace WPF_UI
             bl = BlFactory.GetBL();
             InitializeComponent();
 
-        }
+            }
 
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -51,6 +51,15 @@ namespace WPF_UI
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            LinesPassCbBox.ItemsSource = from lineId in (DataContext as BusStation).LinesThatPass
+                                         let line = bl.GetBusLine(lineId)
+                                         select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
+
+            LinesPassCbBox.SelectedItem = LinesPassCbBox.Items.GetItemAt(0);
         }
     }
 }

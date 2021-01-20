@@ -1,36 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBusLines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusLine>
-    <Id>1</Id>
-    <BusLineNumber>12</BusLineNumber>
-    <Area>Areas.Center</Area>
-    <FirstStationKey>38831</FirstStationKey>
-    <LastStationKey>39007</LastStationKey>
-    <TotalTime>20</TotalTime>
-</BusLine>
+    <Id>5</Id>
+    <BusLineNumber>18</BusLineNumber>
+    <Area>South</Area>
+    <FirstStationKey>38836</FirstStationKey>
+    <LastStationKey>39069</LastStationKey>
+    <TotalTime>0</TotalTime>
+  </BusLine>
   <BusLine>
     <Id>2</Id>
     <BusLineNumber>30</BusLineNumber>
-    <Area>Areas.Jerusalem</Area>
-    <FirstStationKey>38894</FirstStationKey>
-    <LastStationKey>39024</LastStationKey>
-    <TotalTime>15</TotalTime>
+    <Area>South</Area>
+    <FirstStationKey>38832</FirstStationKey>
+    <LastStationKey>39091</LastStationKey>
+    <TotalTime>0</TotalTime>
   </BusLine>
   <BusLine>
     <Id>3</Id>
-    <BusLineNumber>50</BusLineNumber>
-    <Area>Areas.North</Area>
-    <FirstStationKey>38903</FirstStationKey>
-    <LastStationKey>39024</LastStationKey>
-    <TotalTime>30</TotalTime>
+    <BusLineNumber>40</BusLineNumber>
+    <Area>General</Area>
+    <FirstStationKey>38832</FirstStationKey>
+    <LastStationKey>38881</LastStationKey>
+    <TotalTime>0</TotalTime>
   </BusLine>
   <BusLine>
-    <Id>4</Id>
-    <BusLineNumber>113</BusLineNumber>
-    <Area>Areas.Center</Area>
-    <FirstStationKey>38831</FirstStationKey>
-    <LastStationKey>39019</LastStationKey>
-    <TotalTime>40</TotalTime>
+    <Id>6</Id>
+    <BusLineNumber>52</BusLineNumber>
+    <Area>South</Area>
+    <FirstStationKey>38838</FirstStationKey>
+    <LastStationKey>38890</LastStationKey>
+    <TotalTime>0</TotalTime>
   </BusLine>
-
+  <BusLine>
+    <Id>1</Id>
+    <BusLineNumber>72</BusLineNumber>
+    <Area>Jerusalem</Area>
+    <FirstStationKey>38842</FirstStationKey>
+    <LastStationKey>38904</LastStationKey>
+    <TotalTime>0</TotalTime>
+  </BusLine>
 </ArrayOfBusLines>

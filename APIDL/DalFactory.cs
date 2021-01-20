@@ -36,6 +36,7 @@ namespace APIDL
             if (dalPackage == null)
                 throw new DalConfigException($"Wrong DL type: {dalType}");
 
+
             try // Load into CLR the dal implementation assembly according to dll file name (taken above)
             {
                 Assembly.Load(dalPackage);

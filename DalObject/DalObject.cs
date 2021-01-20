@@ -162,6 +162,7 @@ namespace DL
         public IEnumerable<BusLine> GetAllLines()
         {
             return from line in DataSource.ListLines
+                   orderby line.BusLineNumber
                    select line.Clone();
         }
 
@@ -243,7 +244,10 @@ namespace DL
 
         public LineStation GetLineStation(int lineId, int stationKey)
         {
-            return DataSource.ListLineStations.FirstOrDefault(s => s.LineId == lineId && s.StationKey == stationKey).Clone();
+            LineStation lsToReturn = DataSource.ListLineStations.FirstOrDefault(s => s.LineId == lineId && s.StationKey == stationKey);
+            if (lsToReturn == null)
+                return null;
+            return lsToReturn.Clone();
         }
 
 
