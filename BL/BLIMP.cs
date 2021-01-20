@@ -9,14 +9,21 @@ using System.Collections.Generic;
 
 namespace BL
 {
-	public class BLIMP : IBL
+	class BLIMP : IBL
     {
 		readonly IDAL dl = DalFactory.GetDal();
 		static Random rndLat = new Random(DateTime.Now.Millisecond);
 		static Random rndLong = new Random(DateTime.Now.Millisecond);
 
+        #region Singleton
+        static readonly BLIMP instance = new BLIMP();
+        static BLIMP() { }
+        BLIMP() { }
+        public static BLIMP Instance => instance;
+        #endregion
+
         #region BusStation
-		DO.BusStation BusStationBoDoAdapter (BO.BusStation stationBo)
+        DO.BusStation BusStationBoDoAdapter (BO.BusStation stationBo)
         {
 			DO.BusStation stationDo = new DO.BusStation();
 			stationBo.CopyPropertiesTo(stationDo);
@@ -331,6 +338,50 @@ namespace BL
         {
 
         }
-		#endregion
-	}
+        #endregion
+
+        #region LineTrip
+        DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
+        {
+            DO.LineTrip lineTripDo = new DO.LineTrip();
+            lineTripBo.CopyPropertiesTo(lineTripDo);
+            return lineTripDo;
+        }
+        BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
+        {
+            BO.LineTrip lineTripBo = new BO.LineTrip();
+            lineTripDo.CopyPropertiesTo(lineTripBo);
+            return lineTripBo;
+        }
+        public BO.LineTrip GetLineTrip(int id)
+        {
+            return LineTripDoBoAdapter(dl.GetLineTrip(id));
+        }
+        public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
+        {
+            return from trip in dl.GetAllLineTrips()
+                   where trip.LineNumber == line.BusLineNumber
+                   select LineTripDoBoAdapter(trip);
+        }
+        public IEnumerable<BO.LineTrip> GetAllLineTrips()
+        {
+            return from trip in dl.GetAllLineTrips()
+                   select LineTripDoBoAdapter(trip);
+        }
+        public void AddLineTrip(BO.LineTrip trip)
+        {
+            dl.AddLineTrip(LineTripBoDoAdapter(trip));
+        }
+        public void DeleteLineTrip(BO.LineTrip trip)
+        {
+            dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
+        }
+        public TimeSpan CalculateDistance(BO.LineStation station)
+        {
+            //from Departure to station
+            //needs data source
+            return TimeSpan.Zero;
+        }
+        #endregion
+    }
 }

@@ -22,16 +22,17 @@ namespace WPF_UI
     /// </summary>
     public partial class AddLineWindow : Window
     {
-        static IBL bl;
-        static BusLine busLine = new BusLine();
+        static IBL bl = BlFactory.GetBL();
+        static BusLine busLine;
         static ObservableCollection<int> stations = new ObservableCollection<int>();
         public AddLineWindow()
         {
-            bl = BlFactory.GetBL();
             InitializeComponent();
             
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Areas));
             
+            busLine = new BusLine();
+            DataContext = busLine;
 
             cbFirstStop.ItemsSource = bl.GetAllBusStations();
             cbLastStop.ItemsSource = bl.GetAllBusStations();
@@ -67,12 +68,13 @@ namespace WPF_UI
         {
             try
             {
-                if (tbLineNumber.Text.Length == 0 || cbArea.SelectedIndex == -1 || 
-                    cbFirstStop.SelectedIndex == -1 || cbLastStop.SelectedIndex == -1)
+                if (tbLineNumber.Text.Length == 0 || cbArea.SelectedIndex == -1 || cbFirstStop.SelectedIndex == -1 || cbLastStop.SelectedIndex == -1)
                     throw new Exception();
 
                 else
                 {
+                    busLine = new BusLine();
+                    DataContext = busLine;
     
                     busLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                                 select int.Parse(item.Substring(6, 5));

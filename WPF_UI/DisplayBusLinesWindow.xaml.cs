@@ -21,10 +21,9 @@ namespace WPF_UI
 	/// </summary>
 	public partial class DisplayBusLinesWindow : Window
 	{
-		static IBL bl;
+        static IBL bl = BlFactory.GetBL();
         public DisplayBusLinesWindow()
 		{
-			bl = BlFactory.GetBL();
 			InitializeComponent();
 		}
 

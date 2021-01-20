@@ -18,6 +18,8 @@ namespace DS
 		public static List<BusLine> ListLines;
 		public static List<LineStation> ListLineStations;
 		public static List<FollowingStations> ListFollowingStations;
+        public static List<LineTrip> ListLineTrips;
+        public static int TripId = 1;
 		public static int LineId = 1;
 		public static int LineStationId = 1;
 		public static int FollowingStationsId = 1;
@@ -29,7 +31,27 @@ namespace DS
 
 		static void InitAllLists()
 		{
-			ListStations = new List<BusStation>
+            //ListLineTrips = new List<LineTrip>
+            //{
+            //    new LineTrip
+            //    {
+            //        Id = TripId,
+            //        LineNumber = ,
+            //        Departure = ,
+            //        Arrival = ,
+            //        Destination =
+            //    },
+            //    new LineTrip
+            //    {
+            //        Id = ++TripId,
+            //        LineNumber = ,
+            //        Departure = ,
+            //        Arrival = ,
+            //        Destination =
+            //    }
+            //};
+
+            ListStations = new List<BusStation>
 			{
 				new BusStation
 				{

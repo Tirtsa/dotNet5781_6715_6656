@@ -27,7 +27,7 @@ namespace WPF_UI
             bl = BlFactory.GetBL();
             InitializeComponent();
 
-            }
+        }
 
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)

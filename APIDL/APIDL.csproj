@@ -52,6 +52,7 @@
     <Compile Include="IClonable.cs" />
     <Compile Include="IDAL.cs" />
     <Compile Include="LineStation.cs" />
+    <Compile Include="LineTrip.cs" />
     <Compile Include="PassengerTravel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />

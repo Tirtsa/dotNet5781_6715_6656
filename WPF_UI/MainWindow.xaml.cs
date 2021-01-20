@@ -24,11 +24,10 @@ namespace WPF_UI
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		static IBL bl;
+        static IBL bl = BlFactory.GetBL();
         //private ObservableCollection<BusStation> AllStations ;
-		public MainWindow()
+        public MainWindow()
 		{
-			bl = BlFactory.GetBL();
 			InitializeComponent();
 
             //IEnumerable<BusStation> stations = bl.GetAllBusStations();

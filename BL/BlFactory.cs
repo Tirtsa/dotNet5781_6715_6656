@@ -10,7 +10,7 @@ namespace BLApi
     {
         public static IBL GetBL()
         {
-            return new BL.BLIMP();
+            return BL.BLIMP.Instance;
         }
     }
 }
