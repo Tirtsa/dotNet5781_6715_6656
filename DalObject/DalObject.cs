@@ -171,13 +171,13 @@ namespace DL
                    where predicate(line)
                    select line.Clone();
         }
-        public BusLine GetLine(int lineId, Areas area)
+        public BusLine GetLine(int lineNum, Areas area)
         {
-            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == lineId && l.Area == area);
+            BusLine tempLine = DataSource.ListLines.Find(l => l.BusLineNumber == lineNum && l.Area == area);
             if (tempLine != null)
                 return tempLine.Clone();
             else 
-                throw new ArgumentException("There is no line with this number and area" + lineId + area);
+                throw new ArgumentException("There is no line with this number and area" + lineNum + area);
         }
         public BusLine GetLine (int Id)
         {

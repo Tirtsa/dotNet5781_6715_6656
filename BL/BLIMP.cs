@@ -151,7 +151,7 @@ namespace BL
 			BO.BusLine lineBo = new BO.BusLine();
 			lineDo.CopyPropertiesTo(lineBo);
 
-			DO.BusLine busLine = dl.GetLine(lineBo.BusLineNumber, AreasAdapter(lineBo.Area));
+			DO.BusLine busLine = dl.GetLine(lineBo.Id);
 			List<int> request= (from station in dl.GetAllLineStationsBy(s => s.LineId == busLine.Id)
 						orderby station.RankInLine
 						select station.StationKey).ToList();
@@ -196,7 +196,7 @@ namespace BL
 			dl.AddLine(BusLineBoDoAdapter(newLine));//add lint to can then add lisStations with LineId (attributed in dl.AddLine)
 
 			//3. Create corresponding line stations
-			int newLineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
+			int newLineId = newLine.Id;
 			for (int i = 0; i < (newLine.AllStationsOfLine.Count()); i++)
 			{
                 int stationKey = GetBusStation(newLine.AllStationsOfLine.ElementAt(i)).BusStationKey;

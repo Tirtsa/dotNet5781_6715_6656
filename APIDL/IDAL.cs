@@ -28,7 +28,7 @@ namespace APIDL
         #region BusLine
         IEnumerable<DO.BusLine> GetAllLines();
         IEnumerable<DO.BusLine> GetAllLinesBy(Predicate<DO.BusLine> predicate);
-        DO.BusLine GetLine(int id, Areas area);
+        DO.BusLine GetLine(int lineNum, Areas area);
         DO.BusLine GetLine(int Id);
         void AddLine(DO.BusLine line);
         void UpdateLine(DO.BusLine line);
