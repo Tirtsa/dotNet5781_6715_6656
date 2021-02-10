@@ -41,9 +41,9 @@ namespace WPF_UI
                 MessageBox.Show("התחנה נוספה בהצלחה");
                 Close();
             }
-            catch (Exception ex)
+            catch (BO.DuplicateStationException ex)
             {
-                MessageBox.Show(" : ארעה תקלה/שגיאה" + ex);
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
         }

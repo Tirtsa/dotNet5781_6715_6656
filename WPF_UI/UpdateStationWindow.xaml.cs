@@ -32,14 +32,22 @@ namespace WPF_UI
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.UpdateBusStation(new BusStation
+            try
             {
-                BusStationKey = (int)busStationKeyLabel.Content,
-                Address = addressTextBox.Text,
-                StationName = stationNameTextBox.Text,
-               LinesThatPass = (DataContext as BusStation).LinesThatPass
-            });
-            Close();
+                bl.UpdateBusStation(new BusStation {
+                    BusStationKey = (int)busStationKeyLabel.Content,
+                    Address = addressTextBox.Text,
+                    StationName = stationNameTextBox.Text,
+                    LinesThatPass = (DataContext as BusStation).LinesThatPass
+                });
+
+                App.Current.MainWindow.DataContext = bl.GetAllBusStations();
+                Close();
+            }
+            catch (InexistantStationException ex)
+            {
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -47,11 +55,11 @@ namespace WPF_UI
             Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-        }
+        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    MainWindow mainWindow = new MainWindow();
+        //    mainWindow.Show();
+        //}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -59,7 +67,8 @@ namespace WPF_UI
                                          let line = bl.GetBusLine(lineId)
                                          select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
 
-            LinesPassCbBox.SelectedItem = LinesPassCbBox.Items.GetItemAt(0);
+            if (LinesPassCbBox.ItemsSource != null)
+                LinesPassCbBox.SelectedItem = LinesPassCbBox.Items.GetItemAt(0);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace BLApi
 {
     public interface IBL
     {
+
         #region BusLine
         DO.Areas AreasAdapter(BO.Areas areaBO);
         IEnumerable<BO.BusLine> GetAllBusLines();
@@ -53,5 +54,8 @@ namespace BLApi
         //void DeleteLineTrip(BO.LineTrip trip);
         //TimeSpan CalculateDistance(BO.LineTrip trip);
         #endregion
+
+        IEnumerable<LineTiming> ListArrivalOfLine(int lineId, TimeSpan hour, int stationKey);
+        IEnumerable<IGrouping<TimeSpan, LineTiming>> StationTiming(BO.BusStation station, TimeSpan hour);
     }
 }

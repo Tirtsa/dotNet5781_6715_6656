@@ -11,7 +11,7 @@ namespace BL
 {
 	class BLIMP : IBL
     {
-		readonly IDAL dl = DalFactory.GetDal();
+        readonly IDAL dl = DalFactory.GetDal();
 		static Random rndLat = new Random(DateTime.Now.Millisecond);
 		static Random rndLong = new Random(DateTime.Now.Millisecond);
 
@@ -50,9 +50,9 @@ namespace BL
 			{
 				dl.AddStation(stationToAdd);
 			}
-			catch
+			catch (DO.DuplicateStationException ex)
             {
-				throw new ArgumentException("BL failed to add station because : Duplicate Stations");
+                throw new BO.DuplicateStationException("You can't add this station because it already exists", ex);
             }
 		}
 
@@ -73,9 +73,9 @@ namespace BL
 			{
 				dl.UpdateStation(BusStationBoDoAdapter(station));
 			}
-			catch
+			catch (DO.InexistantStationException ex)
 			{
-				throw new ArgumentException("This Bus Station not exist");
+                throw new BO.InexistantStationException("This Bus Station not exist", ex);
 			}
 			
 		}
@@ -93,11 +93,11 @@ namespace BL
             {
 				return BusStationDoBoAdapter(dl.GetStation(key));
 			}
-			catch
+			catch (DO.InexistantStationException ex)
             {
-				throw new ArgumentException("Bus station " + key + " doesn't exist");
+                throw new BO.InexistantStationException("This Bus Station not exist", ex);
             }
-		}
+        }
 
 		public IEnumerable<BO.BusStation> GetAllBusStations()
 		{
@@ -183,9 +183,14 @@ namespace BL
             //1. Verify if all stations of list exists
             foreach (int item in newLine.AllStationsOfLine)
             {
-                if (dl.GetStation(item) == null)
-                    throw new ArgumentException("Bus Station " + item + " doesn't exist. Please create station and then" +
-                        " add it to line");
+                try
+                {
+                    dl.GetStation(item);
+                }
+                catch (DO.InexistantStationException ex)
+                {
+                    throw new BO.InexistantStationException("Please create station and then add it to line", ex);
+                }
             }
 
             for (int i = 0; i < (newLine.AllStationsOfLine.Count() - 1); i++)
@@ -227,9 +232,9 @@ namespace BL
 				dl.DeleteLine(BusLineBoDoAdapter(lineBo));
 				dl.DeleteLineStation(s => s.LineId == lineBo.Id);
             }
-            catch
+            catch(DO.InexistantLineException ex)
             {
-				throw new ArgumentException("This Line not exist " + lineBo.BusLineNumber);
+                throw new BO.InexistantLineException("This Line not exist", ex);
             }
 		}
 
@@ -239,12 +244,11 @@ namespace BL
 			{
                 DeleteBusLine(line);
                 AddBusLine(line);
-                //dl.UpdateLine(BusLineBoDoAdapter(line));
             }
-			catch
-			{
-				throw new ArgumentException("This Line not exist " + line.BusLineNumber);
-			}
+			catch (DO.InexistantLineException ex)
+            {
+				throw new BO.InexistantLineException("This Line not exist", ex);
+            }
 		}
 
 		public void UpdateBusLine(int id, Action<DO.BusLine> action)
@@ -254,10 +258,10 @@ namespace BL
 				BO.BusLine line = GetBusLine(id);
 				dl.UpdateLine(BusLineBoDoAdapter(line), action);
 			}
-			catch
-			{
-				throw new ArgumentException("This Line not exist " + id);
-			}
+			catch (DO.InexistantLineException ex)
+            {
+				throw new BO.InexistantLineException("This Line not exist", ex);
+            }
 			
 		}
 
@@ -340,46 +344,66 @@ namespace BL
         }
         #endregion
 
-        #region LineTrip
-        //DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
-        //{
-        //    DO.LineTrip lineTripDo = new DO.LineTrip();
-        //    lineTripBo.CopyPropertiesTo(lineTripDo);
-        //    return lineTripDo;
-        //}
-        //BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
-        //{
-        //    BO.LineTrip lineTripBo = new BO.LineTrip();
-        //    lineTripDo.CopyPropertiesTo(lineTripBo);
-        //    return lineTripBo;
-        //}
-        //public BO.LineTrip GetLineTrip(int id)
-        //{
-        //    return LineTripDoBoAdapter(dl.GetLineTrip(id));
-        //}
-        //public IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line)
-        //{
-        //    return from trip in dl.GetAllLineTrips()
-        //           where trip.LineNumber == line.BusLineNumber
-        //           select LineTripDoBoAdapter(trip);
-        //}
-        //public IEnumerable<BO.LineTrip> GetAllLineTrips()
-        //{
-        //    return from trip in dl.GetAllLineTrips()
-        //           select LineTripDoBoAdapter(trip);
-        //}
-        //public void AddLineTrip(BO.LineTrip trip)
-        //{
-        //    dl.AddLineTrip(LineTripBoDoAdapter(trip));
-        //}
-        //public void DeleteLineTrip(BO.LineTrip trip)
-        //{
-        //    dl.DeleteLineTrip(LineTripBoDoAdapter(trip));
-        //}
-        //public TimeSpan CalculateDistance(BO.LineTrip trip)
-        //{
-        //    return dl.CalculateDistance(LineTripBoDoAdapter(trip));
-        //}
-        #endregion
+        public IEnumerable<LineTiming> ListArrivalOfLine (int lineId, TimeSpan hour, int stationKey)
+        {
+            //Calcul of TravelTime between first station of line and our station
+            BO.BusLine line = GetBusLine(lineId);
+            TimeSpan durationOfTravel = DurationOfTravel(line, stationKey);
+
+
+            LineTrip myLineTrip = dl.GetLineTrip(lineId, hour);
+
+            List<LineTiming> listTiming = new List<LineTiming>(); //initialize list of all timing for the specified line
+            while (myLineTrip.StartTimeRange + durationOfTravel < hour)
+                myLineTrip.StartTimeRange += myLineTrip.Frequency; //we can change value of StartTimeRange thanks to Clone() 
+            for (TimeSpan i = myLineTrip.StartTimeRange; i<= hour;)
+            {
+                listTiming.Add(new LineTiming {
+                    TripStart = i,
+                    LineId = myLineTrip.LineId,
+                    ExpectedTimeTillArrive = CalculateTimeOfArrival(i, durationOfTravel)
+                });
+                i += myLineTrip.Frequency;
+            }
+
+            return listTiming;
+        }
+
+        internal TimeSpan CalculateTimeOfArrival (TimeSpan startOfTRavel, TimeSpan durationOfTravel)
+        {
+            return startOfTRavel + durationOfTravel;
+        }
+
+        internal TimeSpan DurationOfTravel(BO.BusLine line, int stationKey)
+        {
+           int rankOfStation = dl.GetLineStation(line.Id, stationKey).RankInLine;
+           IEnumerable<DO.LineStation> stations =  (from lineStat in dl.GetAllLineStationsBy(l => l.LineId == line.Id).ToList()
+                                                    where lineStat.RankInLine <= rankOfStation
+                                                    select lineStat).ToList();
+
+            TimeSpan travelDuration = new TimeSpan();
+            for(int i = 0; i < stations.Count() - 1; i++)
+            {
+                DO.BusStation station1 = BusStationBoDoAdapter(GetBusStation(stations.ElementAt(i).StationKey));
+                DO.BusStation station2 = BusStationBoDoAdapter(GetBusStation(stations.ElementAt(i + 1).StationKey));
+
+                travelDuration += dl.GetFollowingStations(station1, station2).AverageJourneyTime;
+            }
+
+            return travelDuration;
+        }
+
+        public IEnumerable<IGrouping< TimeSpan, LineTiming>> StationTiming(BO.BusStation station, TimeSpan hour)
+        {
+            List<LineTiming> timing = new List<LineTiming>();
+            foreach(int lineId in station.LinesThatPass)
+            {
+                foreach (var item in ListArrivalOfLine(lineId, hour, station.BusStationKey))
+                    timing.Add(item);
+            }
+
+            return from item in timing
+                   group item by item.ExpectedTimeTillArrive;
+        }
     }
 }

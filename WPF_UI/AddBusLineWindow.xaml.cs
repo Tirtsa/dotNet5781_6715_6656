@@ -19,11 +19,11 @@ namespace WPF_UI
     /// <summary>
     /// Logique d'interaction pour AddBusLine.xaml
     /// </summary>
-    public partial class AddBusLine : Window
+    public partial class AddBusLineWindow : Window
     {
         static IBL bl;
         BusLine myLine;
-        public AddBusLine()
+        public AddBusLineWindow()
         {
             bl = BlFactory.GetBL();
             InitializeComponent();
@@ -74,9 +74,9 @@ namespace WPF_UI
                 DataContext = myLine;
                 LineStationsListBox.Items.Clear();
             }
-            catch (Exception ex)
+            catch (DuplicateLineException ex)
             {
-                MessageBox.Show(" : אירעה תקלה" + ex);
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

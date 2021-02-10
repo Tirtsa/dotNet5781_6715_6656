@@ -58,11 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddBusLine.xaml.cs">
-      <DependentUpon>AddBusLine.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddLineWindow.xaml.cs">
-      <DependentUpon>AddLineWindow.xaml</DependentUpon>
+    <Compile Include="AddBusLineWindow.xaml.cs">
+      <DependentUpon>AddBusLineWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddStationWindow.xaml.cs">
       <DependentUpon>AddStationWindow.xaml</DependentUpon>
@@ -70,6 +67,10 @@
     <Compile Include="DisplayBusLinesWindow.xaml.cs">
       <DependentUpon>DisplayBusLinesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LineTiming.xaml.cs">
+      <DependentUpon>LineTiming.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PO\LineTiming.cs" />
     <Compile Include="LineTripWindow.xaml.cs">
       <DependentUpon>LineTripWindow.xaml</DependentUpon>
     </Compile>
@@ -79,20 +80,13 @@
     <Compile Include="UpdateBusLineWindow.xaml.cs">
       <DependentUpon>UpdateBusLineWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UpdateLineWindow.xaml.cs">
-      <DependentUpon>UpdateLineWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UpdateStationWindow.xaml.cs">
       <DependentUpon>UpdateStationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddBusLine.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AddLineWindow.xaml">
+    <Page Include="AddBusLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DisplayBusLinesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LineTiming.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,10 +123,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateBusLineWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UpdateLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

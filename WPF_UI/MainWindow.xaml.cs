@@ -16,6 +16,7 @@ using BO;
 using BLApi;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using PO;
 
 namespace WPF_UI
 {
@@ -25,32 +26,28 @@ namespace WPF_UI
 	public partial class MainWindow : Window
 	{
         static IBL bl = BlFactory.GetBL();
-        //private ObservableCollection<BusStation> AllStations ;
+        static PL pl = new PL();
         public MainWindow()
 		{
 			InitializeComponent();
 
-            //IEnumerable<BusStation> stations = bl.GetAllBusStations();
-            //AllStations = new ObservableCollection<BusStation>(stations.Cast<BusStation>());
-            //BusStationsDg.ItemsSource = AllStations;
             BusStationsDg.ItemsSource = bl.GetAllBusStations();
             BusLinesDg.ItemsSource = bl.GetAllBusLines();
         }
 
+        #region BusStation
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
-            //List<string> LinesInStation = new List<string>();
-            //foreach(int item in selectedStation.LinesThatPass)
-            //{
-            //    BusLine line = bl.GetBusLine(item);
-            //    LinesInStation.Add("קו " + line.BusLineNumber + "לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
-            //}
-            IEnumerable<string> LinesInStation = from lineId in selectedStation.LinesThatPass
-                                                 let line = bl.GetBusLine(lineId)
-                                                 select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
+            BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
+            
+            if (selectedStation != null)
+            {
+                IEnumerable<string> LinesInStation = from lineId in selectedStation.LinesThatPass
+                                                     let line = bl.GetBusLine(lineId)
+                                                     select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
 
-            LinesPassListBox.ItemsSource = LinesInStation;
+                LinesPassListBox.ItemsSource = LinesInStation;
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -60,11 +57,11 @@ namespace WPF_UI
                 BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
                 bl.DeleteStation(selectedStation.BusStationKey);
                 MessageBox.Show("התחנה נמחקה בהצלחה");
-                Refresh();
+                BusStationsDg.ItemsSource = bl.GetAllBusStations();
             }
-			catch (Exception ex)
+            catch (InexistantStationException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -72,7 +69,7 @@ namespace WPF_UI
         {
             UpdateStationWindow updateStationWindow = new UpdateStationWindow { DataContext = BusStationsDg.SelectedItem };
             updateStationWindow.Show();
-            Close();
+            //Close();
         }
 
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
@@ -81,49 +78,26 @@ namespace WPF_UI
             newWindow.Show();
             Close();
         }
-        private void AddLineButton_Click(object sender, RoutedEventArgs e)
+
+        private void ViewArrivals_Click(object sender, RoutedEventArgs e)
         {
-            AddLineWindow newWindow = new AddLineWindow();
-            //AddBusLine newWindow = new AddBusLine();
-            newWindow.Show();
-            Close();
+            IEnumerable<IGrouping<TimeSpan, PO.LineTiming>> listTest = 
+                pl.BoPoLineTimingAdapter(bl.StationTiming(BusStationsDg.SelectedItem as BusStation, DateTime.Now.TimeOfDay));
+            foreach (var item in listTest)
+                foreach(var element in item)
+                    MessageBox.Show(element.ToString());
+            if (listTest.Count() == 0)
+                MessageBox.Show("il n'y a aucun horaire");
         }
+        #endregion
 
-        private void BusList_Click(object sender, RoutedEventArgs e)
-        {
-            DataGrid tempDG = (DataGrid)sender;
-            BusStation tempS = (BusStation)tempDG.SelectedItem;
-            int key = tempS.BusStationKey;
 
-            DisplayBusLinesWindow newWindow = new DisplayBusLinesWindow { DataContext = bl.GetBusStation(tempS.BusStationKey) };
 
-            List<BusLine> lines = new List<BusLine>();
-            foreach (BusLine line in bl.GetAllBusLines())
-                foreach (int stop in line.AllStationsOfLine)
-                    if (stop == key)
-                    {
-                        lines.Add(line);
-                        break;
-                    }
 
-            newWindow.lbBusLines.ItemsSource = lines;
-            newWindow.Show();
-        }
-
-        private void Refresh()
-        {
-            MainWindow newWindow = new MainWindow();
-            newWindow.Show();
-            Close();
-        }
-
+        #region BusLine
         private void BusLinesDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BusLine selectedStation = BusLinesDg.SelectedItem as BusLine;
-            List<string> StationsInLine = new List<string>();
-            foreach (int item in selectedStation.AllStationsOfLine)
-                StationsInLine.Add("תחנה" + item + " : " + bl.GetBusStation(item).StationName  );
-            StationsListBox.ItemsSource = StationsInLine;
+            showStationsForLine(BusLinesDg.SelectedItem as BusLine);
         }
 
         private void DeleteLine_Click(object sender, RoutedEventArgs e)
@@ -133,20 +107,46 @@ namespace WPF_UI
                 BusLine selectedStation = BusLinesDg.SelectedItem as BusLine;
                 bl.DeleteBusLine(selectedStation);
                 MessageBox.Show("הקו נמחק בהצלחה");
-                Refresh();
+                BusLinesDg.ItemsSource = bl.GetAllBusLines();
             }
-            catch (Exception ex)
+            catch (InexistantLineException ex)
             {
-                MessageBox.Show("An error occured " + ex);
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void UpdateLine_Click(object sender, RoutedEventArgs e)
         {
-            UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = BusLinesDg.SelectedItem };
-            //UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
+            UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
             updateLineWindow.Show();
+            //Close();
+        }
+
+        private void AddLineButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddBusLineWindow newWindow = new AddBusLineWindow();
+            newWindow.Show();
             Close();
         }
+
+        private void Window_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            showStationsForLine(BusLinesDg.SelectedItem as BusLine);
+        }
+
+        private void showStationsForLine(BusLine line)
+        {
+            if (line != null)
+            {
+                List<string> StationsInLine = new List<string>();
+                foreach (int item in line.AllStationsOfLine)
+                    StationsInLine.Add("תחנה" + item + " : " + bl.GetBusStation(item).StationName);
+                StationsListBox.ItemsSource = StationsInLine;
+            }
+        }
+
+        #endregion
+
+        
     }
 }

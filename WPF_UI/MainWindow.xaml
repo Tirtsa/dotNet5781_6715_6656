@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_UI"
         mc:Ignorable="d"
-        Title="מערכת תחנות וקווים - מיני פרויקט תשפ''א" TextBlock.TextAlignment="Right" Height="593.969" Width="990.385">
+        Title="מערכת תחנות וקווים - מיני פרויקט תשפ''א" TextBlock.TextAlignment="Right" Height="593.969" Width="990.385"
+        DataContextChanged="Window_DataContextChanged" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -33,7 +34,7 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Button x:Name="ViewArrivals" Content="לוח זמנים" HorizontalContentAlignment="Center" 
-                                                    Grid.Column="0" Margin="2"/>
+                                                    Grid.Column="0" Margin="2" Click="ViewArrivals_Click"/>
                                             <Button x:Name="Delete" Content="מחיקה" HorizontalContentAlignment="Center" 
                                                     Grid.Column="1" Margin="2" Click="Delete_Click"/>
                                             <Button x:Name="Update" Content="עדכון" HorizontalContentAlignment="Center" 

@@ -24,7 +24,7 @@ namespace DL
         public void AddStation(BusStation station)
         {
             if (DataSource.ListStations.FirstOrDefault(s => s.BusStationKey == station.BusStationKey) != null)
-                throw new ArgumentException("Duplicate Stations");
+                throw new DuplicateStationException(station.BusStationKey, $"Duplicate station : {station.BusStationKey}");
             DataSource.ListStations.Add(station.Clone());
         }
 
@@ -34,7 +34,7 @@ namespace DL
             if (sta != null)
                 DataSource.ListStations.Remove(sta);
             else
-                throw new ArgumentException("It's not exist Bus Station with this key : " + id);
+                throw new InexistantStationException(id, $"Station : {id} doesn't exist");
         }
 
         public IEnumerable<BusStation> GetAllStations()
@@ -58,8 +58,7 @@ namespace DL
                 if (station != null)
                     return station.Clone();
                 else
-                    throw new ArgumentException("Bus Station doesn't exist");
-            
+                throw new InexistantStationException(id, $"Station : {id} doesn't exist");
         }
         public void UpdateStation(BusStation station)
         {
@@ -70,7 +69,7 @@ namespace DL
                 DataSource.ListStations.Add(station.Clone());
             }
             else
-                throw new ArgumentException("station to update doesn't exist");
+                throw new InexistantStationException(station.BusStationKey, $"Station : {station.BusStationKey} doesn't exist");
         }
 
         public void UpdateStation(int id, Action<BusStation> update)
@@ -93,8 +92,9 @@ namespace DL
                     KeyStation2 = station2.BusStationKey,
                     Distance = new GeoCoordinate(station1.Latitude, station1.Longitude).GetDistanceTo
                         (new GeoCoordinate(station2.Latitude, station2.Longitude)),
-                    AverageJourneyTime = new GeoCoordinate(station1.Latitude, station1.Longitude).GetDistanceTo
-                    (new GeoCoordinate(station2.Latitude, station2.Longitude))*0.0012*0.5
+                    AverageJourneyTime = TimeSpan.FromTicks(new TimeSpan(0, 0, 0, 0, 72).Ticks *
+                        (long)new GeoCoordinate(station1.Latitude, station1.Longitude).GetDistanceTo
+                        (new GeoCoordinate(station2.Latitude, station2.Longitude)))
                 });
         }
         public void DeleteFollowingStations(BusStation station1, BusStation station2)
@@ -148,14 +148,16 @@ namespace DL
         #region BusLine
         public void AddLine(BusLine line)
         {
-            if (DataSource.ListLines.FirstOrDefault(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area) != null)
-                throw new ArgumentException("Duplicate BusLine");
-            line.Id = DataSource.LineId++;
+            if (DataSource.ListLines.FirstOrDefault(l => l.Id == line.Id) != null)
+                throw new DuplicateLineException
+                    (line.BusLineNumber, line.Area, $"Duplicate line {line.BusLineNumber} in {line.Area}");
+            if (line.Id == 0)
+                line.Id = DataSource.LineId++;
             DataSource.ListLines.Add(line.Clone());
         }
         public void DeleteLine(BusLine line)
         {
-            var lineToDelete = DataSource.ListLines.Where(l => l.BusLineNumber == line.BusLineNumber && l.Area == line.Area).
+            var lineToDelete = DataSource.ListLines.Where(l => l.Id == line.Id).
                 FirstOrDefault();
             DataSource.ListLines.Remove(lineToDelete);
         }
@@ -178,7 +180,7 @@ namespace DL
             if (tempLine != null)
                 return tempLine.Clone();
             else 
-                throw new ArgumentException("There is no line with this number and area" + lineId + area);
+                throw new InexistantLineException (lineId, area, $"There is no line {lineId} in {area}");
         }
         public BusLine GetLine (int Id)
         {
@@ -194,7 +196,8 @@ namespace DL
                 DataSource.ListLines.Add(line.Clone());
             }
             else
-                throw new ArgumentException("line doesn't exist");
+                throw new InexistantLineException
+                    (line.BusLineNumber, line.Area, $"There is no line {line.BusLineNumber} in {line.Area}");
         }
 
         public void UpdateLine(BusLine line, Action<BusLine> update)
@@ -273,36 +276,54 @@ namespace DL
         #endregion
 
         #region LineTrip
-        //public LineTrip GetLineTrip(int id)
-        //{
-        //    LineTrip trip = DataSource.ListLineTrips.Find(s => s.Id == id);
-        //    if (trip != null)
-        //        return trip.Clone();
-        //    else
-        //        throw new ArgumentException("This trip doesn't exist");
-        //}
-        //public IEnumerable<LineTrip> GetAllLineTrips()
-        //{
-        //    return from trip in DataSource.ListLineTrips
-        //           select trip;
-        //}
-        //public void AddLineTrip(LineTrip trip)
-        //{
-        //    if(DataSource.ListLineTrips.FirstOrDefault(t => t.Id == trip.Id) != null)
-        //        throw new ArgumentException("Duplicate trip");
-        //    DataSource.ListLineTrips.Add(trip.Clone());
-        //}
-        //public void DeleteLineTrip(LineTrip trip)
-        //{
-        //    var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
-        //    DataSource.ListLineTrips.Remove(tripToDelete);
-        //}
-        //public TimeSpan CalculateDistance(LineTrip trip)
-        //{   //xelement
-        //    //GetTripsForABus(GetBusLine(trip.Id));
-        //    //from Departure to station
-        //    return TimeSpan.Zero;
-        //}
+        public LineTrip GetLineTrip(int lineId, TimeSpan now)
+        {
+            LineTrip trip = DataSource.ListLineTrips.Find(s => s.LineId == lineId && s.StartTimeRange <= now
+            && s.EndTimeRange >= now);
+            if (trip != null)
+                return trip.Clone();
+            else
+            {
+                int LineNumber = GetLine(lineId).BusLineNumber;
+                throw new InexistantLineTripException(LineNumber, now);
+            }
+        }
+        public IEnumerable<LineTrip> GetAllLineTrips()
+        {
+            return from trip in DataSource.ListLineTrips
+                   select trip.Clone();
+        }
+
+        public IEnumerable<LineTrip> GetAllLineTripsBy(Predicate<LineTrip> predicate)
+        {
+            return from trip in DataSource.ListLineTrips
+                   where predicate(trip)
+                   select trip.Clone();
+        }
+
+        public void AddLineTrip(LineTrip trip)
+        {
+            if (DataSource.ListLineTrips.FirstOrDefault(t => t.LineId == trip.LineId 
+            && t.StartTimeRange == trip.StartTimeRange) != null)
+                throw new DuplicateLineTripException(GetLine(trip.LineId).BusLineNumber ,trip.StartTimeRange);
+            DataSource.ListLineTrips.Add(trip.Clone());
+        }
+
+        public void DeleteLineTrip(LineTrip trip)
+        {
+            var tripToDelete = DataSource.ListLineTrips.Where(t => t.LineId == trip.LineId
+            && t.StartTimeRange == trip.StartTimeRange).FirstOrDefault();
+            
+            DataSource.ListLineTrips.Remove(tripToDelete);
+        }
+
+        public void UpdateLineTrip (LineTrip trip)
+        {
+            DeleteLineTrip(trip);
+            AddLineTrip(trip);
+        }
+
         #endregion
+    
     }
 }

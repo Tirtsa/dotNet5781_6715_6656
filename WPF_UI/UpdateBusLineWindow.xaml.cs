@@ -36,11 +36,11 @@ namespace WPF_UI
             Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-        }
+        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    MainWindow mainWindow = new MainWindow();
+        //    mainWindow.Show();
+        //}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -79,11 +79,12 @@ namespace WPF_UI
                 myLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                            select int.Parse(item.Substring(6, 5));
                 bl.UpdateBusLine(myLine);
+                App.Current.MainWindow.DataContext = bl.GetAllBusLines();
                 Close();
             }
-            catch (Exception ex)
+            catch (InexistantLineException ex)
             {
-                MessageBox.Show(" : אירעה תקלה" + ex);
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

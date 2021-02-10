@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPF_UI"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="WPF_UI.UpdateBusLineWindow"
         mc:Ignorable="d"
-        Title="UpdateBusLineWindow" Height="550" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="UpdateBusLineWindow" Height="550" Width="800" Loaded="Window_Loaded">
     <Grid>
 
         <Grid x:Name="grid1" VerticalAlignment="Top" Margin="306,24,0,0" HorizontalAlignment="Left">
