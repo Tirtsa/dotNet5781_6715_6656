@@ -67,8 +67,8 @@
     <Compile Include="DisplayBusLinesWindow.xaml.cs">
       <DependentUpon>DisplayBusLinesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LineTiming.xaml.cs">
-      <DependentUpon>LineTiming.xaml</DependentUpon>
+    <Compile Include="LineTimingWindow.xaml.cs">
+      <DependentUpon>LineTimingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PO\LineTiming.cs" />
     <Compile Include="LineTripWindow.xaml.cs">
@@ -98,7 +98,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LineTiming.xaml">
+    <Page Include="LineTimingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

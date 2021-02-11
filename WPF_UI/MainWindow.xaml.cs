@@ -17,23 +17,85 @@ using BLApi;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using PO;
+using System.Threading;
+using System.Diagnostics;
 
 namespace WPF_UI
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
         static IBL bl = BlFactory.GetBL();
         static PL pl = new PL();
+
+        #region fields for backgroundWorker
+        BusStation station;
+        IEnumerable<IGrouping<TimeSpan, PO.LineTiming>> listTest;
+        TimeSpan startHour;
+
+        LineTimingWindow newTiming;
+
+        private Stopwatch stopwatch;
+        BackgroundWorker timing;
+        
+        #endregion
+
         public MainWindow()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             BusStationsDg.ItemsSource = bl.GetAllBusStations();
             BusLinesDg.ItemsSource = bl.GetAllBusLines();
+
         }
+
+        #region BackgroundWorder Methods
+        private void Timing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            
+        }
+
+        private void Timing_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            string timerText = (startHour + TimeSpan.FromTicks(stopwatch.Elapsed.Ticks * 60)).ToString();
+            timerText = timerText.Substring(0, 8);
+            newTiming.TimerTextBlock.Text = timerText;
+
+            newTiming.StationTimingDg.ItemsSource = listTest;
+        
+        }
+
+        private void Timing_DoWork(object sender, DoWorkEventArgs e)
+        {
+            station = e.Argument as BusStation;
+            try
+            {
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    newTiming = new LineTimingWindow(this) { Title = " לוח זמנים של תחנה " + station.BusStationKey 
+                    + station.StationName };
+                    newTiming.Show();
+                });
+                
+
+                startHour = DateTime.Now.TimeOfDay;
+                while (timing.CancellationPending == false)
+                {
+                    TimeSpan simulatedHourNow = startHour + TimeSpan.FromTicks(stopwatch.Elapsed.Ticks * 60);
+                    listTest = pl.BoPoLineTimingAdapter(bl.StationTiming(station, simulatedHourNow), simulatedHourNow);
+                    timing.ReportProgress(1);
+                    Thread.Sleep(1);
+                }
+                e.Result = 1;
+            }
+            catch (InexistantLineTripException ex)
+            {
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
 
         #region BusStation
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -81,18 +143,26 @@ namespace WPF_UI
 
         private void ViewArrivals_Click(object sender, RoutedEventArgs e)
         {
-            IEnumerable<IGrouping<TimeSpan, PO.LineTiming>> listTest = 
-                pl.BoPoLineTimingAdapter(bl.StationTiming(BusStationsDg.SelectedItem as BusStation, DateTime.Now.TimeOfDay));
-            foreach (var item in listTest)
-                foreach(var element in item)
-                    MessageBox.Show(element.ToString());
-            if (listTest.Count() == 0)
-                MessageBox.Show("il n'y a aucun horaire");
+            //threading
+            stopwatch = new Stopwatch();
+            timing = new BackgroundWorker();
+            timing.DoWork += Timing_DoWork;
+            timing.ProgressChanged += Timing_ProgressChanged;
+            timing.RunWorkerCompleted += Timing_RunWorkerCompleted;
+
+            timing.WorkerReportsProgress = true;
+            timing.WorkerSupportsCancellation = true;
+
+            stopwatch.Restart();
+            timing.RunWorkerAsync(BusStationsDg.SelectedItem);
+            
+        }
+
+        public void CancelThread()
+        {
+            timing.CancelAsync();
         }
         #endregion
-
-
-
 
         #region BusLine
         private void BusLinesDg_SelectionChanged(object sender, SelectionChangedEventArgs e)

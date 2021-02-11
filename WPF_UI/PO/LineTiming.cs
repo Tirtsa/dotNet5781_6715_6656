@@ -21,7 +21,8 @@ namespace PO
     {
         static IBL bl = BlFactory.GetBL();
 
-        internal IEnumerable<IGrouping<TimeSpan, LineTiming>> BoPoLineTimingAdapter(IEnumerable<IGrouping<TimeSpan, BO.LineTiming>> listTiming)
+        internal IEnumerable<IGrouping<TimeSpan, LineTiming>> BoPoLineTimingAdapter
+            (IEnumerable<IGrouping<TimeSpan, BO.LineTiming>> listTiming, TimeSpan hour)
         {
             List<LineTiming> timing = new List<LineTiming>();
             foreach (var element in listTiming)
@@ -34,7 +35,7 @@ namespace PO
                         LineNumber = line.BusLineNumber,
                         LastStation = bl.GetBusStation(line.LastStationKey).StationName,
                         TripStart = item.TripStart,
-                        Timing = item.ExpectedTimeTillArrive - DateTime.Now.TimeOfDay
+                        Timing = item.ExpectedTimeTillArrive - hour
                     });
                 } 
             }

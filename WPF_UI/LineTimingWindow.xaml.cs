@@ -17,12 +17,22 @@ namespace WPF_UI
     /// <summary>
     /// Logique d'interaction pour LineTiming.xaml
     /// </summary>
-    public partial class LineTiming : Window
+    public partial class LineTimingWindow : Window
     {
-        public LineTiming()
+        MainWindow main;
+        public LineTimingWindow(MainWindow mainWindow)
         {
             InitializeComponent();
+            main = mainWindow;
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                main.CancelThread();
+               
+            });
+        }
     }
 }

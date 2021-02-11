@@ -350,8 +350,8 @@ namespace BL
             BO.BusLine line = GetBusLine(lineId);
             TimeSpan durationOfTravel = DurationOfTravel(line, stationKey);
 
-
             LineTrip myLineTrip = dl.GetLineTrip(lineId, hour);
+            
 
             List<LineTiming> listTiming = new List<LineTiming>(); //initialize list of all timing for the specified line
             while (myLineTrip.StartTimeRange + durationOfTravel < hour)
@@ -365,8 +365,23 @@ namespace BL
                 });
                 i += myLineTrip.Frequency;
             }
-
+            //if station is the first we want to show 2 nexts departures
+            if(stationKey == line.FirstStationKey)
+            {
+                listTiming.Add(new LineTiming {
+                    TripStart = myLineTrip.StartTimeRange,
+                    LineId = myLineTrip.LineId,
+                    ExpectedTimeTillArrive = myLineTrip.StartTimeRange
+                });
+                myLineTrip.StartTimeRange += myLineTrip.Frequency;
+                listTiming.Add(new LineTiming {
+                    TripStart = myLineTrip.StartTimeRange,
+                    LineId = myLineTrip.LineId,
+                    ExpectedTimeTillArrive = myLineTrip.StartTimeRange
+                });
+            }
             return listTiming;
+            
         }
 
         internal TimeSpan CalculateTimeOfArrival (TimeSpan startOfTRavel, TimeSpan durationOfTravel)
@@ -395,15 +410,25 @@ namespace BL
 
         public IEnumerable<IGrouping< TimeSpan, LineTiming>> StationTiming(BO.BusStation station, TimeSpan hour)
         {
-            List<LineTiming> timing = new List<LineTiming>();
-            foreach(int lineId in station.LinesThatPass)
+            //if (station.LinesThatPass == null)
+            //    throw new BO.InexistantLineTripException("לא נמצעו נסיעות בשעות אלו עבור הקו המבוקש");
+            try
             {
-                foreach (var item in ListArrivalOfLine(lineId, hour, station.BusStationKey))
-                    timing.Add(item);
-            }
+                List<LineTiming> timing = new List<LineTiming>();
+                foreach (int lineId in station.LinesThatPass)
+                {
+                    foreach (var item in ListArrivalOfLine(lineId, hour, station.BusStationKey))
+                        timing.Add(item);
+                }
 
-            return from item in timing
-                   group item by item.ExpectedTimeTillArrive;
+                return from item in timing
+                       group item by item.ExpectedTimeTillArrive;
+            }
+            catch (DO.InexistantLineTripException ex)
+            {
+                throw new BO.InexistantLineTripException("לא נמצעו נסיעות בשעות אלו עבור הקו המבוקש", ex);
+            }
+           
         }
     }
 }

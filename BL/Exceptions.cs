@@ -21,6 +21,21 @@ namespace BO
 
     }
 
+    public class DuplicateLineTripException : Exception
+    {
+        public int Id;
+        public TimeSpan startHour;
+        public DuplicateLineTripException(string message, Exception innerException) : 
+            base(message, innerException) 
+        {
+            Id = ((DO.DuplicateLineTripException)innerException).Id;
+            startHour = ((DO.DuplicateLineTripException)innerException).startHour;
+        }
+        
+        public override string ToString() => base.ToString() + $", כבר רשומים יציאות לקו  {Id} עבור שעה {startHour}";
+
+    }
+
     public class DuplicateStationException : Exception
     {
         public int Id;
@@ -43,6 +58,19 @@ namespace BO
 
         public override string ToString() => base.ToString() + $", There is no line {lineNumber} in {area}";
 
+    }
+
+    public class InexistantLineTripException : Exception
+    {
+        public int Id;
+        public TimeSpan startHour;
+        public InexistantLineTripException(string message, Exception innerException) : 
+            base(message, innerException) 
+        { 
+            Id = ((DO.InexistantLineTripException)innerException).Id; 
+            startHour = ((DO.InexistantLineTripException)innerException).startHour; 
+        }
+        public override string ToString() => base.ToString() + $", לא נמצא מידע על יציאות קו {Id} בשעות אלו : {startHour}";
     }
 
     public class InexistantStationException : Exception
