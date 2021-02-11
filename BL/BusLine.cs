@@ -20,8 +20,7 @@ namespace BO
         public IEnumerable<int> AllStationsOfLine { get; set; }
         public override string ToString()
         {
-            return BusLineNumber.ToString();
-            //return this.ToStringProperty();
+            return this.ToStringProperty();
         }
     }
 }

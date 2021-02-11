@@ -64,16 +64,10 @@
     <Compile Include="AddStationWindow.xaml.cs">
       <DependentUpon>AddStationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DisplayBusLinesWindow.xaml.cs">
-      <DependentUpon>DisplayBusLinesWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LineTimingWindow.xaml.cs">
       <DependentUpon>LineTimingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PO\LineTiming.cs" />
-    <Compile Include="LineTripWindow.xaml.cs">
-      <DependentUpon>LineTripWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="OpeningWindow.xaml.cs">
       <DependentUpon>OpeningWindow.xaml</DependentUpon>
     </Compile>
@@ -94,15 +88,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DisplayBusLinesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="LineTimingWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LineTripWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

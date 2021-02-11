@@ -36,12 +36,6 @@ namespace WPF_UI
             Close();
         }
 
-        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    MainWindow mainWindow = new MainWindow();
-        //    mainWindow.Show();
-        //}
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             myLine = DataContext as BusLine;
@@ -60,7 +54,10 @@ namespace WPF_UI
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             string currentItemText = AllStationsListBox.SelectedValue.ToString();
-            LineStationsListBox.Items.Add(currentItemText);
+            if (LineStationsListBox.SelectedItem == null)
+                LineStationsListBox.Items.Add(currentItemText);
+            else
+                LineStationsListBox.Items.Insert(LineStationsListBox.SelectedIndex, currentItemText);
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)

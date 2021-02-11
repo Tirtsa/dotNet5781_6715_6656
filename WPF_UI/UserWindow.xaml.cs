@@ -26,8 +26,8 @@ namespace WPF_UI
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            LineTripWindow tripWindow = new LineTripWindow();
-            tripWindow.Show();
+            //LineTripWindow tripWindow = new LineTripWindow();
+            //tripWindow.Show();
             Close();
         }
     }

@@ -54,7 +54,10 @@ namespace WPF_UI
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             string currentItemText = AllStationsListBox.SelectedValue.ToString();
-            LineStationsListBox.Items.Add(currentItemText);
+            if (LineStationsListBox.SelectedItem == null)
+                LineStationsListBox.Items.Add(currentItemText);
+            else
+                LineStationsListBox.Items.Insert(LineStationsListBox.SelectedIndex, currentItemText);
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
