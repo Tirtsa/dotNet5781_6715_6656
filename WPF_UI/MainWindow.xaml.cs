@@ -125,6 +125,11 @@ namespace WPF_UI
             {
                 MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)
