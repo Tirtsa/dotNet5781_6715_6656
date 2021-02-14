@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfLineTrip xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LineTrip>
+    <LineId>1</LineId>
+    <StartTimeRange>PT9H</StartTimeRange>
+    <EndTimeRange>PT11H</EndTimeRange>
+    <Frequency>PT10M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>1</LineId>
+    <StartTimeRange>PT11H</StartTimeRange>
+    <EndTimeRange>PT16H</EndTimeRange>
+    <Frequency>PT20M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>1</LineId>
+    <StartTimeRange>PT16H</StartTimeRange>
+    <EndTimeRange>PT20H</EndTimeRange>
+    <Frequency>PT45M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>1</LineId>
+    <StartTimeRange>PT20H</StartTimeRange>
+    <EndTimeRange>PT9H</EndTimeRange>
+    <Frequency>PT1H</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>4</LineId>
+    <StartTimeRange>PT9H</StartTimeRange>
+    <EndTimeRange>PT23H</EndTimeRange>
+    <Frequency>PT10M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>4</LineId>
+    <StartTimeRange>PT9H</StartTimeRange>
+    <EndTimeRange>new TimeSpan(23,0,0)</EndTimeRange>
+    <Frequency>PT10M</Frequency>
+  </LineTrip>
+</ArrayOfLineTrip>
