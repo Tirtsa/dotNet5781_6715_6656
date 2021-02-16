@@ -70,16 +70,6 @@ namespace DL
         public IEnumerable<BusStation> GetAllStations()
         {
             XElement stationsRootElem = XMLTools.LoadListFromXMLElement(stationsPath);
-            //IEnumerable<XElement> test = from station in stationsRootElem.Elements()
-            //                select station;
-            //IEnumerable<BusStation> testI = (from station in test
-            //                                 select new BusStation() {
-            //                                     BusStationKey = Convert.ToInt32(station.Element("BusStationKey").Value),
-            //                                     Address = station.Element("Address").Value,
-            //                                     StationName = station.Element("StationName").Value,
-            //                                     Latitude = double.Parse(station.Element("Latitude").Value),
-            //                                     Longitude = double.Parse(station.Element("Longitude").Value)
-            //                                 }).ToArray();
             return from station in stationsRootElem.Elements()
                    let s = new BusStation() {
                        BusStationKey = Convert.ToInt32(station.Element("BusStationKey").Value),
@@ -375,7 +365,6 @@ namespace DL
                    }).FirstOrDefault();
         }
 
-
         public void UpdateLineStation(LineStation station)
         {
             DeleteLineStation(station);
@@ -460,17 +449,6 @@ namespace DL
         public FollowingStations GetFollowingStations(BusStation station1, BusStation station2)
         {
             XElement followingStationsRootElem = XMLTools.LoadListFromXMLElement(followingStationsPath);
-            //XElement test = (from fs in followingStationsRootElem.Elements()
-            //                 where Convert.ToInt32(fs.Element("KeyStation1").Value) == station1.BusStationKey
-            //                 && Convert.ToInt32(fs.Element("KeyStation2").Value) == station2.BusStationKey
-            //                 select fs).FirstOrDefault();
-            //FollowingStations foltest = new FollowingStations();
-            //foltest.KeyStation1 = Convert.ToInt32(test.Element("KeyStation1").Value);
-            //foltest.KeyStation2 = Convert.ToInt32(test.Element("KeyStation2").Value);
-            //Double distancetest;
-            //Double.TryParse(test.Element("Distance").Value, out distancetest);
-            //foltest.Distance = Convert.ToDouble(test.Element("Distance").Value);
-            //foltest.AverageJourneyTime = double.Parse(test.Element("AverageJourneyTime").Value);
             return (from fs in followingStationsRootElem.Elements()
                     where Convert.ToInt32(fs.Element("KeyStation1").Value) == station1.BusStationKey
                     && Convert.ToInt32(fs.Element("KeyStation2").Value) == station2.BusStationKey
@@ -494,59 +472,124 @@ namespace DL
         #endregion
 
         #region LineTrip
-        public LineTrip GetLineTrip(int id)
+        static int TripCounter = 0;
+        public LineTrip GetLineTrip(int tripId)
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
             LineTrip myLineTrip = (from lineTrip in lineTripRootElem.Elements()
-                                    where Convert.ToInt32(lineTrip.Element("Id").Value) == id
+                                    where Convert.ToInt32(lineTrip.Element("tripId").Value) == tripId
                                     select new LineTrip() {
-                                        Id = Convert.ToInt32(lineTrip.Element("Id").Value),
+                                        TripId = Convert.ToInt32(lineTrip.Element("tripId").Value),
                                         LineNumber = Convert.ToInt32(lineTrip.Element("LineNumber").Value),
+                                        LineIdTrip = Convert.ToInt32(lineTrip.Element("LineIdTrip").Value),
+                                        StationKey = Convert.ToInt32(lineTrip.Element("StationKey").Value), 
                                         Departure = Convert.ToDateTime(lineTrip.Element("Departure").Value),
-                                        Arrival = Convert.ToDateTime(lineTrip.Element("Arrival").Value),
+                                        Frequency = Convert.ToInt32(lineTrip.Element("Frequency").Value),
                                         Destination = lineTrip.Element("Destination").Value
                                     }).FirstOrDefault();
 
             if (myLineTrip == null)
                 throw new ArgumentException("LineTrip doesn't exist");
-            return myLineTrip;
 
+            return myLineTrip;
+        }
+        public LineTrip GetLineTrip(int lineId, int stationKey)
+        {
+            XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
+            LineTrip myNewLineTrip = (from lineTrip in lineTripRootElem.Elements()
+                                      where Convert.ToInt32(lineTrip.Element("LineIdTrip").Value) == lineId //&& lineTrip.Element("Destination").Value
+                                      select new LineTrip() {
+                                       TripId = (Convert.ToInt32(lineTrip.Element("tripId").Value) + TripCounter),
+                                       LineNumber = Convert.ToInt32(lineTrip.Element("LineNumber").Value),
+                                       LineIdTrip = Convert.ToInt32(lineTrip.Element("LineIdTrip").Value),
+                                       StationKey = stationKey,
+                                       Departure = Convert.ToDateTime(lineTrip.Element("Departure").Value),
+                                       Frequency = Convert.ToInt32(lineTrip.Element("Frequency").Value),
+                                       Destination = lineTrip.Element("Destination").Value
+                                   }).FirstOrDefault();
+            myNewLineTrip.Departure.Add(CalculateDistance(myNewLineTrip));
+
+            if (myNewLineTrip == null)
+                throw new ArgumentException("LineTrip doesn't exist");
+            
+            TripCounter++;
+            return myNewLineTrip;
         }
         public IEnumerable<LineTrip> GetAllLineTrips()
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
             return (from lineTrip in lineTripRootElem.Elements()
                                    select new LineTrip() {
-                                       Id = Convert.ToInt32(lineTrip.Element("Id").Value),
+                                       TripId = Convert.ToInt32(lineTrip.Element("tripId").Value),
                                        LineNumber = Convert.ToInt32(lineTrip.Element("LineNumber").Value),
+                                       LineIdTrip = Convert.ToInt32(lineTrip.Element("LineIdTrip").Value),
+                                       StationKey = Convert.ToInt32(lineTrip.Element("StationKey").Value),
                                        Departure = Convert.ToDateTime(lineTrip.Element("Departure").Value),
-                                       Arrival = Convert.ToDateTime(lineTrip.Element("Arrival").Value),
+                                       Frequency = Convert.ToInt32(lineTrip.Element("Frequency").Value),
                                        Destination = lineTrip.Element("Destination").Value
                                    }).ToList();
         }
-        //public void AddLineTrip(LineTrip trip)
-        //{
-        //    XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
-        //    LineTrip myLineTrip = (from lineTrip in lineTripRootElem.Elements()
-        //                           where Convert.ToInt32(lineTrip.Element("Id").Value) == id
-        //                           select new LineTrip() {
-        //                               Id = Convert.ToInt32(lineTrip.Element("Id").Value),
-        //                               LineNumber = Convert.ToInt32(lineTrip.Element("LineNumber").Value),
-        //                               Departure = Convert.ToDateTime(lineTrip.Element("Departure").Value),
-        //                               Arrival = Convert.ToDateTime(lineTrip.Element("Arrival").Value),
-        //                               Destination = lineTrip.Element("Destination").Value
-        //                           }).FirstOrDefault();
-        //    XElement lineTripElem;  
-           
-        //    if (myLineTrip != null)
-        //        throw new ArgumentException("Duplicate trip");
-        //    //lineTripRootElem.Add(lineTripElem);
-        //}
-        //public void DeleteLineTrip(LineTrip trip)
-        //{
-        //    //var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
-        //    //DataSource.ListLineTrips.Remove(tripToDelete);
-        //}
+        public void AddLineTrip(LineTrip trip)
+        {
+            XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
+            LineTrip myLineTrip = (from lineTrip in lineTripRootElem.Elements()
+                                   where Convert.ToInt32(lineTrip.Element("Id").Value) == trip.TripId
+                                   select new LineTrip() {
+                                       TripId = Convert.ToInt32(lineTrip.Element("tripId").Value),
+                                       LineNumber = Convert.ToInt32(lineTrip.Element("LineNumber").Value),
+                                       LineIdTrip = Convert.ToInt32(lineTrip.Element("LineIdTrip").Value),
+                                       StationKey = Convert.ToInt32(lineTrip.Element("StationKey").Value),
+                                       Departure = Convert.ToDateTime(lineTrip.Element("Departure").Value),
+                                       Frequency = Convert.ToInt32(lineTrip.Element("Frequency").Value),
+                                       Destination = lineTrip.Element("Destination").Value
+                                   }).FirstOrDefault();
+            
+            if (myLineTrip != null)
+                throw new ArgumentException("Duplicate trip");
+            
+            XElement lineTripElem = new XElement("LineTrip",
+                                          new XElement("tripId", trip.TripId.ToString()),
+                                          new XElement("LineNumber", trip.LineNumber.ToString()),
+                                          new XElement("LineIdTrip", trip.LineIdTrip.ToString()),
+                                          new XElement("StationKey", trip.StationKey.ToString()),
+                                          new XElement("Departure", trip.Departure.ToString()),
+                                          new XElement("Frequency", trip.Frequency.ToString()),
+                                          new XElement("Destination", trip.Destination.ToString()));
+
+            lineTripRootElem.Add(lineTripElem);
+            XMLTools.SaveListToXMLElement(lineTripRootElem, lineTripPath); ;
+
+            lineTripRootElem.Add(lineTripElem);
+        }
+        public void DeleteLineTrip(LineTrip trip)
+        {
+            XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
+            XElement myLineTrip = (from t in lineTripRootElem.Elements()
+                                      where Convert.ToInt32(t.Element("tripId").Value) == trip.TripId
+                                      select t).FirstOrDefault();
+
+            if (myLineTrip == null)
+                throw new ArgumentException("Line Trip doesn't exist");
+
+
+            myLineTrip.Remove();
+            XMLTools.SaveListToXMLElement(lineTripRootElem, lineTripPath);
+        }
+        public TimeSpan CalculateDistance(LineTrip trip)
+        {
+            double totalDist = 0;
+            int ID = GetLine(trip.LineIdTrip).Id;
+            BusLine line = GetLine(trip.LineIdTrip);
+            LineStation stop1, stop2 = GetLineStation(ID, line.FirstStationKey);
+
+            for (int i = 2; i <= GetLineStation(ID, trip.StationKey).RankInLine; i++)
+            {
+                stop1 = stop2;
+                stop2 = GetLineStation(ID, GetAllLineStationsBy(s => s.LineId == ID && s.RankInLine == i).First().StationKey);
+                totalDist += GetFollowingStations(GetStation(stop1.StationKey), GetStation(stop2.StationKey)).AverageJourneyTime;
+            }
+            return TimeSpan.FromMinutes(totalDist);
+        }
         #endregion
     }
 }

@@ -103,11 +103,6 @@ namespace BL
 		{
             try
             {
-                //var listTemp = dl.GetAllStations().ToList();
-                //List<BO.BusStation> listStations = new List<BO.BusStation>();
-                //foreach (var item in listTemp)
-                //    listStations.Add(BusStationDoBoAdapter(item));
-                //return listStations;
                 return from bs in dl.GetAllStations()
                        let stat1 = bs
                        select BusStationDoBoAdapter(stat1);
@@ -239,11 +234,11 @@ namespace BL
 			{
                 DeleteBusLine(line);
                 AddBusLine(line);
-                //dl.UpdateLine(BusLineBoDoAdapter(line));
+                dl.UpdateLine(BusLineBoDoAdapter(line));
             }
 			catch
 			{
-				throw new ArgumentException("This Line not exist " + line.BusLineNumber);
+				throw new ArgumentException("This line does not exist " + line.BusLineNumber);
 			}
 		}
 
@@ -366,7 +361,7 @@ namespace BL
         public IEnumerable<BO.LineTrip> GetTripsForAStation(BO.BusLine line, BO.BusStation station)
         {
             return from trip in dl.GetAllLineTrips()
-                   where trip.LineNumber == line.BusLineNumber && trip.stationKey == station.BusStationKey
+                   where trip.LineNumber == line.BusLineNumber && trip.StationKey == station.BusStationKey
                    select LineTripDoBoAdapter(trip);
         }
         public IEnumerable<BO.LineTrip> GetAllLineTrips()

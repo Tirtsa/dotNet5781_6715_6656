@@ -26,8 +26,10 @@ namespace WPF_UI
 
         private void rideButton_Click(object sender, RoutedEventArgs e)
         {
-            UserWindow userWindow = new UserWindow();
-            userWindow.Show();
+            //UserWindow userWindow = new UserWindow();
+            //userWindow.Show();
+            LineTripWindow lineTripWindow = new LineTripWindow();
+            lineTripWindow.Show();
             Close();
         }
 

@@ -273,36 +273,37 @@ namespace DL
         #endregion
 
         #region LineTrip
-        //public LineTrip GetLineTrip(int id)
-        //{
-        //    LineTrip trip = DataSource.ListLineTrips.Find(s => s.Id == id);
-        //    if (trip != null)
-        //        return trip.Clone();
-        //    else
-        //        throw new ArgumentException("This trip doesn't exist");
-        //}
-        //public IEnumerable<LineTrip> GetAllLineTrips()
-        //{
-        //    return from trip in DataSource.ListLineTrips
-        //           select trip;
-        //}
-        //public void AddLineTrip(LineTrip trip)
-        //{
-        //    if(DataSource.ListLineTrips.FirstOrDefault(t => t.Id == trip.Id) != null)
-        //        throw new ArgumentException("Duplicate trip");
-        //    DataSource.ListLineTrips.Add(trip.Clone());
-        //}
-        //public void DeleteLineTrip(LineTrip trip)
-        //{
-        //    var tripToDelete = DataSource.ListLineTrips.Where(t => t.Id == trip.Id).FirstOrDefault();
-        //    DataSource.ListLineTrips.Remove(tripToDelete);
-        //}
-        //public TimeSpan CalculateDistance(LineTrip trip)
-        //{   //xelement
-        //    //GetTripsForABus(GetBusLine(trip.Id));
-        //    //from Departure to station
-        //    return TimeSpan.Zero;
-        //}
+        public LineTrip GetLineTrip(int lineId, int stationKey)
+        {
+            LineTrip trip = DataSource.ListLineTrips.Find(t => t.LineIdTrip == lineId);
+            if (trip != null)
+                return trip.Clone();
+            else
+                throw new ArgumentException("This trip doesn't exist");
+        }
+        public IEnumerable<LineTrip> GetAllLineTrips()
+        {
+            return from trip in DataSource.ListLineTrips
+                   select trip;
+        }
+        public void AddLineTrip(LineTrip trip)
+        {
+            if (DataSource.ListLineTrips.FirstOrDefault(t => t.TripId == trip.TripId) != null)
+                throw new ArgumentException("Duplicate trip");
+            DataSource.ListLineTrips.Add(trip.Clone());
+        }
+        public void DeleteLineTrip(LineTrip trip)
+        {
+            var tripToDelete = DataSource.ListLineTrips.Where(t => t.TripId == trip.TripId).FirstOrDefault();
+            DataSource.ListLineTrips.Remove(tripToDelete);
+        }
+        public TimeSpan CalculateDistance(LineTrip trip)
+        {
+            //GetTripsForABus(GetBusLine(trip.Id));
+            //from Departure to station
+            //following.time
+            return TimeSpan.Zero;
+        }
         #endregion
     }
 }

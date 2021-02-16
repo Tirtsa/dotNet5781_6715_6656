@@ -58,14 +58,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddBusLine.xaml.cs">
-      <DependentUpon>AddBusLine.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AddLineWindow.xaml.cs">
       <DependentUpon>AddLineWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddStationWindow.xaml.cs">
       <DependentUpon>AddStationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ArrivalsWindow.xaml.cs">
+      <DependentUpon>ArrivalsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DisplayBusLinesWindow.xaml.cs">
       <DependentUpon>DisplayBusLinesWindow.xaml</DependentUpon>
@@ -76,9 +76,6 @@
     <Compile Include="OpeningWindow.xaml.cs">
       <DependentUpon>OpeningWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UpdateBusLineWindow.xaml.cs">
-      <DependentUpon>UpdateBusLineWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UpdateLineWindow.xaml.cs">
       <DependentUpon>UpdateLineWindow.xaml</DependentUpon>
     </Compile>
@@ -88,10 +85,6 @@
     <Compile Include="UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddBusLine.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AddLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,9 +93,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DisplayBusLinesWindow.xaml">
+    <Page Include="ArrivalsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplayBusLinesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="LineTripWindow.xaml">
       <SubType>Designer</SubType>
@@ -121,10 +118,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="OpeningWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UpdateBusLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,7 +19,6 @@ namespace DS
 		public static List<LineStation> ListLineStations;
 		public static List<FollowingStations> ListFollowingStations;
         public static List<LineTrip> ListLineTrips;
-        public static int TripId = 1;
 		public static int LineId = 1;
 		public static int LineStationId = 1;
 		public static int FollowingStationsId = 1;
@@ -31,26 +30,6 @@ namespace DS
 
 		static void InitAllLists()
 		{
-            //ListLineTrips = new List<LineTrip>
-            //{
-            //    new LineTrip
-            //    {
-            //        Id = TripId,
-            //        LineNumber = ,
-            //        Departure = ,
-            //        Arrival = ,
-            //        Destination =
-            //    },
-            //    new LineTrip
-            //    {
-            //        Id = ++TripId,
-            //        LineNumber = ,
-            //        Departure = ,
-            //        Arrival = ,
-            //        Destination =
-            //    }
-            //};
-
             ListStations = new List<BusStation>
 			{
 				new BusStation
@@ -714,6 +693,50 @@ namespace DS
 						new GeoCoordinate(31.905052, 34.818909).GetDistanceTo(new GeoCoordinate(31.914816, 35.023028))*0.0012*0.5,
 				}
 			};
-		} 
-	}
+
+            /*ListLineTrips = new List<LineTrip>
+            {
+                new LineTrip
+                {
+                    tripId = 1,
+                    LineNumber = 12,
+                    LineIdTrip = 1,
+                    StationKey = 38831,
+                    Departure = new DateTime(0, 0, 0, 6, 0, 0),
+                    Frequency = new DateTime(0, 0, 0, 0, 10, 0),
+                    Destination = "הנשיא הראשון/מכון ויצמן"
+                },
+                new LineTrip
+                {
+                    tripId = 2,
+                    LineNumber = 30,
+                    LineIdTrip = 2,
+                    StationKey = 38894,
+                    Departure = new DateTime(0, 0, 0, 6, 30, 0),
+                    Frequency = new DateTime(0, 0, 0, 0, 08, 0),
+                    Destination = " רחוב:  עיר: מודיעין מכבים רעות רציף:   קומה:"
+                },
+                new LineTrip
+                {
+                    tripId = 3,
+                    LineNumber = 50,
+                    LineIdTrip = 3,
+                    StationKey = 38903,
+                    Departure = new DateTime(0, 0, 0, 6, 20, 0),
+                    Frequency = new DateTime(0, 0, 0, 0, 15, 0),
+                    Destination = " רחוב:  עיר: מודיעין מכבים רעות רציף:   קומה:"
+                },
+                new LineTrip
+                {
+                    tripId = 4,
+                    LineNumber = 113,
+                    LineIdTrip = 4,
+                    StationKey = 38831,
+                    Departure = new DateTime(0, 0, 0, 6, 12, 0),
+                    Frequency = new DateTime(0, 0, 0, 0, 05, 0),
+                    Destination = "רחוב:דרך הזית  עיר: שילת רציף:   קומה"
+                },
+            };*/
+        }
+    }
 }

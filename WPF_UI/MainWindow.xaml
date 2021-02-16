@@ -11,8 +11,8 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" Margin="20" FlowDirection="RightToLeft">
-            <TabItem Header="תחנות אוטובוס" FlowDirection="LeftToRight">
+        <TabControl x:Name="tabs" Grid.Row="1" Margin="20" FlowDirection="RightToLeft">
+            <TabItem x:Name="stops" Header="תחנות אוטובוס" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.509">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -33,7 +33,7 @@
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <Button x:Name="ViewArrivals" Content="לוח זמנים" HorizontalContentAlignment="Center" 
-                                                    Grid.Column="0" Margin="2"/>
+                                                    Grid.Column="0" Margin="2" Click="ViewArrivals_Click"/>
                                             <Button x:Name="Delete" Content="מחיקה" HorizontalContentAlignment="Center" 
                                                     Grid.Column="1" Margin="2" Click="Delete_Click"/>
                                             <Button x:Name="Update" Content="עדכון" HorizontalContentAlignment="Center" 
@@ -57,7 +57,7 @@
                     <Button x:Name="AddStationButton" Content="הוסף תחנה" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 20, 30" Click="AddStationButton_Click" Width="63" Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="קווי אוטובוס" FlowDirection="LeftToRight">
+            <TabItem x:Name="buses" Header="קווי אוטובוס" FlowDirection="LeftToRight">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
@@ -97,11 +97,14 @@
 
                     <Label Content=": רשימת התחנות" HorizontalContentAlignment="Right" HorizontalAlignment="Left" 
                             VerticalAlignment="Center" Width="136" Height="26" Margin="174,25,0,314.6"/>
-                    <ListBox x:Name="StationsListBox" HorizontalAlignment="Left" Height="237" HorizontalContentAlignment="Right"
+                    <ListBox x:Name="StationsListBox" HorizontalAlignment="Left" Height="284" HorizontalContentAlignment="Right"
                                 Margin="27,56,0,0" VerticalAlignment="Top" Width="283" />
                     <Button x:Name="AddLineButton" Content="הוסף קו" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0, 0, 20, 30" Click="AddLineButton_Click" Width="63" Grid.RowSpan="2"/>
                 </Grid>
             </TabItem>
         </TabControl>
+        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Height="40" Margin="276,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" FontSize="24" PreviewKeyDown="tb_PreviewKeyDown"/>
+        <Label Content=":חיפוש לפי מספר תחנה" HorizontalAlignment="Left" Height="40" Margin="498,31,0,0" VerticalAlignment="Top" Width="216" FontSize="20"/>
+        <Button x:Name="searchButton" Content="חפש" HorizontalAlignment="Left" Height="40" Margin="142,31,0,0" VerticalAlignment="Top" Width="106" FontSize="20" Click="searchButton_Click"/>
     </Grid>
 </Window>

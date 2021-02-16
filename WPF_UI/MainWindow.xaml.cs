@@ -25,14 +25,9 @@ namespace WPF_UI
 	public partial class MainWindow : Window
 	{
         static IBL bl = BlFactory.GetBL();
-        //private ObservableCollection<BusStation> AllStations ;
         public MainWindow()
 		{
 			InitializeComponent();
-
-            //IEnumerable<BusStation> stations = bl.GetAllBusStations();
-            //AllStations = new ObservableCollection<BusStation>(stations.Cast<BusStation>());
-            //BusStationsDg.ItemsSource = AllStations;
             BusStationsDg.ItemsSource = bl.GetAllBusStations();
             BusLinesDg.ItemsSource = bl.GetAllBusLines();
         }
@@ -40,12 +35,7 @@ namespace WPF_UI
         private void BusStationsDg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 			BusStation selectedStation = BusStationsDg.SelectedItem as BusStation;
-            //List<string> LinesInStation = new List<string>();
-            //foreach(int item in selectedStation.LinesThatPass)
-            //{
-            //    BusLine line = bl.GetBusLine(item);
-            //    LinesInStation.Add("קו " + line.BusLineNumber + "לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
-            //}
+
             IEnumerable<string> LinesInStation = from lineId in selectedStation.LinesThatPass
                                                  let line = bl.GetBusLine(lineId)
                                                  select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
@@ -74,6 +64,13 @@ namespace WPF_UI
             updateStationWindow.Show();
             Close();
         }
+        
+        private void ViewArrivals_Click(object sender, RoutedEventArgs e)
+        {
+            ArrivalsWindow arrivalsWindow = new ArrivalsWindow { DataContext = BusStationsDg.SelectedItem };
+            arrivalsWindow.Show();
+            Close();
+        }
 
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
@@ -81,10 +78,10 @@ namespace WPF_UI
             newWindow.Show();
             Close();
         }
+        
         private void AddLineButton_Click(object sender, RoutedEventArgs e)
         {
             AddLineWindow newWindow = new AddLineWindow();
-            //AddBusLine newWindow = new AddBusLine();
             newWindow.Show();
             Close();
         }
@@ -144,9 +141,31 @@ namespace WPF_UI
         private void UpdateLine_Click(object sender, RoutedEventArgs e)
         {
             UpdateLineWindow updateLineWindow = new UpdateLineWindow { DataContext = BusLinesDg.SelectedItem };
-            //UpdateBusLineWindow updateLineWindow = new UpdateBusLineWindow { DataContext = BusLinesDg.SelectedItem };
             updateLineWindow.Show();
             Close();
+        }
+
+        private void tb_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            int key = (int)e.Key;
+            e.Handled = !(key > 33 && key < 44 || key > 73 && key < 84 || key == 2);
+        }
+
+        private void searchButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabs.SelectedItem == buses)
+                SearchBusList();
+
+            else if (tabs.SelectedItem == stops)
+                SearchStopList();
+        }
+        private void SearchBusList()
+        {
+
+        }
+        private void SearchStopList()
+        {
+
         }
     }
 }

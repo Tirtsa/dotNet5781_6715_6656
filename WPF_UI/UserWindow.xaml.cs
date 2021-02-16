@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
+using BLApi;
 
 namespace WPF_UI
 {
@@ -19,6 +21,7 @@ namespace WPF_UI
     /// </summary>
     public partial class UserWindow : Window
     {
+        static IBL bl = BlFactory.GetBL();
         public UserWindow()
         {
             InitializeComponent();
