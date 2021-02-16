@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBusStations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusStation>
+    <BusStationKey> 38831</BusStationKey>
+    <Address> רחוב:בן יהודה 76 עיר: כפר סבא רציף: קומה</Address>
+    <StationName> בי''ס בר לב / בן יהודה</StationName>
+    <Latitude> 32,183921</Latitude>
+    <Longitude> 34,917806</Longitude>
+  </BusStation>
+  <BusStation>
     <BusStationKey> 38833</BusStationKey>
     <Address>  רחוב:הנחשול 30 עיר: ראשון לציון רציף:   קומה:  </Address>
     <StationName> הנחשול/הדייגים</StationName>

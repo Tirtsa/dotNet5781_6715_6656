@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		bin\xml\BusStationXml.xml = bin\xml\BusStationXml.xml
 		bin\config.xml = bin\config.xml
 		bin\xml\FollowingStations.xml = bin\xml\FollowingStations.xml
+		IdXml.xml = IdXml.xml
 		bin\xml\LineStationXml.xml = bin\xml\LineStationXml.xml
 		LineTripXml.xml = LineTripXml.xml
 	EndProjectSection

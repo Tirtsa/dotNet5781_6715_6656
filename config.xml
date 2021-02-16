@@ -1,9 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <config>
-  <dal>data</dal>
+  <dal>xml</dal>
   <dal-packages>
-    <data namespace="DL" class="DalObject">DalObject</data>
-    <xml namespace="DL" class="DLXML">DLXml</xml>
-    <oracle namespace="DL_O" class="DLDbOracle">DLOracle</oracle>
+    <data>DalObject</data>
+    <xml>DalXML</xml>
   </dal-packages>
 </config>
