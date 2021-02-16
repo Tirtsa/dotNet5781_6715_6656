@@ -17,7 +17,7 @@
                 <DataGridTextColumn x:Name="TimingColumn" Width="*" Header="זמן הגעה משוער" 
                                                 Binding="{Binding Timing}">
                     <DataGridTextColumn.CellStyle>
-                        <Style TargetType="Bold">
+                        <Style TargetType="DataGridCell">
                             <Style.Triggers>
                                 <Trigger Property="TextBlock.Text" Value="00:01:##">
                                     <Setter Property="Background" Value="Yellow"/>

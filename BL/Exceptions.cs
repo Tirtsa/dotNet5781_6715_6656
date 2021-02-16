@@ -81,4 +81,19 @@ namespace BO
 
         public override string ToString() => base.ToString() + $", There is no station {Id}";
     }
+
+    public class InexistantUserException : Exception
+    {
+        public string Id;
+        public string Password;
+        public InexistantUserException(string message, Exception innerException) :
+            base(message, innerException)
+        {
+            Id = ((DO.InexistantUserException)innerException).Id;
+            Password = ((DO.InexistantUserException)innerException).Password;
+        }
+
+        public override string ToString() => base.ToString() + $", לא קיים משתמש עם הסיסמא והשם משתמש שהוזנו";
+
+    }
 }

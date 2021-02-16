@@ -12,6 +12,7 @@ namespace DO
         public string UserName { get; set; }
         public string Password { get; set; }
         public UserStatus UserStatus { get; set; }
+        public bool Connected { get; set; }
 
         public override string ToString()
         {

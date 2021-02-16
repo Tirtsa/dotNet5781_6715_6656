@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUsers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <UserId>bar1u</UserId>
+    <UserName>ברוך</UserName>
+    <Password>21e54d</Password>
+    <UserStatus>Manager</UserStatus>
+    <Connected>False</Connected>
+  </User>
+  <User>
+    <UserId>isr1u</UserId>
+    <UserName>ישראל</UserName>
+    <Password>52s41x</Password>
+    <UserStatus>Traveller</UserStatus>
+    <Connected>False</Connected>
+  </User>
+</ArrayOfUsers>

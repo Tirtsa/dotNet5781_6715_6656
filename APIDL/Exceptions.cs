@@ -104,8 +104,29 @@ namespace DO
     }
     #endregion
 
-    #region XML
-    public class XMLFileLoadCreateException : Exception
+    #region User
+    public class InexistantUserException : Exception
+    {
+        public string Id;
+        public string Password;
+
+        public InexistantUserException(string id, string pwd) : base() { Id = id; Password = pwd; }
+        public InexistantUserException(string id, string pwd, string message) :
+            base(message)
+        { Id = id; Password = pwd; }
+        public InexistantUserException(string id, string pwd, string message, Exception innerException) :
+            base(message, innerException)
+        { Id = id; Password = pwd; }
+
+        public override string ToString()
+        {
+            return base.ToString() + $", לא קיים משתמש עם הסיסמא והשם משתמש שהוזנו";
+        }
+    }
+        #endregion
+
+        #region XML
+        public class XMLFileLoadCreateException : Exception
     {
         public string xmlFilePath;
         public XMLFileLoadCreateException(string xmlPath) : base() { xmlFilePath = xmlPath; }

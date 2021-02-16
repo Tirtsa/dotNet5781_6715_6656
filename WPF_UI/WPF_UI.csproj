@@ -77,9 +77,6 @@
     <Compile Include="UpdateStationWindow.xaml.cs">
       <DependentUpon>UpdateStationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserWindow.xaml.cs">
-      <DependentUpon>UserWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="AddBusLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -116,10 +113,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -146,6 +139,7 @@
     <None Include="Properties\DataSources\BO.BusStation.datasource" />
     <None Include="Properties\DataSources\BO.LineTiming.datasource" />
     <None Include="Properties\DataSources\BO.LineTrip.datasource" />
+    <None Include="Properties\DataSources\BO.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

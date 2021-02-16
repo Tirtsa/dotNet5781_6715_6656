@@ -29,6 +29,7 @@ namespace DL
         string lineStationsPath = @"LineStationXml.xml";
         string idPath = @"IdXml.xml";
         string lineTripPath = @"LineTripXml.xml";
+        string userPath = @"UserXml.xml";
         #endregion
 
         #region BusStation
@@ -609,5 +610,27 @@ namespace DL
         }
 
         #endregion
+
+        #region User
+        public User GetUser(string id, string password)
+        {
+            XElement userRootElem = XMLTools.LoadListFromXMLElement(userPath);
+            User myUser = (from user in userRootElem.Elements()
+                                   where user.Element("UserId").Value == id
+                                   && user.Element("Password").Value == password
+                                   select new User() {
+                                       UserId = user.Element("UserId").Value,
+                                       UserName = user.Element("UserName").Value,
+                                       UserStatus = (UserStatus)Enum.Parse(typeof(UserStatus), user.Element("UserStatus").Value),
+                                       Password = user.Element("Password").Value,
+                                       Connected = bool.Parse(user.Element("Connected").Value)
+                                   }).FirstOrDefault();
+
+            if (myUser == null)
+                throw new InexistantUserException(id, password);
+            return myUser;
+        }
+        #endregion
+
     }
 }

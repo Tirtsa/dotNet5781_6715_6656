@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
-using DO;
 
 namespace BLApi
 {
@@ -47,12 +46,16 @@ namespace BLApi
         #endregion
 
         #region LineTrip
-        IEnumerable<BO.LineTrip> GetAllLineTrips();
-        IEnumerable<BO.LineTrip> GetAllLineTripsBy(Predicate<BO.LineTrip> predicate);
-        BO.LineTrip GetLineTrip(int lineId, TimeSpan startTime);
+        IEnumerable<LineTrip> GetAllLineTrips();
+        IEnumerable<LineTrip> GetAllLineTripsBy(Predicate<BO.LineTrip> predicate);
+        LineTrip GetLineTrip(int lineId, TimeSpan startTime);
         void AddLineTrip(BO.LineTrip lineTrip);
         void UpdateLineTrip(BO.LineTrip lineTrip);
         void DeleteLineTrip(BO.LineTrip lineTrip);
+        #endregion
+
+        #region User
+        User GetUser(string id, string pwd);
         #endregion
 
         IEnumerable<LineTiming> ListArrivalOfLine(int lineId, TimeSpan hour, int stationKey);

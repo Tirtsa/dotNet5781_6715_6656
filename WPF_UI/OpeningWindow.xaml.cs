@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
+using BO;
 
 namespace WPF_UI
 {
@@ -19,27 +21,53 @@ namespace WPF_UI
     /// </summary>
     public partial class OpeningWindow : Window
     {
+        static IBL bl = BlFactory.GetBL();
+        User user;
         public OpeningWindow()
         {
             InitializeComponent();
+            user = new User();
+            managerDetailsGrid.DataContext = user;
+            travellerDetailsGrid.DataContext = user;
         }
 
-        private void rideButton_Click(object sender, RoutedEventArgs e)
+        private void managerConnectionButton_Click(object sender, RoutedEventArgs e)
         {
-            UserWindow userWindow = new UserWindow();
-            userWindow.Show();
+            User myUser = new User();
+            try
+            {
+                //User user = managerDetailsGrid.DataContext as User;
+                myUser = bl.GetUser(user.UserId, user.Password);
+            }
+            catch(InexistantUserException ex)
+            {
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (myUser.UserStatus != UserStatus.Manager)
+                MessageBox.Show("שם המשתמש והסיסמא שהוזנו אינם תואמים נתונים של מנהל", "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            MainWindow newWindow = new MainWindow();
+            newWindow.Show();
             Close();
         }
 
-        private void manageButton_Click(object sender, RoutedEventArgs e)
+        private void travellerConnectionButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            Close();
-        }
+            User myUser = new User();
+            try
+            {
+                User user = travellerDetailsGrid.DataContext as User;
+                myUser = bl.GetUser(user.UserId, user.Password);
+            }
+            catch (InexistantUserException ex)
+            {
+                MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (myUser.UserStatus != UserStatus.Traveller)
+                MessageBox.Show("שם המשתמש והסיסמא שהוזנו אינם תואמים נתונים של נוסע", "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
 
-        private void exitButton_Click(object sender, RoutedEventArgs e)
-        {
+            MainWindow newWindow = new MainWindow();
+            newWindow.Show();
             Close();
         }
     }

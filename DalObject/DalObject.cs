@@ -317,6 +317,14 @@ namespace DL
             DataSource.ListLineTrips.Remove(tripToDelete);
         }
 
+        public void DeleteLineTrip(Predicate<LineTrip> predicate)
+        {
+            var tripToDelete = from LineTrip item in GetAllLineTripsBy(predicate)
+                               select item;
+            foreach (LineTrip item in tripToDelete)
+                DataSource.ListLineTrips.Remove(item);
+        }
+
         public void UpdateLineTrip (LineTrip trip)
         {
             DeleteLineTrip(trip);
@@ -325,5 +333,9 @@ namespace DL
 
         #endregion
     
+        public User GetUser(string id, string pwd)
+        {
+            return null;
+        }
     }
 }

@@ -67,5 +67,8 @@ namespace APIDL
         void UpdateLineTrip(LineTrip trip);
         #endregion
 
+        #region User
+        User GetUser(string id, string pwd);
+        #endregion
     }
 }

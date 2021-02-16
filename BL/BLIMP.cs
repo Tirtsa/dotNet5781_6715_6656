@@ -408,6 +408,32 @@ namespace BL
         }
         #endregion
 
+        #region User
+        BO.User UserDoBoAdapter(DO.User userDo)
+        {
+            BO.User userBo = new BO.User();
+            userDo.CopyPropertiesTo(userBo);
+            return userBo;
+        }
+        DO.User UserBoDoAdapter(BO.User userBo)
+        {
+            DO.User userDo = new DO.User();
+            userBo.CopyPropertiesTo(userDo);
+            return userDo;
+        }
+        public BO.User GetUser(string id, string pwd)
+        {
+            try
+            {
+                return UserDoBoAdapter(dl.GetUser(id, pwd));
+            }
+            catch(DO.InexistantUserException ex)
+            {
+                throw new BO.InexistantUserException("אחד מהנתונים שהוזנו שגוי", ex);
+            }
+        }
+        #endregion
+
         public IEnumerable<LineTiming> ListArrivalOfLine (int lineId, TimeSpan hour, int stationKey)
         {
             //Calcul of TravelTime between first station of line and our station
