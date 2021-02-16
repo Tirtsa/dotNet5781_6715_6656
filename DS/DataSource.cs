@@ -456,7 +456,7 @@ namespace DS
                     Area = Areas.Center,
                     FirstStationKey = 38831,
                     LastStationKey = 39007,
-                    TotalTime = 20
+                    TotalTime = new TimeSpan(0,20,0)
                 },
                 new BusLine
                 {
@@ -465,7 +465,7 @@ namespace DS
                     Area = Areas.Jerusalem,
                     FirstStationKey = 38894,
                     LastStationKey = 39024,
-                    TotalTime = 15
+                    TotalTime = new TimeSpan(0,15,0)
                 },
                 new BusLine
                 {
@@ -474,7 +474,7 @@ namespace DS
                     Area = Areas.North,
                     FirstStationKey = 38903,
                     LastStationKey = 39024,
-                    TotalTime = 30
+                    TotalTime = new TimeSpan(0,30,0)
                 },
                 new BusLine
                 {
@@ -483,7 +483,7 @@ namespace DS
                     Area = Areas.Center,
                     FirstStationKey = 38831,
                     LastStationKey = 39019,
-                    TotalTime = 40
+                    TotalTime = new TimeSpan(0,40,0)
                 }
             };
 

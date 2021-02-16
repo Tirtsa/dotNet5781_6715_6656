@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{28A4F24C-EBB
 		bin\xml\FollowingStations.xml = bin\xml\FollowingStations.xml
 		bin\xml\IdXml.xml = bin\xml\IdXml.xml
 		bin\xml\LineStationXml.xml = bin\xml\LineStationXml.xml
-		LineTripXml.xml = LineTripXml.xml
+		bin\xml\LineTripXml.xml = bin\xml\LineTripXml.xml
 	EndProjectSection
 EndProject
 Global

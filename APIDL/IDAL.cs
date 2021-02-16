@@ -63,7 +63,7 @@ namespace APIDL
         IEnumerable<LineTrip> GetAllLineTripsBy(Predicate<LineTrip> predicate);
         void AddLineTrip(LineTrip trip);
         void DeleteLineTrip(LineTrip trip);
-
+        void DeleteLineTrip(Predicate<LineTrip> predicate);
         void UpdateLineTrip(LineTrip trip);
         #endregion
 

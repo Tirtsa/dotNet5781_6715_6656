@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
+using BO;
 
 namespace WPF_UI
 {
@@ -21,24 +22,23 @@ namespace WPF_UI
     public partial class AddStationWindow : Window
     {
         static IBL bl = BlFactory.GetBL();
+
+        BusStation station;
         public AddStationWindow()
         {
             InitializeComponent();
+            station = new BusStation();
+            DataContext = station;
         }
 
         private void AddStationButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int stationCode;
-                int.TryParse(busStationKeyTextBox.Text, out stationCode);
-                bl.AddStation(new BO.BusStation
-                {
-                    BusStationKey = stationCode,
-                    Address = addressTextBox.Text,
-                    StationName = stationNameTextBox.Text
-                });
+                bl.AddStation(station);
+
                 MessageBox.Show("התחנה נוספה בהצלחה");
+                //App.Current.MainWindow.DataContext = bl.GetAllBusStations();
                 Close();
             }
             catch (BO.DuplicateStationException ex)
@@ -52,7 +52,6 @@ namespace WPF_UI
         {
             Close();
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

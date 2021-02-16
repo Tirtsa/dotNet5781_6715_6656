@@ -47,12 +47,12 @@ namespace BLApi
         #endregion
 
         #region LineTrip
-        //BO.LineTrip GetLineTrip(int id);
-        //IEnumerable<BO.LineTrip> GetTripsForABus(BO.BusLine line);
-        //IEnumerable<BO.LineTrip> GetAllLineTrips();
-        //void AddLineTrip(BO.LineTrip trip);
-        //void DeleteLineTrip(BO.LineTrip trip);
-        //TimeSpan CalculateDistance(BO.LineTrip trip);
+        IEnumerable<BO.LineTrip> GetAllLineTrips();
+        IEnumerable<BO.LineTrip> GetAllLineTripsBy(Predicate<BO.LineTrip> predicate);
+        BO.LineTrip GetLineTrip(int lineId, TimeSpan startTime);
+        void AddLineTrip(BO.LineTrip lineTrip);
+        void UpdateLineTrip(BO.LineTrip lineTrip);
+        void DeleteLineTrip(BO.LineTrip lineTrip);
         #endregion
 
         IEnumerable<LineTiming> ListArrivalOfLine(int lineId, TimeSpan hour, int stationKey);

@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBusStations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusStation>
-    <BusStationKey> 38833</BusStationKey>
-    <Address>  רחוב:הנחשול 30 עיר: ראשון לציון רציף:   קומה:  </Address>
-    <StationName> הנחשול/הדייגים</StationName>
-    <Latitude> 31,984553</Latitude>
-    <Longitude> 34,782828</Longitude>
-  </BusStation>
-  <BusStation>
     <BusStationKey> 38834</BusStationKey>
     <Address>  רחוב:משה פריד 9 עיר: רחובות רציף:   קומה:  </Address>
     <StationName> פריד/ששת הימים</StationName>
@@ -20,13 +13,6 @@
     <StationName> ת. מרכזית לוד/הורדה</StationName>
     <Latitude> 31,956392</Latitude>
     <Longitude> 34,898098</Longitude>
-  </BusStation>
-  <BusStation>
-    <BusStationKey> 38837</BusStationKey>
-    <Address>  רחוב:חנה אברך 9 עיר: רחובות רציף:   קומה:  </Address>
-    <StationName> חנה אברך/וולקני</StationName>
-    <Latitude> 31,892166</Latitude>
-    <Longitude> 34,796071</Longitude>
   </BusStation>
   <BusStation>
     <BusStationKey> 38838</BusStationKey>
@@ -897,17 +883,24 @@
     <Longitude>34,7560413758066</Longitude>
   </BusStation>
   <BusStation>
-    <BusStationKey>38832</BusStationKey>
-    <Address>  רחוב:הרצליה  עיר: קרית עקרון רציף:   קומה:  </Address>
-    <StationName> הרצל/כפר בילו</StationName>
-    <Latitude>31,3968599477768</Latitude>
-    <Longitude>34,7834134827291</Longitude>
-  </BusStation>
-  <BusStation>
     <BusStationKey>40052</BusStationKey>
     <Address>סתם כתובת</Address>
     <StationName>שם התחנה</StationName>
     <Latitude>31,9644871251492</Latitude>
     <Longitude>34,0076639344951</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey>38832</BusStationKey>
+    <Address>  רחוב:הרצליה  עיר: קרית עקרון רציף:   קומה:  </Address>
+    <StationName> הרצל/כפר בילו</StationName>
+    <Latitude>31,2166053644459</Latitude>
+    <Longitude>34,2166053644459</Longitude>
+  </BusStation>
+  <BusStation>
+    <BusStationKey>38831</BusStationKey>
+    <Address>רחוב:בן יהודה 76 עיר: כפר סבא</Address>
+    <StationName>בי''ס בר לב/בן יהודה</StationName>
+    <Latitude>31,2064934746393</Latitude>
+    <Longitude>34,2064934746393</Longitude>
   </BusStation>
 </ArrayOfBusStations>

@@ -51,6 +51,8 @@ namespace DO
     {
         public int lineNumber;
         public Areas area;
+        public int Id;
+        public InexistantLineException(int id) : base() => Id = id;
         public InexistantLineException(int lineNum, Areas lineArea) : base() { lineNumber = lineNum; area = lineArea; }
         public InexistantLineException(int lineNum, Areas lineArea, string message) :
             base(message)
@@ -59,7 +61,13 @@ namespace DO
             base(message, innerException)
         { lineNumber = lineNum; area = lineArea; }
 
-        public override string ToString() => base.ToString() + $", There is no line {lineNumber} in {area}";
+        public override string ToString() 
+        { 
+            if (Id == 0)
+                return base.ToString() + $", There is no line {lineNumber} in {area}";
+            else
+                return base.ToString() + $", There is no line with id {Id}";
+        }
 
     }
     #endregion

@@ -4,6 +4,32 @@
              xmlns:local="clr-namespace:WPF_UI"
              StartupUri="OpeningWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <Style x:Key="myButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="LimeGreen"/>
+                <Setter Property="TextBlock.Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="2" BorderThickness="2"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition  Property="Button.IsMouseOver" Value="true"/>
+                            <Condition  Property="Button.IsPressed" Value="true"/>
+                        </MultiTrigger.Conditions>
+                        <MultiTrigger.Setters>
+                            <Setter Property="TextBlock.Foreground" Value="LimeGreen"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="BorderBrush" Value="LimeGreen"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                        </MultiTrigger.Setters>
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

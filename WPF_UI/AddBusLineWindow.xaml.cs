@@ -23,15 +23,21 @@ namespace WPF_UI
     {
         static IBL bl;
         BusLine myLine;
+        LineTrip newLineTrip;
+        List<LineTrip> listLineTrips;
         public AddBusLineWindow()
         {
             bl = BlFactory.GetBL();
             InitializeComponent();
 
             myLine = new BusLine();
-            DataContext = myLine;
+            lineDetailsGrid.DataContext = myLine;
+            newLineTrip = new LineTrip();
+            addLineTripGrid.DataContext = newLineTrip;
+            listLineTrips = new List<LineTrip>();
 
             areaComboBox.ItemsSource = Enum.GetValues(typeof(Areas));
+            
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -72,15 +78,29 @@ namespace WPF_UI
             {
                 myLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                            select int.Parse(item.Substring(6,5));
+                myLine.FirstStationKey = myLine.AllStationsOfLine.First();
+                myLine.LastStationKey = myLine.AllStationsOfLine.Last();
+                myLine.AllLineTripsOfLine = listLineTrips;
                 bl.AddBusLine(myLine);
+                
                 myLine = new BusLine();
-                DataContext = myLine;
+                lineDetailsGrid.DataContext = myLine;
+                listLineTrips.Clear();
+                lineTripDataGrid.ItemsSource = listLineTrips;
                 LineStationsListBox.Items.Clear();
             }
             catch (DuplicateLineException ex)
             {
                 MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void addLineTripButton_Click(object sender, RoutedEventArgs e)
+        {
+            listLineTrips.Add(addLineTripGrid.DataContext as LineTrip);
+            lineTripDataGrid.ItemsSource = from l in listLineTrips select l;
+            newLineTrip = new LineTrip();
+            addLineTripGrid.DataContext = newLineTrip;
         }
     }
 }

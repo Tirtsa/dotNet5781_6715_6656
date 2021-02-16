@@ -103,11 +103,6 @@ namespace BL
 		{
             try
             {
-                //var listTemp = dl.GetAllStations().ToList();
-                //List<BO.BusStation> listStations = new List<BO.BusStation>();
-                //foreach (var item in listTemp)
-                //    listStations.Add(BusStationDoBoAdapter(item));
-                //return listStations;
                 return from bs in dl.GetAllStations()
                        let stat1 = bs
                        select BusStationDoBoAdapter(stat1);
@@ -166,9 +161,15 @@ namespace BL
 				DO.BusStation station2 = BusStationBoDoAdapter(GetBusStation(lineBo.AllStationsOfLine.ElementAt(i+1)));
 
 				lineBo.TotalDistance += dl.GetFollowingStations(station1, station2).Distance;
+                lineBo.TotalTime += dl.GetFollowingStations(station1, station2).AverageJourneyTime;
             }
-            lineBo.TotalTime = lineBo.TotalDistance * 0.0012 * 0.5;
-			return lineBo;
+            lineBo.TotalDistance = Math.Round(lineBo.TotalDistance /= 1000);
+
+            lineBo.AllLineTripsOfLine = (from lt in GetAllLineTripsBy(t => t.LineId == busLine.Id)
+                                         orderby lt.StartTimeRange
+                                         select lt).ToList();
+            
+            return lineBo;
         }
 
 		DO.BusLine BusLineBoDoAdapter(BO.BusLine lineBo)
@@ -200,9 +201,10 @@ namespace BL
 				DO.BusStation station2 = dl.GetStation(newLine.AllStationsOfLine.ElementAt(i + 1));
 				if (dl.GetFollowingStations(station1, station2) == null)
 					dl.AddFollowingStations(station1, station2);
+                newLine.TotalTime += dl.GetFollowingStations(station1, station2).AverageJourneyTime;
 			}
 
-			dl.AddLine(BusLineBoDoAdapter(newLine));//add lint to can then add lisStations with LineId (attributed in dl.AddLine)
+            dl.AddLine(BusLineBoDoAdapter(newLine));//add line to can then add lisStations with LineId (attributed in dl.AddLine)
 
 			//3. Create corresponding line stations
 			int lineId = dl.GetLine(newLine.BusLineNumber, AreasAdapter(newLine.Area)).Id;
@@ -218,7 +220,14 @@ namespace BL
                     });
                 }
 			}
-		}
+
+            //4. Create corresponding trip line
+            foreach (BO.LineTrip item in newLine.AllLineTripsOfLine)
+            {
+                item.LineId = lineId;
+                AddLineTrip(item);
+            }
+        }
 
 		public DO.Areas GetArea(int id)
 		{
@@ -231,6 +240,7 @@ namespace BL
             {
 				dl.DeleteLine(BusLineBoDoAdapter(lineBo));
 				dl.DeleteLineStation(s => s.LineId == lineBo.Id);
+                dl.DeleteLineTrip(t => t.LineId == lineBo.Id);
             }
             catch(DO.InexistantLineException ex)
             {
@@ -344,13 +354,67 @@ namespace BL
         }
         #endregion
 
+        #region LineTrip
+        BO.LineTrip LineTripDoBoAdapter(DO.LineTrip lineTripDo)
+        {
+            BO.LineTrip lineTripBo = new BO.LineTrip();
+            lineTripDo.CopyPropertiesTo(lineTripBo);
+            return lineTripBo;
+        }
+        DO.LineTrip LineTripBoDoAdapter(BO.LineTrip lineTripBo)
+        {
+            DO.LineTrip lineTripDo = new DO.LineTrip();
+            lineTripBo.CopyPropertiesTo(lineTripDo);
+            return lineTripDo;
+        }
+        public IEnumerable<BO.LineTrip> GetAllLineTrips()
+        {
+            return from item in dl.GetAllLineTrips()
+                   select LineTripDoBoAdapter(item);
+        }
+        public IEnumerable<BO.LineTrip> GetAllLineTripsBy(Predicate<BO.LineTrip> predicate)
+        {
+            return from item in GetAllLineTrips()
+                   where predicate(item)
+                   select item;
+        }
+        public BO.LineTrip GetLineTrip(int lineId, TimeSpan startTime)
+        {
+            DO.LineTrip ls = dl.GetLineTrip(lineId, startTime);
+            if (ls != null)
+                return LineTripDoBoAdapter(dl.GetLineTrip(lineId, startTime));
+            else
+                return null;
+        }
+        public void AddLineTrip(BO.LineTrip lineTrip)
+        {
+            dl.AddLineTrip(LineTripBoDoAdapter(lineTrip));
+        }
+        public void UpdateLineTrip(BO.LineTrip lineTrip)
+        {
+            dl.UpdateLineTrip(LineTripBoDoAdapter(lineTrip));
+        }
+        public void DeleteLineTrip(BO.LineTrip lineTrip)
+        {
+            dl.DeleteLineTrip(LineTripBoDoAdapter(lineTrip));
+        }
+        public void DeleteLineTrip(Predicate<BO.LineTrip> predicate)
+        {
+            //dl.DeleteLineTrip(predicate);
+        }
+        public void DeleteLineTrip(int id)
+        {
+
+        }
+        #endregion
+
         public IEnumerable<LineTiming> ListArrivalOfLine (int lineId, TimeSpan hour, int stationKey)
         {
             //Calcul of TravelTime between first station of line and our station
             BO.BusLine line = GetBusLine(lineId);
             TimeSpan durationOfTravel = DurationOfTravel(line, stationKey);
 
-            LineTrip myLineTrip = dl.GetLineTrip(lineId, hour);
+            DO.LineTrip myLineTrip = dl.GetLineTrip(lineId, hour);
             
 
             List<LineTiming> listTiming = new List<LineTiming>(); //initialize list of all timing for the specified line

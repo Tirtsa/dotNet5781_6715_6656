@@ -23,12 +23,18 @@ namespace WPF_UI
     {
         static IBL bl;
         BusLine myLine;
+        LineTrip newLineTrip;
+        List<LineTrip> listLineTrips;
         public UpdateBusLineWindow()
         {
             bl = BlFactory.GetBL();
             InitializeComponent();
 
             areaComboBox.ItemsSource = Enum.GetValues(typeof(Areas));
+
+            newLineTrip = new LineTrip();
+            listLineTrips = new List<LineTrip>();
+            addLineTripGrid.DataContext = newLineTrip;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -44,11 +50,13 @@ namespace WPF_UI
                                            let station = bl.GetBusStation(key)
                                            select (" תחנה " + station.BusStationKey + " : " + station.StationName)).ToList();
             foreach(string item in myStationsList)
-            {
                 LineStationsListBox.Items.Add(item);
-            }
             AllStationsListBox.ItemsSource = from station in bl.GetAllBusStations()
                                              select (" תחנה " + station.BusStationKey + " : " + station.StationName);
+            List<LineTrip> myLineTripList = (from lineTrip in (DataContext as BusLine).AllLineTripsOfLine
+                                            select lineTrip).ToList();
+            foreach (LineTrip item in myLineTripList)
+                lineTripDataGrid.Items.Add(item);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -70,11 +78,10 @@ namespace WPF_UI
         {
             try
             {
-                string test;
-                foreach (string item in LineStationsListBox.Items)
-                    test = item.Substring(6, 5);
                 myLine.AllStationsOfLine = from string item in LineStationsListBox.Items
                                            select int.Parse(item.Substring(6, 5));
+                myLine.AllLineTripsOfLine = from LineTrip item in lineTripDataGrid.Items
+                                            select item as LineTrip;
                 bl.UpdateBusLine(myLine);
                 App.Current.MainWindow.DataContext = bl.GetAllBusLines();
                 Close();
@@ -83,6 +90,24 @@ namespace WPF_UI
             {
                 MessageBox.Show(ex.Message, "אירעה שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void addLineTripButton_Click(object sender, RoutedEventArgs e)
+        {
+            lineTripDataGrid.Items.Add(addLineTripGrid.DataContext as LineTrip);
+
+            //listLineTrips.Add(addLineTripGrid.DataContext as LineTrip);
+            //lineTripDataGrid.ItemsSource = from l in listLineTrips select l;
+            newLineTrip = new LineTrip();
+            addLineTripGrid.DataContext = newLineTrip;
+        }
+
+        private void deleteLineTrip_Click(object sender, RoutedEventArgs e)
+        {
+            int currentItemIndex = lineTripDataGrid.SelectedIndex;
+            lineTripDataGrid.Items.RemoveAt(currentItemIndex);
+            //listLineTrips.Remove(lineTripDataGrid.SelectedItem as LineTrip);
+            //lineTripDataGrid.ItemsSource = from l in listLineTrips select l;
         }
     }
 }

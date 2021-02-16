@@ -55,19 +55,13 @@ namespace WPF_UI
             Close();
         }
 
-        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    MainWindow mainWindow = new MainWindow();
-        //    mainWindow.Show();
-        //}
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LinesPassCbBox.ItemsSource = from lineId in (DataContext as BusStation).LinesThatPass
                                          let line = bl.GetBusLine(lineId)
                                          select (" קו " + line.BusLineNumber + " : לכיוון " + bl.GetBusStation(line.LastStationKey).StationName);
 
-            if (LinesPassCbBox.ItemsSource != null)
+            if (LinesPassCbBox.Items.Count != 0)
                 LinesPassCbBox.SelectedItem = LinesPassCbBox.Items.GetItemAt(0);
         }
     }

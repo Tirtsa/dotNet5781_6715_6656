@@ -40,7 +40,7 @@ namespace DL
                                 select s).FirstOrDefault();
 
             if (myStation != null)
-                throw new ArgumentException("duplicate bus stations");
+                throw new DuplicateStationException(station.BusStationKey);
 
             //Creation of new XElement
             XElement stationElem = new XElement("BusStation", new XElement("BusStationKey", station.BusStationKey.ToString()),
@@ -62,7 +62,7 @@ namespace DL
                                   select s).FirstOrDefault();
 
             if (myStation == null)
-                throw new ArgumentException("It's not exist Bus Station with this key : " + id);
+                throw new InexistantStationException(id);
 
             myStation.Remove(); 
             XMLTools.SaveListToXMLElement(stationsRootElem, stationsPath);
@@ -123,8 +123,8 @@ namespace DL
                        Longitude = double.Parse(station.Element("Longitude").Value)
                    }).FirstOrDefault();
 
-            if(myStation == null)
-                throw new ArgumentException("Bus Station doesn't exist");
+            if (myStation == null)
+                throw new InexistantStationException(id);
             return myStation;
         }
         public void UpdateStation(BusStation station)
@@ -159,7 +159,7 @@ namespace DL
                                   select l).FirstOrDefault();
 
             if (myLine != null)
-                throw new ArgumentException("Duplicate BusLine");
+                throw new DuplicateLineException(line.BusLineNumber, line.Area);
 
             //Creation of new XElement
             if (line.Id == 0)
@@ -179,7 +179,7 @@ namespace DL
                                           new XElement("Area", line.Area.ToString()),
                                           new XElement("FirstStationKey", line.FirstStationKey.ToString()),
                                           new XElement("LastStationKey", line.LastStationKey.ToString()),
-                                          new XElement("TotalTime", line.TotalTime.ToString()) );
+                                          new XElement("TotalTime", XmlConvert.ToString(line.TotalTime)) );
 
             //Adding this XElement to BusLine xml file
             linesRootElem.Add(lineElem);
@@ -194,7 +194,7 @@ namespace DL
                                select l).FirstOrDefault();
 
             if (lineToDelete == null)
-                throw new ArgumentException("This line doesn't exist");
+                throw new InexistantLineException(line.BusLineNumber, line.Area);
 
             lineToDelete.Remove();
             XMLTools.SaveListToXMLElement(linesRootElem, linesPath);
@@ -209,7 +209,7 @@ namespace DL
                        Area = (Areas)Enum.Parse(typeof(Areas), line.Element("Area").Value),
                        FirstStationKey = Convert.ToInt32(line.Element("FirstStationKey").Value),
                        LastStationKey = Convert.ToInt32(line.Element("LastStationKey").Value),
-                       TotalTime = double.Parse(line.Element("TotalTime").Value)
+                       TotalTime = XmlConvert.ToTimeSpan(line.Element("TotalTime").Value)
                    }
                    orderby l.BusLineNumber
                    select l;
@@ -225,7 +225,7 @@ namespace DL
                        Area = (Areas)Enum.Parse(typeof(Areas), line.Element("Area").Value),
                        FirstStationKey = Convert.ToInt32(line.Element("FirstStationKey").Value),
                        LastStationKey = Convert.ToInt32(line.Element("LastStationKey").Value),
-                       TotalTime = double.Parse(line.Element("TotalTime").Value)
+                       TotalTime = XmlConvert.ToTimeSpan(line.Element("TotalTime").Value)
                    }
                    where predicate(l)
                    orderby l.BusLineNumber
@@ -243,10 +243,10 @@ namespace DL
                         Area = (Areas)Enum.Parse(typeof(Areas), line.Element("Area").Value),
                         FirstStationKey = Convert.ToInt32(line.Element("FirstStationKey").Value),
                         LastStationKey = Convert.ToInt32(line.Element("LastStationKey").Value),
-                        TotalTime = double.Parse(line.Element("TotalTime").Value)
+                        TotalTime = XmlConvert.ToTimeSpan(line.Element("TotalTime").Value)
                     }).FirstOrDefault();
-            if(lineToReturn == null)
-                throw new ArgumentException("There is no line with this number and area" + lineNum + area);
+            if (lineToReturn == null)
+                throw new InexistantLineException(lineNum, area);
             return lineToReturn;
         }
         public BusLine GetLine(int Id)
@@ -260,10 +260,10 @@ namespace DL
                                         Area = (Areas)Enum.Parse(typeof(Areas), line.Element("Area").Value),
                                         FirstStationKey = Convert.ToInt32(line.Element("FirstStationKey").Value),
                                         LastStationKey = Convert.ToInt32(line.Element("LastStationKey").Value),
-                                        TotalTime = double.Parse(line.Element("TotalTime").Value)
+                                        TotalTime = XmlConvert.ToTimeSpan(line.Element("TotalTime").Value)
                                     }).FirstOrDefault();
             if (lineToReturn == null)
-                throw new ArgumentException("There is no line with this id " + Id);
+                throw new InexistantLineException(Id);
             return lineToReturn;
         }
         public void UpdateLine(BusLine line)
@@ -335,7 +335,7 @@ namespace DL
                 throw new ArgumentException("Line Station doesn't exist");
 
             foreach (var item in myLineStation)
-                myLineStation.Remove();
+                item.Remove();
             XMLTools.SaveListToXMLElement(lineStationsRootElem, lineStationsPath);
         }
 
@@ -405,14 +405,15 @@ namespace DL
             //calculate distance & time in new field to facility using of them in create new XElement
             double distance = new GeoCoordinate(station1.Latitude, station1.Longitude).GetDistanceTo
                         (new GeoCoordinate(station2.Latitude, station2.Longitude));
-            double time = new GeoCoordinate(station1.Latitude, station1.Longitude).GetDistanceTo
-                    (new GeoCoordinate(station2.Latitude, station2.Longitude)) * 0.0012 * 0.5;
+            string test = XmlConvert.ToString(TimeSpan.FromTicks(new TimeSpan(0, 0, 0, 0, 72).Ticks * (long)49187.9343891956));
+            TimeSpan totalTime = TimeSpan.FromTicks(new TimeSpan(0, 0, 0, 0, 72).Ticks *(long)distance);
+            string test2 = totalTime.ToString();
             //Creation of new XElement
             XElement followStationElem =  new XElement("FollowingStations", 
                                           new XElement("KeyStation1", station1.BusStationKey.ToString()),
                                           new XElement("KeyStation2", station2.BusStationKey.ToString()),
                                           new XElement("Distance", distance.ToString()),
-                                          new XElement("AverageJourneyTime", time.ToString()));
+                                          new XElement("AverageJourneyTime", XmlConvert.ToString(totalTime)));
 
             //Adding this XElement to followingStations' xml file
             followingStationsRootElem.Add(followStationElem);
@@ -497,7 +498,6 @@ namespace DL
         #region LineTrip
         public LineTrip GetLineTrip(int lineId, TimeSpan now)
         {
-
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
             LineTrip myLineTrip = (from lineTrip in lineTripRootElem.Elements()
                                    where Convert.ToInt32(lineTrip.Element("LineId").Value) == lineId
@@ -505,7 +505,7 @@ namespace DL
                                    && XmlConvert.ToTimeSpan(lineTrip.Element("EndTimeRange").Value) >= now
                                    select new LineTrip() {
                                        LineId = Convert.ToInt32(lineTrip.Element("LineId").Value),
-                                       StartTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("StartTimeRAnge").Value),
+                                       StartTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("StartTimeRange").Value),
                                        EndTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("EndTimeRange").Value),
                                        Frequency = XmlConvert.ToTimeSpan(lineTrip.Element("Frequency").Value)
                                    }).FirstOrDefault();
@@ -520,7 +520,7 @@ namespace DL
             return from lineTrip in lineTripRootElem.Elements()
                    let lt = new LineTrip() {
                        LineId = Convert.ToInt32(lineTrip.Element("LineId").Value),
-                       StartTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("StartTimeRAnge").Value),
+                       StartTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("StartTimeRange").Value),
                        EndTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("EndTimeRange").Value),
                        Frequency = XmlConvert.ToTimeSpan(lineTrip.Element("Frequency").Value)
                    }
@@ -534,7 +534,7 @@ namespace DL
             return from lineTrip in lineTripRootElem.Elements()
                    let lt = new LineTrip() {
                        LineId = Convert.ToInt32(lineTrip.Element("LineId").Value),
-                       StartTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("StartTimeRAnge").Value),
+                       StartTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("StartTimeRange").Value),
                        EndTimeRange = XmlConvert.ToTimeSpan(lineTrip.Element("EndTimeRange").Value),
                        Frequency = XmlConvert.ToTimeSpan(lineTrip.Element("Frequency").Value)
                    }
@@ -578,6 +578,27 @@ namespace DL
                 throw new InexistantLineTripException(trip.LineId, trip.StartTimeRange);
 
             myLineTrip.Remove();
+            XMLTools.SaveListToXMLElement(lineTripRootElem, lineTripPath);
+        }
+
+        public void DeleteLineTrip(Predicate<LineTrip> predicate)
+        {
+
+            XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
+            IEnumerable<XElement> myLineTrip = (from t in lineTripRootElem.Elements()
+                                   let lt = new LineTrip() {
+                                       LineId = Convert.ToInt32(t.Element("LineId").Value),
+                                       StartTimeRange = XmlConvert.ToTimeSpan(t.Element("StartTimeRange").Value),
+                                       EndTimeRange = XmlConvert.ToTimeSpan(t.Element("EndTimeRange").Value),
+                                       Frequency = XmlConvert.ToTimeSpan(t.Element("Frequency").Value)
+                                   }
+                                   where predicate(lt)
+                                   select t).ToList();
+            if (myLineTrip == null)
+                throw new InexistantLineTripException(0, new TimeSpan());
+
+            foreach (var item in myLineTrip)
+                item.Remove();
             XMLTools.SaveListToXMLElement(lineTripRootElem, lineTripPath);
         }
 

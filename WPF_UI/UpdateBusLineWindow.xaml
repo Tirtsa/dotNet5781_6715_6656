@@ -6,42 +6,80 @@
         xmlns:local="clr-namespace:WPF_UI"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="WPF_UI.UpdateBusLineWindow"
         mc:Ignorable="d"
-        Title="UpdateBusLineWindow" Height="550" Width="800" Loaded="Window_Loaded">
+        Title="UpdateBusLineWindow" Height="605.2" Width="828.8" Loaded="Window_Loaded">
     <Grid>
-
-        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="306,24,0,0" HorizontalAlignment="Left">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מספר קו"/>
-            <Label x:Name="busLineNumberLabel" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="0" Content="{Binding BusLineNumber}"/>
-            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": איזור"/>
-            <ComboBox x:Name="areaComboBox" Width="120" VerticalAlignment="Center" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
-            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה הראשונה"/>
-            <TextBox x:Name="firstStationKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding FirstStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
-            <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה האחרונה"/>
-            <TextBox x:Name="lastStationKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LastStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
-            <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מרחק כולל"/>
-            <TextBox x:Name="totalDistanceTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TotalDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
-            <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": זמן נסיעה כולל"/>
-            <TextBox x:Name="totalTimeTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TotalTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            <Grid x:Name="detailsLineGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מספר קו"/>
+                <Label x:Name="busLineNumberLabel" VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Right" Grid.Column="0" Content="{Binding BusLineNumber}"/>
+                <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": איזור"/>
+                <ComboBox x:Name="areaComboBox" Width="120" VerticalAlignment="Center" Text="{Binding Area, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+                <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה הראשונה"/>
+                <TextBox x:Name="firstStationKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding FirstStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+                <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": קוד התחנה האחרונה"/>
+                <TextBox x:Name="lastStationKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LastStationKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+                <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": מרחק כולל"/>
+                <TextBox x:Name="totalDistanceTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TotalDistance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+                <Label VerticalAlignment="Center" Grid.Row="5" Margin="3" HorizontalAlignment="Right" Grid.Column="1" Content=": זמן נסיעה כולל"/>
+                <TextBox x:Name="totalTimeTextBox" Width="120" VerticalAlignment="Center" Text="{Binding TotalTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3" Height="23" HorizontalAlignment="Right" Grid.Column="0"/>
+            </Grid>
+            <Grid x:Name="addLineTripGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="0" Height="30" Margin="0,0,0,50" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Content=" : משעה " Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26"/>
+                <TextBox x:Name="startTimeRangeTextBox" Grid.Column="4" HorizontalAlignment="Right" Text="{Binding StartTimeRange, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50"/>
+                <Label Content=" : עד שעה" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Center" Height="26"/>
+                <TextBox x:Name="endTimeRangeTextBox" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" Text="{Binding EndTimeRange, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50"/>
+                <Label Content=" : תדירות" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="26"/>
+                <TextBox x:Name="frequencyTextBox" Grid.Column="0" HorizontalAlignment="Right" Text="{Binding Frequency, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="50"/>
+            </Grid>
+            <Button x:Name="addLineTripButton" Content="הוסף תדירות" HorizontalAlignment="Center" Height="21" VerticalAlignment="Bottom" Width="73" Margin="0,0,0,10" Click="addLineTripButton_Click"/>
+            <DataGrid x:Name="lineTripDataGrid" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,40,0"
+                      AutoGenerateColumns="False" EnableRowVirtualization="True" Height="150"
+                      RowDetailsVisibilityMode="VisibleWhenSelected">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="frequencyColumn" Binding="{Binding Frequency}" Header=": תדירות" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="endTimeRangeColumn" Binding="{Binding EndTimeRange}" Header=" : עד שעה" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="startTimeRangeColumn" Binding="{Binding StartTimeRange}" Header="משעה" Width="SizeToHeader"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="deleteLineTrip" Content="מחק תדירות" HorizontalAlignment="Left" Margin="121,171,0,0" VerticalAlignment="Top" Width="75" Click="deleteLineTrip_Click"/>
         </Grid>
-        <ListBox x:Name="LineStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="158" Margin="57,282,0,0" VerticalAlignment="Top" Width="289"/>
-        <Label Content=": רשימת התחנות בקו" HorizontalAlignment="Left" Margin="228,242,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
-        <Button x:Name="UpdateButton" Content="עדכון הקו" HorizontalAlignment="Left" Margin="448,474,0,0" VerticalAlignment="Top" Width="75" Click="UpdateButton_Click"/>
-        <Button x:Name="CancelButton" Content="ביטול" HorizontalAlignment="Left" Margin="317,474,0,0" VerticalAlignment="Top" Width="75" Click="CancelButton_Click"/>
-        <Label Content=": רשימת כל התחנות" HorizontalAlignment="Left" Margin="658,242,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
-        <ListBox x:Name="AllStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right"  Height="158" Margin="483,282,0,0" VerticalAlignment="Top" Width="289"/>
-        <Button x:Name="AddButton" Content="&lt;&lt; הוסף" HorizontalAlignment="Left" Margin="380,328,0,0" VerticalAlignment="Top" Width="73" Click="AddButton_Click"/>
-        <Button x:Name="RemoveButton" Content="הורד &gt;&gt;" HorizontalAlignment="Left" Margin="380,376,0,0" VerticalAlignment="Top" Width="73" Click="RemoveButton_Click"/>
+        <Grid Grid.Row="1">
+            <ListBox x:Name="LineStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Height="158" Margin="57,70,0,0" VerticalAlignment="Top" Width="289"/>
+            <Label Content=": רשימת התחנות בקו" HorizontalAlignment="Left" Margin="228,20,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+            <Button x:Name="UpdateButton" Content="עדכון הקו" HorizontalAlignment="Left" Margin="448,252,0,0" VerticalAlignment="Top" Width="75" Click="UpdateButton_Click"/>
+            <Button x:Name="CancelButton" Content="ביטול" HorizontalAlignment="Left" Margin="317,252,0,0" VerticalAlignment="Top" Width="75" Click="CancelButton_Click"/>
+            <Label Content=": רשימת כל התחנות" HorizontalAlignment="Left" Margin="658,20,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right"/>
+            <ListBox x:Name="AllStationsListBox" HorizontalAlignment="Left" HorizontalContentAlignment="Right"  Height="158" Margin="483,70,0,0" VerticalAlignment="Top" Width="289"/>
+            <Button x:Name="AddButton" Content="&lt;&lt; הוסף" HorizontalAlignment="Left" Margin="380,125,0,0" VerticalAlignment="Top" Width="73" Click="AddButton_Click"/>
+            <Button x:Name="RemoveButton" Content="הורד &gt;&gt;" HorizontalAlignment="Left" Margin="380,165,0,0" VerticalAlignment="Top" Width="73" Click="RemoveButton_Click"/>
+        </Grid>
     </Grid>
 </Window>

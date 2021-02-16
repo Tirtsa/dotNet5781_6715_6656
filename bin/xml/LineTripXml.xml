@@ -31,9 +31,57 @@
     <Frequency>PT10M</Frequency>
   </LineTrip>
   <LineTrip>
-    <LineId>4</LineId>
+    <LineId>7</LineId>
+    <StartTimeRange>PT6H</StartTimeRange>
+    <EndTimeRange>PT23H</EndTimeRange>
+    <Frequency>PT40M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>7</LineId>
+    <StartTimeRange>PT23H</StartTimeRange>
+    <EndTimeRange>PT6H</EndTimeRange>
+    <Frequency>PT20M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>8</LineId>
+    <StartTimeRange>PT6H</StartTimeRange>
+    <EndTimeRange>PT9H</EndTimeRange>
+    <Frequency>PT20M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>8</LineId>
     <StartTimeRange>PT9H</StartTimeRange>
-    <EndTimeRange>new TimeSpan(23,0,0)</EndTimeRange>
-    <Frequency>PT10M</Frequency>
+    <EndTimeRange>PT14H</EndTimeRange>
+    <Frequency>PT45M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>8</LineId>
+    <StartTimeRange>PT14H</StartTimeRange>
+    <EndTimeRange>PT18H</EndTimeRange>
+    <Frequency>PT30M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>8</LineId>
+    <StartTimeRange>PT18H</StartTimeRange>
+    <EndTimeRange>PT22H30M</EndTimeRange>
+    <Frequency>PT35M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>8</LineId>
+    <StartTimeRange>PT0S</StartTimeRange>
+    <EndTimeRange>PT0S</EndTimeRange>
+    <Frequency>PT0S</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>3</LineId>
+    <StartTimeRange>PT6H</StartTimeRange>
+    <EndTimeRange>PT8H</EndTimeRange>
+    <Frequency>PT25M</Frequency>
+  </LineTrip>
+  <LineTrip>
+    <LineId>3</LineId>
+    <StartTimeRange>PT8H</StartTimeRange>
+    <EndTimeRange>PT10H</EndTimeRange>
+    <Frequency>PT20M</Frequency>
   </LineTrip>
 </ArrayOfLineTrip>

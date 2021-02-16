@@ -16,8 +16,9 @@ namespace BO
         public int FirstStationKey { get; set; }
         public int LastStationKey { get; set; }
         public double TotalDistance { get; set; }
-        public double TotalTime { get; set; }
+        public TimeSpan TotalTime { get; set; }
         public IEnumerable<int> AllStationsOfLine { get; set; }
+        public IEnumerable<LineTrip> AllLineTripsOfLine { get; set; }
         public override string ToString()
         {
             return this.ToStringProperty();

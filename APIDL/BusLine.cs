@@ -13,7 +13,7 @@ namespace DO
         public Areas Area { get; set; }
         public int FirstStationKey { get; set; }
         public int LastStationKey { get; set; }
-        public double TotalTime { get; set; }
+        public TimeSpan TotalTime { get; set; }
         public override string ToString()
         {
             return this.ToStringProperty();
